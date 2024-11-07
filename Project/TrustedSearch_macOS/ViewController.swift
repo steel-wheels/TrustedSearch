@@ -1,19 +1,20 @@
-//
-//  ViewController.swift
-//  TrustedSearch
-//
-//  Created by Tomoo Hamada on 2024/11/06.
-//
+/*
+ * @file ViewCpntrpller.swift
+ * @description Define ViewController class
+ * @par Copyright
+ *   Copyright (C) 2024 Steel Wheels Project
+ */
 
 import MultiUIKit
 import Cocoa
 
-class ViewController: NSViewController
+class ViewController: TSViewController
 {
-        override func viewDidLoad() {
-                super.viewDidLoad()
+        @IBOutlet weak var mRootView: MIStack!
 
-                // Do any additional setup after loading the view.
+        override func viewDidLoad() {
+                setRootView(mRootView)
+                super.viewDidLoad()
         }
 
         override var representedObject: Any? {

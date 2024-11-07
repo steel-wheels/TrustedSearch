@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050DA1D42CDD09C3006E0EDD /* TSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSViewController.swift */; };
+		050DA1D52CDD09C3006E0EDD /* TSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSViewController.swift */; };
 		0518B09B2CDBB23800C46E01 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; };
 		0518B09C2CDBB23800C46E01 /* MultiUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0518B09F2CDBB24F00C46E01 /* JavaScriptKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09E2CDBB24F00C46E01 /* JavaScriptKit.xcframework */; };
@@ -45,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		050DA1D32CDD09C3006E0EDD /* TSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSViewController.swift; sourceTree = "<group>"; };
 		0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		0518B09E2CDBB24F00C46E01 /* JavaScriptKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = JavaScriptKit.xcframework; path = ../../../Library/Frameworks/JavaScriptKit.xcframework; sourceTree = "<group>"; };
 		053970E02CDBA4FD008E4EFA /* TrustedSearch_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,11 +111,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		0518B0AE2CDBB95A00C46E01 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				050DA1D32CDD09C3006E0EDD /* TSViewController.swift */,
+			);
+			name = Source;
+			path = ../Source;
+			sourceTree = "<group>";
+		};
 		053970D72CDBA4FD008E4EFA = {
 			isa = PBXGroup;
 			children = (
 				053970E22CDBA4FD008E4EFA /* TrustedSearch_macOS */,
 				05780E852CDBA8E5003C03E6 /* TrustedSearch_iOS */,
+				0518B0AE2CDBB95A00C46E01 /* Source */,
 				0518B0992CDBB23800C46E01 /* Frameworks */,
 				053970E12CDBA4FD008E4EFA /* Products */,
 			);
@@ -236,6 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				050DA1D42CDD09C3006E0EDD /* TSViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				050DA1D52CDD09C3006E0EDD /* TSViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
