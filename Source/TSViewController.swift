@@ -13,6 +13,8 @@ class TSViewController: MIViewController
         private var mRootView:          MIStack? = nil
         private var mKeywordField:      MITextField? = nil
 
+        private var mBrowserController = TSBrowserController()
+
         public func setRootView(_ root: MIStack) {
                 mRootView = root
         }
@@ -22,11 +24,26 @@ class TSViewController: MIViewController
 
                 /* make contents */
                 if let root = mRootView {
-                        let keywordfield = MITextField()
-                        keywordfield.stringValue = "Keyword field"
-                        root.addArrangedSubView(keywordfield)
-                        mKeywordField = keywordfield
+                        makeContents(rootView: root)
                 }
+        }
+
+        private func makeContents(rootView root: MIStack) {
+                let keywordfield = MITextField()
+                keywordfield.stringValue = "Keyword field"
+                root.addArrangedSubView(keywordfield)
+                mKeywordField = keywordfield
+
+                let searchbutton = MIButton()
+                searchbutton.title = "Search"
+                searchbutton.setCallback {
+                        () -> Void in self.searchButtonPressed()
+                }
+                root.addArrangedSubView(searchbutton)
+        }
+
+        private func searchButtonPressed() {
+                mBrowserController.start()
         }
 }
 
