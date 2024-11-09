@@ -43,6 +43,9 @@ class TSViewController: MIViewController
         }
 
         private func searchButtonPressed() {
+                if let field = mKeywordField {
+                        mBrowserController.keyword = field.stringValue
+                }
                 mBrowserController.start()
         }
 }

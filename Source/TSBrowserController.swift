@@ -10,11 +10,13 @@ import Foundation
 
 public class TSBrowserController
 {
-        public init() {
+        public var keyword: String
 
+        public init() {
+                keyword = ""
         }
 
         public func start() {
-                NSLog("search start")
+                NSLog("search start: \(keyword)")
         }
 }
