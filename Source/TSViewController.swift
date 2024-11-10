@@ -10,9 +10,9 @@ import Foundation
 
 class TSViewController: MIViewController
 {
-        private var mRootView:          MIStack? = nil
-        private var mKeywordField:      MITextField? = nil
-        private var mSearchButton:      MIButton? =  nil
+        private var mRootView:          MIStack?        = nil
+        private var mKeywordField:      MITextField?    = nil
+        private var mSearchButton:      MIButton?       =  nil
 
         private var mBrowserController  = TSBrowserController()
 
@@ -34,7 +34,7 @@ class TSViewController: MIViewController
 
         private func makeContents(rootView root: MIStack) {
                 let keywordfield = MITextField()
-                keywordfield.stringValue = "Keyword field"
+                keywordfield.placeholderString = "Keywords to search"
                 root.addArrangedSubView(keywordfield)
                 keywordfield.setCallback({
                         (_ str: String) -> Void in
@@ -71,7 +71,9 @@ class TSViewController: MIViewController
         }
 
         private func searchButtonPressed() {
-                mBrowserController.start()
+                if let url = mBrowserController.URLToLaunchBrowser() {
+                        super.open(URL: url)
+                }
         }
 }
 

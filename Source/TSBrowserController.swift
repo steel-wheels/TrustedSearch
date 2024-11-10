@@ -12,11 +12,14 @@ public class TSBrowserController
 {
         public var parameters: TSSearchParameters
 
+        private var mEngineURL: URL? = nil
+
         public init() {
                 parameters = TSSearchParameters()
+                mEngineURL = URL(string: "https://www.google.com/")
         }
 
-        public func start() {
-                NSLog("search start: \(parameters.keyword)")
+        public func URLToLaunchBrowser() -> URL? {
+                return mEngineURL
         }
 }
