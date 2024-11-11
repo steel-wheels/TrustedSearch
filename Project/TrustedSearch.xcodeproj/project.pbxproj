@@ -11,12 +11,12 @@
 		050DA1D52CDD09C3006E0EDD /* TSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSViewController.swift */; };
 		0518B09B2CDBB23800C46E01 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; };
 		0518B09C2CDBB23800C46E01 /* MultiUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0518B09F2CDBB24F00C46E01 /* JavaScriptKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09E2CDBB24F00C46E01 /* JavaScriptKit.xcframework */; };
-		0518B0A02CDBB24F00C46E01 /* JavaScriptKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09E2CDBB24F00C46E01 /* JavaScriptKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0518B0A12CDBB26C00C46E01 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; };
 		0518B0A22CDBB26C00C46E01 /* MultiUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0518B0A42CDBB27F00C46E01 /* JavaScriptKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09E2CDBB24F00C46E01 /* JavaScriptKit.xcframework */; };
-		0518B0A52CDBB27F00C46E01 /* JavaScriptKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09E2CDBB24F00C46E01 /* JavaScriptKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		051CF6E82CE0D16D000B690D /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; };
+		051CF6E92CE0D16D000B690D /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		051CF6EA2CE0D1B1000B690D /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; };
+		051CF6EB2CE0D1B1000B690D /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05CC32812CDFA67100978FF6 /* TSSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */; };
 		05CC32822CDFA67100978FF6 /* TSSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */; };
 		05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */; };
@@ -30,8 +30,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				051CF6E92CE0D16D000B690D /* MultiDataKit.xcframework in Embed Frameworks */,
 				0518B09C2CDBB23800C46E01 /* MultiUIKit.xcframework in Embed Frameworks */,
-				0518B0A02CDBB24F00C46E01 /* JavaScriptKit.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,8 +42,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				051CF6EB2CE0D1B1000B690D /* MultiDataKit.xcframework in Embed Frameworks */,
 				0518B0A22CDBB26C00C46E01 /* MultiUIKit.xcframework in Embed Frameworks */,
-				0518B0A52CDBB27F00C46E01 /* JavaScriptKit.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,7 +53,7 @@
 /* Begin PBXFileReference section */
 		050DA1D32CDD09C3006E0EDD /* TSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSViewController.swift; sourceTree = "<group>"; };
 		0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
-		0518B09E2CDBB24F00C46E01 /* JavaScriptKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = JavaScriptKit.xcframework; path = ../../../Library/Frameworks/JavaScriptKit.xcframework; sourceTree = "<group>"; };
+		051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		053970E02CDBA4FD008E4EFA /* TrustedSearch_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05780E842CDBA8E5003C03E6 /* TrustedSearch_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSearchParameters.swift; sourceTree = "<group>"; };
@@ -91,8 +91,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				051CF6E82CE0D16D000B690D /* MultiDataKit.xcframework in Frameworks */,
 				0518B09B2CDBB23800C46E01 /* MultiUIKit.xcframework in Frameworks */,
-				0518B09F2CDBB24F00C46E01 /* JavaScriptKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,8 +100,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				051CF6EA2CE0D1B1000B690D /* MultiDataKit.xcframework in Frameworks */,
 				0518B0A12CDBB26C00C46E01 /* MultiUIKit.xcframework in Frameworks */,
-				0518B0A42CDBB27F00C46E01 /* JavaScriptKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +111,7 @@
 		0518B0992CDBB23800C46E01 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0518B09E2CDBB24F00C46E01 /* JavaScriptKit.xcframework */,
+				051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */,
 				0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */,
 			);
 			name = Frameworks;
@@ -405,6 +405,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TR2DNF3P93;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -432,6 +434,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TR2DNF3P93;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -456,8 +460,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TR2DNF3P93;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TrustedSearch_iOS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -472,6 +479,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.TrustedSearch.iOS.TrustedSearch-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -486,8 +496,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TR2DNF3P93;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TrustedSearch_iOS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -502,6 +515,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.TrustedSearch.iOS.TrustedSearch-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
