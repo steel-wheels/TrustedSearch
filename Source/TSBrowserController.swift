@@ -33,12 +33,17 @@ public class TSBrowserController
                 guard let base = mEngineURL else {
                         return nil
                 }
-                var result = base.absoluteString
+                var queries: Array<String> = []
+                /* Add sites */
                 for site in self.parameters.sites {
-                        result += "q=site:\(site.absoluteString) "
+                        queries.append("q=site:\(site.absoluteString)")
                 }
-                result += self.parameters.keyword
-                NSLog("result=\"\(result)\"")
+                /* Add keywords */
+                queries.append("q=\"\(self.parameters.keyword)\"")
+                /* make quesry string */
+                let qstr   = queries.joined(separator: ",")
+                let result = base.absoluteString + qstr
+                NSLog("result=\(result)")
                 return URL(string: result)
         }
 }
