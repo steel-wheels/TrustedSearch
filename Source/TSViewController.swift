@@ -12,7 +12,8 @@ class TSViewController: MIViewController
 {
         private var mRootView:          MIStack?        = nil
         private var mKeywordField:      MITextField?    = nil
-        private var mSearchButton:      MIButton?       =  nil
+        private var mLanguageMenu:      MIPopupMenu?    = nil
+        private var mSearchButton:      MIButton?       = nil
 
         private var mBrowserController  = TSBrowserController()
 
@@ -33,6 +34,7 @@ class TSViewController: MIViewController
         }
 
         private func makeContents(rootView root: MIStack) {
+                /* keyword field */
                 let keywordfield = MITextField()
                 keywordfield.placeholderString = "Keywords to search"
                 root.addArrangedSubView(keywordfield)
@@ -42,6 +44,19 @@ class TSViewController: MIViewController
                 })
                 mKeywordField = keywordfield
 
+                /* Language menu */
+                var mitems: Array<MIPopupMenu.MenuItem> = []
+                for lang in TSLanguage.allLanguages {
+                        let item = MIPopupMenu.MenuItem(menuId: lang.rawValue,
+                                                        title: lang.langeage)
+                        mitems.append(item)
+                }
+                let langmenu = MIPopupMenu()
+                langmenu.setMenuItems(items: mitems)
+                root.addArrangedSubView(langmenu)
+                mLanguageMenu = langmenu
+
+                /* search button */
                 let searchbutton = MIButton()
                 searchbutton.title = "Search"
                 searchbutton.setCallback {
@@ -71,6 +86,17 @@ class TSViewController: MIViewController
         }
 
         private func searchButtonPressed() {
+                /* set language parameter */
+                if let langmenu = mLanguageMenu {
+                        if let menuid = langmenu.selectedItem() {
+                                if let lang = TSLanguage(rawValue: menuid) {
+                                        mBrowserController.set(language: lang)
+                                } else {
+                                        NSLog("Invalid language menu id: \(menuid)")
+                                }
+                        }
+                }
+
                 if let url = mBrowserController.URLToLaunchBrowser() {
                         super.open(URL: url)
                 }

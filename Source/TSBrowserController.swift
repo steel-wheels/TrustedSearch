@@ -19,6 +19,10 @@ public class TSBrowserController
                 mEngineURL      = URL(string: "https://www.google.com/search?")
         }
 
+        public func set(language lang: TSLanguage) {
+                parameters.language = lang
+        }
+
         public func append(site path: String) -> NSError? {
                 if let url = URL(string: path) {
                         self.parameters.sites.append(url)
@@ -34,12 +38,21 @@ public class TSBrowserController
                         return nil
                 }
                 var queries: Array<String> = []
+
                 /* Add sites */
                 for site in self.parameters.sites {
                         queries.append("q=site:\(site.absoluteString)")
                 }
+
                 /* Add keywords */
                 queries.append("q=\"\(self.parameters.keyword)\"")
+
+                /* Add language */
+                let targetlang = self.parameters.language
+                if targetlang != .all {
+                        queries.append("hl=\(targetlang.query)")
+                }
+
                 /* make quesry string */
                 let qstr   = queries.joined(separator: ",")
                 let result = base.absoluteString + qstr
