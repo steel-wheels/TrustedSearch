@@ -53,8 +53,9 @@ class TSViewController: MIViewController
                 }
                 let langmenu = MIPopupMenu()
                 langmenu.setMenuItems(items: mitems)
-                root.addArrangedSubView(langmenu)
                 mLanguageMenu = langmenu
+                let langbox = TSViewController.allocateLabeledStack(label: "Language", content: langmenu)
+                root.addArrangedSubView(langbox)
 
                 /* search button */
                 let searchbutton = MIButton()
@@ -100,6 +101,16 @@ class TSViewController: MIViewController
                 if let url = mBrowserController.URLToLaunchBrowser() {
                         super.open(URL: url)
                 }
+        }
+
+        private static func allocateLabeledStack(label labstr: String, content cont: MIInterfaceView) -> MIStack {
+                let newbox = MIStack()
+                newbox.axis = .horizontal
+                let label = MILabel()
+                label.title = labstr
+                newbox.addArrangedSubView(label)
+                newbox.addArrangedSubView(cont)
+                return newbox
         }
 }
 
