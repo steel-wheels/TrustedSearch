@@ -50,11 +50,11 @@ public class TSBrowserController
                 /* Add language */
                 let targetlang = self.parameters.language
                 if targetlang != .all {
-                        queries.append("hl=\(targetlang.query)")
+                        queries.append("lr=lang_\(targetlang.query)")
                 }
 
                 /* make quesry string */
-                let qstr   = queries.joined(separator: ",")
+                let qstr   = queries.joined(separator: "&")
                 let result = base.absoluteString + qstr
                 NSLog("result=\(result)")
                 return URL(string: result)
