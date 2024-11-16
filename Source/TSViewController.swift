@@ -10,10 +10,13 @@ import Foundation
 
 class TSViewController: MIViewController
 {
-        private var mRootView:          MIStack?        = nil
-        private var mKeywordField:      MITextField?    = nil
-        private var mLanguageMenu:      MIPopupMenu?    = nil
-        private var mSearchButton:      MIButton?       = nil
+        private var mRootView:          MIStack?                = nil
+        private var mKeywordField:      MITextField?            = nil
+        private var mLanguageMenu:      MIPopupMenu?            = nil
+        private var mCategoryMenu:      MIPopupMenu?            = nil
+        private var mSearchButton:      MIButton?               = nil
+
+        private var mCategorizedSites:  TSCategorizedSites?     = nil
 
         private var mBrowserController  = TSBrowserController()
 
@@ -24,14 +27,16 @@ class TSViewController: MIViewController
         override func viewDidLoad() {
                 super.viewDidLoad()
 
+                /* load categorized sites data */
+                let catsites = TSCategorizedSites()
+                catsites.load()
+                catsites.dump()
+                mCategorizedSites = catsites
+
                 /* make contents */
                 if let root = mRootView {
                         makeContents(rootView: root)
                 }
-
-                /* load categorized sites data */
-                mBrowserController.load()
-                //mBrowserController.dump()
 
                 /* repeat tracking */
                 self.tracking()
@@ -61,6 +66,25 @@ class TSViewController: MIViewController
                 let langbox = TSViewController.allocateLabeledStack(label: "Language", content: langmenu)
                 root.addArrangedSubView(langbox)
 
+                /* categorized site menu */
+                mitems.removeAll()
+                if let catsites = mCategorizedSites {
+                        let category = catsites.categories
+                        let catnum   = category.count
+                        for i in 0..<catnum {
+                                let cat  = category[i]
+                                let item = MIPopupMenu.MenuItem(menuId: i, title: cat.name)
+                                mitems.append(item)
+                        }
+                } else {
+                        mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "?"))
+                }
+                let catmenu = MIPopupMenu()
+                catmenu.setMenuItems(items: mitems)
+                mCategoryMenu = catmenu
+                let catbox =  TSViewController.allocateLabeledStack(label: "Category", content: catmenu)
+                root.addArrangedSubView(catbox)
+
                 /* search button */
                 let searchbutton = MIButton()
                 searchbutton.title = "Search"
@@ -69,6 +93,35 @@ class TSViewController: MIViewController
                 }
                 root.addArrangedSubView(searchbutton)
                 mSearchButton = searchbutton
+        }
+
+        private func searchButtonPressed() {
+                /* set language parameter */
+                if let langmenu = mLanguageMenu {
+                        if let menuid = langmenu.selectedItem() {
+                                if let lang = TSLanguage(rawValue: menuid) {
+                                        mBrowserController.set(language: lang)
+                                } else {
+                                        NSLog("Invalid language menu id: \(menuid)")
+                                }
+                        }
+                }
+
+                /* set sites parameter */
+                if let catmenu = mCategoryMenu, let sites = mCategorizedSites {
+                        if let menuid = catmenu.selectedItem() {
+                                if 0 <= menuid && menuid < sites.categories.count {
+                                        let cat = sites.categories[menuid]
+                                        mBrowserController.set(sites: cat.sites)
+                                } else {
+                                        NSLog("invalid index: \(menuid)")
+                                }
+                        }
+                }
+
+                if let url = mBrowserController.URLToLaunchBrowser() {
+                        super.open(URL: url)
+                }
         }
 
         /* this operation is called in main thread*/
@@ -87,23 +140,6 @@ class TSViewController: MIViewController
         private func keywordIsUpdated(_ str: String) {
                 if let button = mSearchButton {
                         button.isEnabled = !str.isEmpty
-                }
-        }
-
-        private func searchButtonPressed() {
-                /* set language parameter */
-                if let langmenu = mLanguageMenu {
-                        if let menuid = langmenu.selectedItem() {
-                                if let lang = TSLanguage(rawValue: menuid) {
-                                        mBrowserController.set(language: lang)
-                                } else {
-                                        NSLog("Invalid language menu id: \(menuid)")
-                                }
-                        }
-                }
-
-                if let url = mBrowserController.URLToLaunchBrowser() {
-                        super.open(URL: url)
                 }
         }
 

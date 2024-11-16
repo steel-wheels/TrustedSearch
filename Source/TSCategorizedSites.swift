@@ -8,13 +8,27 @@
 import MultiDataKit
 import Foundation
 
-public class TSCategorizeSites
+public class TSCategory {
+        public var name: String
+        public var sites: Array<URL>
+
+        public init(name: String, sites: Array<URL>) {
+                self.name = name
+                self.sites = sites
+        }
+}
+
+public class TSCategorizedSites
 {
-        private var mCategorizeSites: Dictionary<String, Array<URL>>
+        private var mCategorizeSites:   Array<TSCategory>
 
         public init() {
-                mCategorizeSites = [:]
+                mCategorizeSites  = []
         }
+
+        public var categories: Array<TSCategory> { get {
+                return mCategorizeSites
+        }}
 
         public func load()  {
                 if let resdir = FileManager.default.resourceDirectory {
@@ -29,10 +43,13 @@ public class TSCategorizeSites
                         let err = MIError.error(errorCode: .fileError, message: "No resource directory")
                         NSLog(MIError.errorToString(error: err))
                 }
+
+                let appdir = FileManager.default.applicationSupportDirectory
+                NSLog("appdir = \(appdir.path)")
         }
 
-        private func load(file src: MIValue) -> Dictionary<String, Array<URL>> {
-                var result: Dictionary<String, Array<URL>> = [:]
+        private func load(file src: MIValue) -> Array<TSCategory> {
+                var result: Array<TSCategory> = []
                 switch src.value {
                 case .interface(let dict):
                         for catname in dict.keys {
@@ -43,7 +60,8 @@ public class TSCategorizeSites
                                         NSLog("[Error] Unexpected member in \(catname)")
                                         sites = []
                                 }
-                                result[catname] = sites
+                                let newcat = TSCategory(name: catname, sites: sites)
+                                result.append(newcat)
                         }
                 default:
                         NSLog("Interface value is required")
@@ -75,9 +93,9 @@ public class TSCategorizeSites
         }
 
         public func dump() {
-                for (name, sites) in mCategorizeSites {
-                        NSLog("category: \(name)")
-                        for site in sites {
+                for cat in mCategorizeSites {
+                        NSLog("category: \(cat.name)")
+                        for site in cat.sites {
                                 NSLog("  site: \(site.absoluteString)")
                         }
                 }

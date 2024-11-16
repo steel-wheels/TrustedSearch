@@ -1,6 +1,13 @@
 {
+        ALL : [
+	],
+        news : [
+		"https://www.bbc.com",
+		"https://www.bbc.com"
+	],
         computer : [
-		"https://www.apple.com/jp/"
+		"https://developer.apple.com/",
+		"https://github.com"
 	]
 }
 
