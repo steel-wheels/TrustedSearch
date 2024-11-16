@@ -29,6 +29,10 @@ class TSViewController: MIViewController
                         makeContents(rootView: root)
                 }
 
+                /* load categorized sites data */
+                mBrowserController.load()
+                //mBrowserController.dump()
+
                 /* repeat tracking */
                 self.tracking()
         }

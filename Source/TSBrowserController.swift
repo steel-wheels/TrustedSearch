@@ -10,13 +10,23 @@ import Foundation
 
 public class TSBrowserController
 {
-        public var parameters: TSSearchParameters
+        public var parameters:          TSSearchParameters
+        private var mCategorizeSites:   TSCategorizeSites
 
         private var mEngineURL: URL?
 
         public init() {
-                parameters      = TSSearchParameters()
-                mEngineURL      = URL(string: "https://www.google.com/search?")
+                parameters              = TSSearchParameters()
+                mCategorizeSites        = TSCategorizeSites()
+                mEngineURL              = URL(string: "https://www.google.com/search?")
+        }
+
+        public func load() {
+                mCategorizeSites.load()
+        }
+
+        public func dump() {
+                mCategorizeSites.dump()
         }
 
         public func set(language lang: TSLanguage) {

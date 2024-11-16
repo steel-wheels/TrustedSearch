@@ -17,6 +17,10 @@
 		051CF6E92CE0D16D000B690D /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		051CF6EA2CE0D1B1000B690D /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; };
 		051CF6EB2CE0D1B1000B690D /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0538AD0A2CE772A000561027 /* categorized_sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* categorized_sites.json */; };
+		0538AD0C2CE772B100561027 /* categorized_sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* categorized_sites.json */; };
+		0548501E2CE755980060AEA0 /* TSCategorizedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSCategorizedSites.swift */; };
+		0548501F2CE755980060AEA0 /* TSCategorizedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSCategorizedSites.swift */; };
 		05CC32812CDFA67100978FF6 /* TSSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */; };
 		05CC32822CDFA67100978FF6 /* TSSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */; };
 		05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */; };
@@ -48,13 +52,35 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0538AD092CE7729600561027 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				0538AD0A2CE772A000561027 /* categorized_sites.json in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0538AD0B2CE772A800561027 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				0538AD0C2CE772B100561027 /* categorized_sites.json in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		050DA1D32CDD09C3006E0EDD /* TSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSViewController.swift; sourceTree = "<group>"; };
 		0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
+		0538AD082CE7728100561027 /* categorized_sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categorized_sites.json; sourceTree = "<group>"; };
 		053970E02CDBA4FD008E4EFA /* TrustedSearch_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0548501D2CE755980060AEA0 /* TSCategorizedSites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSCategorizedSites.swift; sourceTree = "<group>"; };
 		05780E842CDBA8E5003C03E6 /* TrustedSearch_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSearchParameters.swift; sourceTree = "<group>"; };
 		05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSBrowserController.swift; sourceTree = "<group>"; };
@@ -123,9 +149,19 @@
 				050DA1D32CDD09C3006E0EDD /* TSViewController.swift */,
 				05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */,
 				05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */,
+				0548501D2CE755980060AEA0 /* TSCategorizedSites.swift */,
 			);
 			name = Source;
 			path = ../Source;
+			sourceTree = "<group>";
+		};
+		0538AD072CE7724B00561027 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				0538AD082CE7728100561027 /* categorized_sites.json */,
+			);
+			name = Resource;
+			path = ../Resource;
 			sourceTree = "<group>";
 		};
 		053970D72CDBA4FD008E4EFA = {
@@ -134,6 +170,7 @@
 				053970E22CDBA4FD008E4EFA /* TrustedSearch_macOS */,
 				05780E852CDBA8E5003C03E6 /* TrustedSearch_iOS */,
 				0518B0AE2CDBB95A00C46E01 /* Source */,
+				0538AD072CE7724B00561027 /* Resource */,
 				0518B0992CDBB23800C46E01 /* Frameworks */,
 				053970E12CDBA4FD008E4EFA /* Products */,
 			);
@@ -159,6 +196,7 @@
 				053970DD2CDBA4FD008E4EFA /* Frameworks */,
 				053970DE2CDBA4FD008E4EFA /* Resources */,
 				0518B09D2CDBB23800C46E01 /* Embed Frameworks */,
+				0538AD092CE7729600561027 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -182,6 +220,7 @@
 				05780E812CDBA8E5003C03E6 /* Frameworks */,
 				05780E822CDBA8E5003C03E6 /* Resources */,
 				0518B0A32CDBB26C00C46E01 /* Embed Frameworks */,
+				0538AD0B2CE772A800561027 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -259,6 +298,7 @@
 			files = (
 				05CC32812CDFA67100978FF6 /* TSSearchParameters.swift in Sources */,
 				050DA1D42CDD09C3006E0EDD /* TSViewController.swift in Sources */,
+				0548501F2CE755980060AEA0 /* TSCategorizedSites.swift in Sources */,
 				05F04E0D2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05CC32822CDFA67100978FF6 /* TSSearchParameters.swift in Sources */,
+				0548501E2CE755980060AEA0 /* TSCategorizedSites.swift in Sources */,
 				05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,
 				050DA1D52CDD09C3006E0EDD /* TSViewController.swift in Sources */,
 			);
