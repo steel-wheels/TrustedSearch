@@ -13,11 +13,13 @@ import Foundation
         public var keyword      : String
         public var sites        : Array<URL>
         public var language     : TSLanguage
+        public var limitDate    : TSLimitDate
 
         public init() {
                 self.keyword    = ""
                 self.sites      = []
                 self.language   = .all
+                self.limitDate  = .none
         }
 }
 
@@ -101,4 +103,31 @@ public enum TSLanguage: Int {
         }}
 }
 
+public enum TSLimitDate: Int {
+        case none
+        case before1day
+        case before1month
+        case before1year
+
+        public static var allLimiteDates: Array<TSLimitDate> { get {
+                let result: Array<TSLimitDate> = [
+                        .none,
+                        .before1day,
+                        .before1month,
+                        .before1year
+                ]
+                return result
+        }}
+
+        public var titile: String { get {
+                let result: String
+                switch self {
+                case .none:             result = "None"
+                case .before1day:       result = "Before 1 day"
+                case .before1month:     result = "Before 1 month"
+                case .before1year:      result = "Before 1 year"
+                }
+                return result
+        }}
+}
 

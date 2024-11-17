@@ -13,6 +13,7 @@ class TSViewController: MIViewController
         private var mRootView:          MIStack?                = nil
         private var mKeywordField:      MITextField?            = nil
         private var mLanguageMenu:      MIPopupMenu?            = nil
+        private var mDateMenu:          MIPopupMenu?            = nil
         private var mCategoryMenu:      MIPopupMenu?            = nil
         private var mSearchButton:      MIButton?               = nil
 
@@ -66,6 +67,19 @@ class TSViewController: MIViewController
                 let langbox = TSViewController.allocateLabeledStack(label: "Language", content: langmenu)
                 root.addArrangedSubView(langbox)
 
+                /* limit date menu */
+                mitems.removeAll()
+                for ldata in TSLimitDate.allLimiteDates {
+                        let item = MIPopupMenu.MenuItem(menuId: ldata.rawValue,
+                                                        title: ldata.titile)
+                        mitems.append(item)
+                }
+                let datemenu = MIPopupMenu()
+                datemenu.setMenuItems(items: mitems)
+                mDateMenu = datemenu
+                let datebox = TSViewController.allocateLabeledStack(label: "Limit date", content: datemenu)
+                root.addArrangedSubView(datebox)
+
                 /* categorized site menu */
                 mitems.removeAll()
                 if let catsites = mCategorizedSites {
@@ -103,6 +117,17 @@ class TSViewController: MIViewController
                                         mBrowserController.set(language: lang)
                                 } else {
                                         NSLog("Invalid language menu id: \(menuid)")
+                                }
+                        }
+                }
+
+                /* set limit date */
+                if let datemenu = mDateMenu {
+                        if let menuid = datemenu.selectedItem() {
+                                if let ldate = TSLimitDate(rawValue: menuid) {
+                                        mBrowserController.set(limitDate: ldate)
+                                } else {
+                                        NSLog("Invalid limit date menu id: \(menuid)")
                                 }
                         }
                 }

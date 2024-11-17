@@ -26,6 +26,10 @@ public class TSBrowserController
                 self.parameters.sites = sts
         }
 
+        public func set(limitDate ldate: TSLimitDate){
+                self.parameters.limitDate = ldate
+        }
+
         public func URLToLaunchBrowser() -> URL? {
                 guard let base = mEngineURL else {
                         return nil
@@ -38,13 +42,18 @@ public class TSBrowserController
                 }
 
                 /* Add sites */
-                if let siteq = siteQueries() {
-                        queries.append(siteq)
+                if let query = siteQueries() {
+                        queries.append(query)
                 }
 
                 /* Add language */
-                if let langq = languageQueries() {
-                        queries.append(langq)
+                if let query = languageQueries() {
+                        queries.append(query)
+                }
+
+                /* Add limit date */
+                if let query = limitDateQueries() {
+                        queries.append(query)
                 }
 
                 /* make quesry string */
@@ -79,6 +88,38 @@ public class TSBrowserController
                 let targetlang = self.parameters.language
                 if targetlang != .all {
                         return "lr=lang_\(targetlang.query)"
+                } else {
+                        return nil
+                }
+        }
+
+        private func limitDateQueries() -> String? {
+                let result: String?
+                let calendar = Calendar.current
+                let today    = Date()
+                switch self.parameters.limitDate {
+                case .none:
+                        result = nil
+                case .before1day:
+                        let targ = calendar.date(byAdding: .day, value: -1, to: today)
+                        result = dateToString(date: targ, calendar: calendar)
+                case .before1month:
+                        let targ = calendar.date(byAdding: .month, value: -1, to: today)
+                        result = dateToString(date: targ, calendar: calendar)
+                case .before1year:
+                        let targ = calendar.date(byAdding: .year, value: -1, to: today)
+                        result = dateToString(date: targ, calendar: calendar)
+                }
+                return result
+        }
+
+        private func dateToString(date dt: Date?, calendar cal: Calendar) -> String? {
+                if let date = dt {
+                        let year  = cal.component(.year,  from: date)
+                        let month = cal.component(.month, from: date)
+                        let day   = cal.component(.day,   from: date)
+                        let str   = "after:\"\(year)/\(month)/\(day)\""
+                        return str
                 } else {
                         return nil
                 }
