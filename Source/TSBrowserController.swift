@@ -26,7 +26,7 @@ public class TSBrowserController
                 self.parameters.sites = sts
         }
 
-        public func set(limitDate ldate: TSLimitDate){
+        public func set(limitDate ldate: TSLimitedDate){
                 self.parameters.limitDate = ldate
         }
 
@@ -85,8 +85,7 @@ public class TSBrowserController
         }
 
         private func languageQueries() -> String? {
-                let targetlang = self.parameters.language
-                if targetlang != .all {
+                if let targetlang = self.parameters.language {
                         return "lr=lang_\(targetlang.query)"
                 } else {
                         return nil

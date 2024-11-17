@@ -17,7 +17,7 @@ class TSViewController: MIViewController
         private var mCategoryMenu:      MIPopupMenu?            = nil
         private var mSearchButton:      MIButton?               = nil
 
-        private var mCategorizedSites:  TSCategorizedSites?     = nil
+        private var mCategoryTable:     TSCategoryTable?        = nil
 
         private var mBrowserController  = TSBrowserController()
 
@@ -29,10 +29,10 @@ class TSViewController: MIViewController
                 super.viewDidLoad()
 
                 /* load categorized sites data */
-                let catsites = TSCategorizedSites()
-                catsites.load()
-                catsites.dump()
-                mCategorizedSites = catsites
+                let cattable = TSCategoryTable()
+                cattable.load()
+                cattable.dump()
+                mCategoryTable = cattable
 
                 /* make contents */
                 if let root = mRootView {
@@ -56,6 +56,7 @@ class TSViewController: MIViewController
 
                 /* Language menu */
                 var mitems: Array<MIPopupMenu.MenuItem> = []
+                mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
                 for lang in TSLanguage.allLanguages {
                         let item = MIPopupMenu.MenuItem(menuId: lang.rawValue,
                                                         title: lang.langeage)
@@ -69,7 +70,8 @@ class TSViewController: MIViewController
 
                 /* limit date menu */
                 mitems.removeAll()
-                for ldata in TSLimitDate.allLimiteDates {
+                mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
+                for ldata in TSLimitedDate.allLimitedDates {
                         let item = MIPopupMenu.MenuItem(menuId: ldata.rawValue,
                                                         title: ldata.titile)
                         mitems.append(item)
@@ -82,13 +84,13 @@ class TSViewController: MIViewController
 
                 /* categorized site menu */
                 mitems.removeAll()
-                if let catsites = mCategorizedSites {
-                        let category = catsites.categories
-                        let catnum   = category.count
-                        for i in 0..<catnum {
-                                let cat  = category[i]
-                                let item = MIPopupMenu.MenuItem(menuId: i, title: cat.name)
-                                mitems.append(item)
+                if let cattable = mCategoryTable {
+                        let tags = cattable.entireTags
+                        mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
+                        var idx = 1
+                        for tag in tags {
+                                mitems.append(MIPopupMenu.MenuItem(menuId: idx, title: tag))
+                                idx += 1
                         }
                 } else {
                         mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "?"))
@@ -115,8 +117,6 @@ class TSViewController: MIViewController
                         if let menuid = langmenu.selectedItem() {
                                 if let lang = TSLanguage(rawValue: menuid) {
                                         mBrowserController.set(language: lang)
-                                } else {
-                                        NSLog("Invalid language menu id: \(menuid)")
                                 }
                         }
                 }
@@ -124,22 +124,21 @@ class TSViewController: MIViewController
                 /* set limit date */
                 if let datemenu = mDateMenu {
                         if let menuid = datemenu.selectedItem() {
-                                if let ldate = TSLimitDate(rawValue: menuid) {
+                                if let ldate = TSLimitedDate(rawValue: menuid) {
                                         mBrowserController.set(limitDate: ldate)
-                                } else {
-                                        NSLog("Invalid limit date menu id: \(menuid)")
                                 }
                         }
                 }
 
                 /* set sites parameter */
-                if let catmenu = mCategoryMenu, let sites = mCategorizedSites {
+                if let catmenu = mCategoryMenu, let cattable = mCategoryTable {
                         if let menuid = catmenu.selectedItem() {
-                                if 0 <= menuid && menuid < sites.categories.count {
-                                        let cat = sites.categories[menuid]
-                                        mBrowserController.set(sites: cat.sites)
+                                if menuid == 0 {
+                                        mBrowserController.set(sites: [])
                                 } else {
-                                        NSLog("invalid index: \(menuid)")
+                                        let tag   = cattable.entireTags[menuid - 1]
+                                        let sites = cattable.selectSites(byTag: tag)
+                                        mBrowserController.set(sites: sites)
                                 }
                         }
                 }

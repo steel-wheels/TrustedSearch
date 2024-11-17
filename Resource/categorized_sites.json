@@ -1,13 +1,21 @@
-{
-        ALL : [
+[
+  {
+	tags: [
+		"news"
 	],
-        news : [
+	sites: [
 		"https://www.bbc.com",
-		"https://www.bbc.com"
+		"https://www.cnn.com"
+	]
+  },
+  {
+	tags: [
+		"macOS", "iOS"
 	],
-        computer : [
+	sites: [
 		"https://developer.apple.com/",
 		"https://github.com"
 	]
-}
+  }
+]
 

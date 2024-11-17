@@ -12,21 +12,20 @@ import Foundation
 {
         public var keyword      : String
         public var sites        : Array<URL>
-        public var language     : TSLanguage
-        public var limitDate    : TSLimitDate
+        public var language     : TSLanguage?
+        public var limitDate    : TSLimitedDate?
 
         public init() {
                 self.keyword    = ""
                 self.sites      = []
-                self.language   = .all
-                self.limitDate  = .none
+                self.language   = nil
+                self.limitDate  = nil
         }
 }
 
 /* See https://serpapi.com/google-languages */
 public enum TSLanguage: Int {
-        case all
-        case english
+        case english            = 1
         case french
         case german
         case italian
@@ -42,7 +41,6 @@ public enum TSLanguage: Int {
 
         public static var allLanguages: Array<TSLanguage> { get {
                 let result: Array<TSLanguage> = [
-                        all,
                         english,
                         french,
                         german,
@@ -63,7 +61,6 @@ public enum TSLanguage: Int {
         public var langeage: String { get {
                 let result: String
                 switch self {
-                case .all:              result = "ALL"
                 case .english:          result = "English"
                 case .french:           result = "French"
                 case .german:           result = "German"
@@ -84,7 +81,6 @@ public enum TSLanguage: Int {
         public var query: String { get {
                 let result: String
                 switch self {
-                case .all:              result = ""
                 case .english:          result = "en"
                 case .french:           result = "fr"
                 case .german:           result = "de"
@@ -103,15 +99,13 @@ public enum TSLanguage: Int {
         }}
 }
 
-public enum TSLimitDate: Int {
-        case none
-        case before1day
+public enum TSLimitedDate: Int {
+        case before1day         = 1
         case before1month
         case before1year
 
-        public static var allLimiteDates: Array<TSLimitDate> { get {
-                let result: Array<TSLimitDate> = [
-                        .none,
+        public static var allLimitedDates: Array<TSLimitedDate> { get {
+                let result: Array<TSLimitedDate> = [
                         .before1day,
                         .before1month,
                         .before1year
@@ -122,7 +116,6 @@ public enum TSLimitDate: Int {
         public var titile: String { get {
                 let result: String
                 switch self {
-                case .none:             result = "None"
                 case .before1day:       result = "Before 1 day"
                 case .before1month:     result = "Before 1 month"
                 case .before1year:      result = "Before 1 year"
