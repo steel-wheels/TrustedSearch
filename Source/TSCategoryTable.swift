@@ -9,52 +9,42 @@ import MultiDataKit
 import Foundation
 
 public class TSCategory {
-        public var tags:  Array<String>
-        public var sites: Array<URL>
+        public var category:    String
+        public var tags:        Array<String>
+        public var sites:       Array<URL>
 
-        public init(tags: Array<String>, sites: Array<URL>) {
-                self.tags  = tags
-                self.sites = sites
-        }
-
-        public func hasTag(_ tag: String) -> Bool {
-                for src in tags {
-                        if tag == src {
-                                return true
-                        }
-                }
-                return false
+        public init(category cat: String, tags tgs: Array<String>, sites sts: Array<URL>) {
+                self.category = cat
+                self.tags     = tgs
+                self.sites    = sts
         }
 }
 
 public class TSCategoryTable
 {
-        private var mCategorizeSites:   Array<TSCategory>
-        private var mEntireTags:        Array<String>
+        private var mCategoryTable: Dictionary<String, Array<TSCategory>> // [Category-name, array of TSCategory]
 
         public init() {
-                mCategorizeSites  = []
-                mEntireTags       = []
+                mCategoryTable  = [:]
         }
 
-        public var categories: Array<TSCategory> { get {
-                return mCategorizeSites
+        public var categoryNames: Array<String> { get {
+                return Array(mCategoryTable.keys.sorted())
         }}
 
-        public var entireTags: Array<String> { get {
-                return mEntireTags
-        }}
-
-        public func selectSites(byTag tag: String) -> Array<URL> {
-                var result: Set<URL> = []
-                for cat in mCategorizeSites {
-                        if cat.hasTag(tag) {
+        public func selectByCategory(categoryName catname: String) -> Array<URL> {
+                var result: Array<URL> = []
+                if let cats = mCategoryTable[catname] {
+                        for cat in cats {
                                 for site in cat.sites {
-                                        result.insert(site)
+                                        //NSLog("select \(site.absoluteString)")
+                                        result.append(site)
                                 }
                         }
+                } else {
+                        NSLog("[Error] Unknown category: \(catname)")
                 }
-                return Array(result)
+                return result
         }
 
         public func load()  {
@@ -63,9 +53,15 @@ public class TSCategoryTable
                         switch MIJsonFile.load(from: file) {
                         case .success(let val):
                                 let table = load(file: val)
-                                mCategorizeSites = table
-                                /* Uupcate tag table */
-                                mEntireTags = entireTags(table)
+                                for cat in table {
+                                        let catname = cat.category
+                                        if var cats = mCategoryTable[catname] {
+                                                cats.append(cat)
+                                                mCategoryTable[catname] = cats
+                                        } else {
+                                                mCategoryTable[catname] = [cat]
+                                        }
+                                }
                         case .failure(let err):
                                 NSLog(MIError.errorToString(error: err))
                         }
@@ -86,18 +82,29 @@ public class TSCategoryTable
                                                 result.append(cat)
                                         }
                                 default:
-                                        NSLog("category value is required")
+                                        NSLog("[Error] category value is required")
                                 }
                         }
                 default:
-                        NSLog("array of categories is required")
+                        NSLog("[Error] array of categories is required")
                 }
                 return result
         }
 
         private func load(element src: Dictionary<String, MIValue>) -> TSCategory? {
-                var tags: Array<String> = []
+                var category:   String        = "?"
+                var tags:       Array<String> = []
+
                 var result = true
+                if let val = src["category"] {
+                        if let str = val.stringValue {
+                                category = str
+                        } else {
+                                NSLog("[Error] category string is required")
+                        }
+                } else {
+                        NSLog("[Error] category section is not exist")
+                }
                 if let val = src["tags"] {
                         if let strs = load(strings: val) {
                                 tags.append(contentsOf: strs)
@@ -105,7 +112,7 @@ public class TSCategoryTable
                                 result = false
                         }
                 } else {
-                        NSLog("Tag property is required")
+                        NSLog("[Error] Tag property is required")
                         result = false
                 }
                 var sites: Array<URL> = []
@@ -115,18 +122,18 @@ public class TSCategoryTable
                                         if let url = URL(string: str) {
                                                 sites.append(url)
                                         } else {
-                                                NSLog("Invalid URL")
+                                                NSLog("[Error] Invalid URL")
                                         }
                                 }
                         } else {
                                 result = false
                         }
                 } else {
-                        NSLog("Sites property is required")
+                        NSLog("[Error] Sites property is required")
                         result = false
                 }
                 if result {
-                        return TSCategory(tags: tags, sites: sites)
+                        return TSCategory(category: category, tags: tags, sites: sites)
                 } else {
                         return nil
                 }
@@ -148,53 +155,21 @@ public class TSCategoryTable
                 default:
                         NSLog("Array of strings is required")
                 }
-                NSLog("*4")
                 return result
-        }
-
-        private func load(sites src: MIValue) -> Array<URL> {
-                var result: Array<URL> = []
-                switch src.value {
-                case .array(let paths):
-                        for path in paths {
-                                switch path.value {
-                                case .string(let str):
-                                        //NSLog("src: \(str)")
-                                        if let url = URL(string: str) {
-                                                result.append(url)
-                                        } else {
-                                                NSLog("[Error] imvalid URL: \(str)")
-                                        }
-                                default:
-                                        NSLog("[Error] imvalid array member")
-                                }
-                        }
-                default:
-                        NSLog("[Error] array member")
-                }
-                return result
-        }
-
-        private func entireTags(_ table: Array<TSCategory>) -> Array<String> {
-                var tags: Set<String> = []
-                for category in table {
-                        for tag in category.tags {
-                                tags.insert(tag)
-                        }
-                }
-                return Array(tags)
         }
 
         public func dump() {
-                for cat in mCategorizeSites {
-                        NSLog("category: {")
-                        for tag in cat.tags {
-                                NSLog("  tag:  \(tag)")
+                for (_, cats) in mCategoryTable {
+                        for cat in cats {
+                                NSLog("category \"\(cat.category)\" : {")
+                                for tag in cat.tags {
+                                        NSLog("  tag:  \(tag)")
+                                }
+                                for site in cat.sites {
+                                        NSLog("  site: \(site.absoluteString)")
+                                }
+                                NSLog("}")
                         }
-                        for site in cat.sites {
-                                NSLog("  site: \(site.absoluteString)")
-                        }
-                        NSLog("}")
                 }
         }
 }

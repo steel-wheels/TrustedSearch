@@ -1,21 +1,43 @@
 [
   {
-	tags: [
-		"news"
-	],
-	sites: [
-		"https://www.bbc.com",
-		"https://www.cnn.com"
-	]
+    category:	"Internet",
+    tags: [
+	"Google API"
+    ],
+    sites: [
+	"https://serpapi.com"
+    ]
+  }
+  {
+    category:	"News",
+    tags: [
+	"news"
+    ],
+    sites: [
+	"https://www.bbc.com",
+	"https://www.cnn.com"
+    ]
   },
   {
-	tags: [
-		"macOS", "iOS"
-	],
-	sites: [
-		"https://developer.apple.com/",
-		"https://github.com"
-	]
+    category:	"Software",
+    tags: [
+	"Programming", "macOS", "iOS"
+    ],
+    sites: [
+	"https://developer.apple.com/",
+	"https://github.com",
+	"https://qiita.com"
+    ]
+  },
+  {
+    category:	"Software",
+    tags: [
+	"TypeScript", "Programming", "Language"
+    ],
+    sites: [
+	"https://basarat.gitbook.io/typescript",
+	"https://typescript-jp.gitbook.io/deep-dive"
+    ]
   }
 ]
 

@@ -59,7 +59,7 @@ public class TSBrowserController
                 /* make quesry string */
                 let qstr   = queries.joined(separator: "&")
                 let result = base.absoluteString + qstr
-                NSLog("result=\(result)")
+                NSLog("query string =\(result)")
                 return URL(string: result)
         }
 

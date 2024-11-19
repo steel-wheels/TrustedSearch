@@ -85,11 +85,11 @@ class TSViewController: MIViewController
                 /* categorized site menu */
                 mitems.removeAll()
                 if let cattable = mCategoryTable {
-                        let tags = cattable.entireTags
+                        let catnames = cattable.categoryNames
                         mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
                         var idx = 1
-                        for tag in tags {
-                                mitems.append(MIPopupMenu.MenuItem(menuId: idx, title: tag))
+                        for catname in catnames {
+                                mitems.append(MIPopupMenu.MenuItem(menuId: idx, title: catname))
                                 idx += 1
                         }
                 } else {
@@ -133,12 +133,12 @@ class TSViewController: MIViewController
                 /* set sites parameter */
                 if let catmenu = mCategoryMenu, let cattable = mCategoryTable {
                         if let menuid = catmenu.selectedItem() {
-                                if menuid == 0 {
-                                        mBrowserController.set(sites: [])
-                                } else {
-                                        let tag   = cattable.entireTags[menuid - 1]
-                                        let sites = cattable.selectSites(byTag: tag)
+                                if menuid > 0 {
+                                        let catname = cattable.categoryNames[menuid - 1]
+                                        let sites   = cattable.selectByCategory(categoryName: catname)
                                         mBrowserController.set(sites: sites)
+                                } else {
+                                        mBrowserController.set(sites: [])
                                 }
                         }
                 }
