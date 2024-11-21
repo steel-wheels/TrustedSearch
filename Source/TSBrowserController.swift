@@ -18,7 +18,7 @@ public class TSBrowserController
                 mEngineURL              = URL(string: "https://www.google.com/search?")
         }
 
-        public func set(language lang: TSLanguage) {
+        public func set(language lang: TSLanguage?) {
                 parameters.language = lang
         }
 
@@ -26,8 +26,12 @@ public class TSBrowserController
                 self.parameters.sites = sts
         }
 
-        public func set(limitDate ldate: TSLimitedDate){
+        public func set(limitDate ldate: TSLimitedDate?){
                 self.parameters.limitDate = ldate
+        }
+
+        public func set(category cat: String?){
+                self.parameters.category = cat
         }
 
         public func URLToLaunchBrowser() -> URL? {

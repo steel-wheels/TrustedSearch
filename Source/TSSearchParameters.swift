@@ -14,17 +14,20 @@ import Foundation
         public var sites        : Array<URL>
         public var language     : TSLanguage?
         public var limitDate    : TSLimitedDate?
+        public var category     : String?
 
         public init() {
                 self.keyword    = ""
                 self.sites      = []
                 self.language   = nil
                 self.limitDate  = nil
+                self.category   = nil
         }
 }
 
 /* See https://serpapi.com/google-languages */
 public enum TSLanguage: Int {
+        /* The value 0 is used to present all languages */
         case english            = 1
         case french
         case german

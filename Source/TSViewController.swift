@@ -45,60 +45,26 @@ class TSViewController: MIViewController
 
         private func makeContents(rootView root: MIStack) {
                 /* keyword field */
-                let keywordfield = MITextField()
-                keywordfield.placeholderString = "Keywords to search"
+                let keywordfield = makeKeywordField()
                 root.addArrangedSubView(keywordfield)
-                keywordfield.setCallback({
-                        (_ str: String) -> Void in
-                        self.mBrowserController.parameters.keyword = str
-                })
                 mKeywordField = keywordfield
 
                 /* Language menu */
-                var mitems: Array<MIPopupMenu.MenuItem> = []
-                mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
-                for lang in TSLanguage.allLanguages {
-                        let item = MIPopupMenu.MenuItem(menuId: lang.rawValue,
-                                                        title: lang.langeage)
-                        mitems.append(item)
-                }
-                let langmenu = MIPopupMenu()
-                langmenu.setMenuItems(items: mitems)
-                mLanguageMenu = langmenu
-                let langbox = TSViewController.allocateLabeledStack(label: "Language", content: langmenu)
+                let langmenu = makeLanguageMenu()
+                let langbox  = makeLabeledStack(label: "Language", content: langmenu)
                 root.addArrangedSubView(langbox)
+                mLanguageMenu = langmenu
 
                 /* limit date menu */
-                mitems.removeAll()
-                mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
-                for ldata in TSLimitedDate.allLimitedDates {
-                        let item = MIPopupMenu.MenuItem(menuId: ldata.rawValue,
-                                                        title: ldata.titile)
-                        mitems.append(item)
-                }
-                let datemenu = MIPopupMenu()
-                datemenu.setMenuItems(items: mitems)
+                let datemenu = makeLimitDateMenu()
                 mDateMenu = datemenu
-                let datebox = TSViewController.allocateLabeledStack(label: "Limit date", content: datemenu)
+                let datebox = makeLabeledStack(label: "Limit date", content: datemenu)
                 root.addArrangedSubView(datebox)
 
                 /* categorized site menu */
-                mitems.removeAll()
-                if let cattable = mCategoryTable {
-                        let catnames = cattable.categoryNames
-                        mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
-                        var idx = 1
-                        for catname in catnames {
-                                mitems.append(MIPopupMenu.MenuItem(menuId: idx, title: catname))
-                                idx += 1
-                        }
-                } else {
-                        mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "?"))
-                }
-                let catmenu = MIPopupMenu()
-                catmenu.setMenuItems(items: mitems)
+                let catmenu = makeCategoryeMenu()
                 mCategoryMenu = catmenu
-                let catbox =  TSViewController.allocateLabeledStack(label: "Category", content: catmenu)
+                let catbox = makeLabeledStack(label: "Category", content: catmenu)
                 root.addArrangedSubView(catbox)
 
                 /* search button */
@@ -111,25 +77,95 @@ class TSViewController: MIViewController
                 mSearchButton = searchbutton
         }
 
+        private func makeKeywordField() -> MITextField {
+                let keywordfield = MITextField()
+                keywordfield.placeholderString = "Keywords to search"
+                keywordfield.setCallback({
+                        (_ str: String) -> Void in
+                        self.mBrowserController.parameters.keyword = str
+                })
+                return keywordfield
+        }
+
+        private func makeLanguageMenu() -> MIPopupMenu {
+                var mitems: Array<MIPopupMenu.MenuItem> = []
+                mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
+                for lang in TSLanguage.allLanguages {
+                        let item = MIPopupMenu.MenuItem(menuId: lang.rawValue,
+                                                        title:  lang.langeage)
+                        mitems.append(item)
+                }
+                let langmenu = MIPopupMenu()
+                langmenu.setMenuItems(items: mitems)
+                langmenu.setCallback({
+                        (_ menuid: Int) -> Void in
+                        let lang = TSLanguage(rawValue: menuid)
+                        self.mBrowserController.set(language: lang)
+                })
+                return langmenu
+        }
+
+        private func makeLimitDateMenu() -> MIPopupMenu {
+                var mitems: Array<MIPopupMenu.MenuItem> = []
+                mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
+                for ldata in TSLimitedDate.allLimitedDates {
+                        let item = MIPopupMenu.MenuItem(menuId: ldata.rawValue,
+                                                        title: ldata.titile)
+                        mitems.append(item)
+                }
+                let datemenu = MIPopupMenu()
+                datemenu.setMenuItems(items: mitems)
+                datemenu.setCallback({
+                        (_ menuid: Int) -> Void in
+                        let date = TSLimitedDate(rawValue: menuid)
+                        self.mBrowserController.set(limitDate: date)
+
+                })
+                return datemenu
+        }
+
+        private func makeCategoryeMenu() -> MIPopupMenu {
+                var mitems: Array<MIPopupMenu.MenuItem> = []
+                guard let cattable = mCategoryTable else {
+                        NSLog("can not happen at \(#function)")
+                        return MIPopupMenu()
+                }
+                let catnames = cattable.categoryNames
+                mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
+                var idx = 1
+                for catname in catnames {
+                        mitems.append(MIPopupMenu.MenuItem(menuId: idx, title: catname))
+                        idx += 1
+                }
+                let catmenu = MIPopupMenu()
+                catmenu.setMenuItems(items: mitems)
+                catmenu.setCallback({
+                        (_ menuId: Int) -> Void in
+                        if menuId > 0 {
+                                let catid = menuId - 1
+                                if 0<=catid && catid < catnames.count {
+                                        self.mBrowserController.set(category: catnames[catid])
+                                } else {
+                                        NSLog("can not happen at \(#function)")
+                                }
+                        } else {
+                                self.mBrowserController.set(category: nil)
+                        }
+                })
+                return catmenu
+        }
+
+        private func makeLabeledStack(label labstr: String, content cont: MIInterfaceView) -> MIStack {
+                let newbox = MIStack()
+                newbox.axis = .horizontal
+                let label = MILabel()
+                label.title = labstr
+                newbox.addArrangedSubView(label)
+                newbox.addArrangedSubView(cont)
+                return newbox
+        }
+
         private func searchButtonPressed() {
-                /* set language parameter */
-                if let langmenu = mLanguageMenu {
-                        if let menuid = langmenu.selectedItem() {
-                                if let lang = TSLanguage(rawValue: menuid) {
-                                        mBrowserController.set(language: lang)
-                                }
-                        }
-                }
-
-                /* set limit date */
-                if let datemenu = mDateMenu {
-                        if let menuid = datemenu.selectedItem() {
-                                if let ldate = TSLimitedDate(rawValue: menuid) {
-                                        mBrowserController.set(limitDate: ldate)
-                                }
-                        }
-                }
-
                 /* set sites parameter */
                 if let catmenu = mCategoryMenu, let cattable = mCategoryTable {
                         if let menuid = catmenu.selectedItem() {
@@ -142,7 +178,6 @@ class TSViewController: MIViewController
                                 }
                         }
                 }
-
                 if let url = mBrowserController.URLToLaunchBrowser() {
                         super.open(URL: url)
                 }
@@ -165,16 +200,6 @@ class TSViewController: MIViewController
                 if let button = mSearchButton {
                         button.isEnabled = !str.isEmpty
                 }
-        }
-
-        private static func allocateLabeledStack(label labstr: String, content cont: MIInterfaceView) -> MIStack {
-                let newbox = MIStack()
-                newbox.axis = .horizontal
-                let label = MILabel()
-                label.title = labstr
-                newbox.addArrangedSubView(label)
-                newbox.addArrangedSubView(cont)
-                return newbox
         }
 }
 
