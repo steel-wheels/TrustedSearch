@@ -16,7 +16,8 @@
     sites: [
 	"https://www.bbc.com",
 	"https://www.cnn.com",
-	"https://www.nikkei.com"
+	"https://www.nikkei.com",
+	"https://www.data.jma.go.jp/multi/index.html"
     ]
   },
   {
