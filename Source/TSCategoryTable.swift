@@ -8,21 +8,21 @@
 import MultiDataKit
 import Foundation
 
-public class TSCategory {
+public class TSSite {
         public var category:    String
         public var tags:        Array<String>
-        public var sites:       Array<URL>
+        public var URLs:        Array<URL>
 
-        public init(category cat: String, tags tgs: Array<String>, sites sts: Array<URL>) {
+        public init(category cat: String, tags tgs: Array<String>, URLs urls: Array<URL>) {
                 self.category = cat
                 self.tags     = tgs
-                self.sites    = sts
+                self.URLs     = urls
         }
 }
 
 public class TSCategoryTable
 {
-        private var mCategoryTable: Dictionary<String, Array<TSCategory>> // [Category-name, array of TSCategory]
+        private var mCategoryTable: Dictionary<String, Array<TSSite>>
 
         public init() {
                 mCategoryTable  = [:]
@@ -36,9 +36,9 @@ public class TSCategoryTable
                 var result: Array<URL> = []
                 if let cats = mCategoryTable[catname] {
                         for cat in cats {
-                                for site in cat.sites {
+                                for url in cat.URLs {
                                         //NSLog("select \(site.absoluteString)")
-                                        result.append(site)
+                                        result.append(url)
                                 }
                         }
                 } else {
@@ -71,8 +71,8 @@ public class TSCategoryTable
                 }
         }
 
-        private func load(file src: MIValue) -> Array<TSCategory> {
-                var result: Array<TSCategory> = []
+        private func load(file src: MIValue) -> Array<TSSite> {
+                var result: Array<TSSite> = []
                 switch src.value {
                 case .array(let arr):
                         for elm in arr {
@@ -91,7 +91,7 @@ public class TSCategoryTable
                 return result
         }
 
-        private func load(element src: Dictionary<String, MIValue>) -> TSCategory? {
+        private func load(element src: Dictionary<String, MIValue>) -> TSSite? {
                 var category:   String        = "?"
                 var tags:       Array<String> = []
 
@@ -115,12 +115,12 @@ public class TSCategoryTable
                         NSLog("[Error] Tag property is required")
                         result = false
                 }
-                var sites: Array<URL> = []
+                var URLs: Array<URL> = []
                 if let val = src["sites"] {
                         if let strs = load(strings: val) {
                                 for str in strs {
                                         if let url = URL(string: str) {
-                                                sites.append(url)
+                                                URLs.append(url)
                                         } else {
                                                 NSLog("[Error] Invalid URL")
                                         }
@@ -133,7 +133,7 @@ public class TSCategoryTable
                         result = false
                 }
                 if result {
-                        return TSCategory(category: category, tags: tags, sites: sites)
+                        return TSSite(category: category, tags: tags, URLs: URLs)
                 } else {
                         return nil
                 }
@@ -161,12 +161,13 @@ public class TSCategoryTable
         public func dump() {
                 for (_, cats) in mCategoryTable {
                         for cat in cats {
-                                NSLog("category \"\(cat.category)\" : {")
+                                NSLog("site: {")
+                                NSLog("  category: \(cat.category)")
                                 for tag in cat.tags {
                                         NSLog("  tag:  \(tag)")
                                 }
-                                for site in cat.sites {
-                                        NSLog("  site: \(site.absoluteString)")
+                                for url in cat.URLs {
+                                        NSLog("  url: \(url.absoluteString)")
                                 }
                                 NSLog("}")
                         }
