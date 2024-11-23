@@ -15,7 +15,8 @@
     ],
     sites: [
 	"https://www.bbc.com",
-	"https://www.cnn.com"
+	"https://www.cnn.com",
+	"https://www.nikkei.com"
     ]
   },
   {
@@ -37,6 +38,16 @@
     sites: [
 	"https://basarat.gitbook.io/typescript",
 	"https://typescript-jp.gitbook.io/deep-dive"
+    ]
+  },
+  {
+    category:	"Wikipedia",
+    tags: [],
+    sites: [
+	"https://ja.wikipedia.org/",
+	"https://en.wikipedia.org/",
+	"https://de.wikipedia.org/",
+	"https://fr.wikipedia.org/"
     ]
   }
 ]
