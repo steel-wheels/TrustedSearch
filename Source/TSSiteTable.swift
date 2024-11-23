@@ -32,6 +32,10 @@ public class TSSiteTable
                 return Array(mSiteTable.keys.sorted())
         }}
 
+        public func selectByCategory(category cat: String) -> Array<TSSite>? {
+                return mSiteTable[cat]
+        }
+
         public func selectByCategory(categoryName catname: String) -> Array<URL> {
                 var result: Array<URL> = []
                 if let cats = mSiteTable[catname] {

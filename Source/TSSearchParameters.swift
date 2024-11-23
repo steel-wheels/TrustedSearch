@@ -11,14 +11,12 @@ import Foundation
 @Observable final public class TSSearchParameters
 {
         public var keyword      : String
-        public var sites        : Array<URL>
         public var language     : TSLanguage?
         public var limitDate    : TSLimitedDate?
         public var category     : String?
 
         public init() {
                 self.keyword    = ""
-                self.sites      = []
                 self.language   = nil
                 self.limitDate  = nil
                 self.category   = nil

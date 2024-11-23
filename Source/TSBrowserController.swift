@@ -10,20 +10,18 @@ import Foundation
 
 public class TSBrowserController
 {
+        public var siteTable:          TSSiteTable
         public var parameters:          TSSearchParameters
         private var mEngineURL:         URL?
 
         public init() {
-                parameters              = TSSearchParameters()
-                mEngineURL              = URL(string: "https://www.google.com/search?")
+                siteTable       = TSSiteTable()
+                parameters      = TSSearchParameters()
+                mEngineURL      = URL(string: "https://www.google.com/search?")
         }
 
         public func set(language lang: TSLanguage?) {
                 parameters.language = lang
-        }
-
-        public func set(sites sts: Array<URL>) {
-                self.parameters.sites = sts
         }
 
         public func set(limitDate ldate: TSLimitedDate?){
@@ -76,13 +74,25 @@ public class TSBrowserController
         }
 
         private func siteQueries() -> String?{
-                guard self.parameters.sites.count > 0 else {
-                        return nil
+                guard let cat = self.parameters.category else {
+                        return nil      // no sepecific site definition
                 }
+                guard let sites = siteTable.selectByCategory(category: cat) else {
+                        return nil      // no specific sites
+
+                }
+
+                var URLs: Set<URL> = []
+                for site in sites {
+                        for url in site.URLs {
+                                URLs.insert(url)
+                        }
+                }
+
                 var result: String = ""
                 var prefix: String = ""
-                for site in self.parameters.sites {
-                        result += prefix + "site:" + site.absoluteString
+                for url in URLs {
+                        result += prefix + "site:" + url.absoluteString
                         prefix = " OR "
                 }
                 return queryString(operator: "q", contents: result)

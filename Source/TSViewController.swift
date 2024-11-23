@@ -17,8 +17,6 @@ class TSViewController: MIViewController
         private var mCategoryMenu:      MIPopupMenu?            = nil
         private var mSearchButton:      MIButton?               = nil
 
-        private var mSiteTable:     TSSiteTable?        = nil
-
         private var mBrowserController  = TSBrowserController()
 
         public func setRootView(_ root: MIStack) {
@@ -29,10 +27,9 @@ class TSViewController: MIViewController
                 super.viewDidLoad()
 
                 /* load categorized sites data */
-                let cattable = TSSiteTable()
-                cattable.load()
-                cattable.dump()
-                mSiteTable = cattable
+                let table = mBrowserController.siteTable
+                table.load()
+                table.dump()
 
                 /* make contents */
                 if let root = mRootView {
@@ -125,12 +122,10 @@ class TSViewController: MIViewController
         }
 
         private func makeCategoryeMenu() -> MIPopupMenu {
-                var mitems: Array<MIPopupMenu.MenuItem> = []
-                guard let cattable = mSiteTable else {
-                        NSLog("can not happen at \(#function)")
-                        return MIPopupMenu()
-                }
+                let cattable = mBrowserController.siteTable
                 let catnames = cattable.categoryNames
+
+                var mitems: Array<MIPopupMenu.MenuItem> = []
                 mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
                 var idx = 1
                 for catname in catnames {
@@ -166,18 +161,6 @@ class TSViewController: MIViewController
         }
 
         private func searchButtonPressed() {
-                /* set sites parameter */
-                if let catmenu = mCategoryMenu, let cattable = mSiteTable {
-                        if let menuid = catmenu.selectedItem() {
-                                if menuid > 0 {
-                                        let catname = cattable.categoryNames[menuid - 1]
-                                        let sites   = cattable.selectByCategory(categoryName: catname)
-                                        mBrowserController.set(sites: sites)
-                                } else {
-                                        mBrowserController.set(sites: [])
-                                }
-                        }
-                }
                 if let url = mBrowserController.URLToLaunchBrowser() {
                         super.open(URL: url)
                 }
