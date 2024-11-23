@@ -1,6 +1,6 @@
 /*
- * @file TSCategoryTable.swift
- * @description Define TSCategoryTable class
+ * @file TSSiteTable.swift
+ * @description Define TSSiteTable class
  * @par Copyright
  *   Copyright (C) 2024 Steel Wheels Project
  */
@@ -20,21 +20,21 @@ public class TSSite {
         }
 }
 
-public class TSCategoryTable
+public class TSSiteTable
 {
-        private var mCategoryTable: Dictionary<String, Array<TSSite>>
+        private var mSiteTable: Dictionary<String, Array<TSSite>>
 
         public init() {
-                mCategoryTable  = [:]
+                mSiteTable  = [:]
         }
 
         public var categoryNames: Array<String> { get {
-                return Array(mCategoryTable.keys.sorted())
+                return Array(mSiteTable.keys.sorted())
         }}
 
         public func selectByCategory(categoryName catname: String) -> Array<URL> {
                 var result: Array<URL> = []
-                if let cats = mCategoryTable[catname] {
+                if let cats = mSiteTable[catname] {
                         for cat in cats {
                                 for url in cat.URLs {
                                         //NSLog("select \(site.absoluteString)")
@@ -55,11 +55,11 @@ public class TSCategoryTable
                                 let table = load(file: val)
                                 for cat in table {
                                         let catname = cat.category
-                                        if var cats = mCategoryTable[catname] {
+                                        if var cats = mSiteTable[catname] {
                                                 cats.append(cat)
-                                                mCategoryTable[catname] = cats
+                                                mSiteTable[catname] = cats
                                         } else {
-                                                mCategoryTable[catname] = [cat]
+                                                mSiteTable[catname] = [cat]
                                         }
                                 }
                         case .failure(let err):
@@ -159,7 +159,7 @@ public class TSCategoryTable
         }
 
         public func dump() {
-                for (_, cats) in mCategoryTable {
+                for (_, cats) in mSiteTable {
                         for cat in cats {
                                 NSLog("site: {")
                                 NSLog("  category: \(cat.category)")

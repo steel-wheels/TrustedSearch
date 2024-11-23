@@ -17,7 +17,7 @@ class TSViewController: MIViewController
         private var mCategoryMenu:      MIPopupMenu?            = nil
         private var mSearchButton:      MIButton?               = nil
 
-        private var mCategoryTable:     TSCategoryTable?        = nil
+        private var mSiteTable:     TSSiteTable?        = nil
 
         private var mBrowserController  = TSBrowserController()
 
@@ -29,10 +29,10 @@ class TSViewController: MIViewController
                 super.viewDidLoad()
 
                 /* load categorized sites data */
-                let cattable = TSCategoryTable()
+                let cattable = TSSiteTable()
                 cattable.load()
                 cattable.dump()
-                mCategoryTable = cattable
+                mSiteTable = cattable
 
                 /* make contents */
                 if let root = mRootView {
@@ -126,7 +126,7 @@ class TSViewController: MIViewController
 
         private func makeCategoryeMenu() -> MIPopupMenu {
                 var mitems: Array<MIPopupMenu.MenuItem> = []
-                guard let cattable = mCategoryTable else {
+                guard let cattable = mSiteTable else {
                         NSLog("can not happen at \(#function)")
                         return MIPopupMenu()
                 }
@@ -167,7 +167,7 @@ class TSViewController: MIViewController
 
         private func searchButtonPressed() {
                 /* set sites parameter */
-                if let catmenu = mCategoryMenu, let cattable = mCategoryTable {
+                if let catmenu = mCategoryMenu, let cattable = mSiteTable {
                         if let menuid = catmenu.selectedItem() {
                                 if menuid > 0 {
                                         let catname = cattable.categoryNames[menuid - 1]

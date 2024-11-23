@@ -19,8 +19,8 @@
 		051CF6EB2CE0D1B1000B690D /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0538AD0A2CE772A000561027 /* sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* sites.json */; };
 		0538AD0C2CE772B100561027 /* sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* sites.json */; };
-		0548501E2CE755980060AEA0 /* TSCategoryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSCategoryTable.swift */; };
-		0548501F2CE755980060AEA0 /* TSCategoryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSCategoryTable.swift */; };
+		0548501E2CE755980060AEA0 /* TSSiteTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSSiteTable.swift */; };
+		0548501F2CE755980060AEA0 /* TSSiteTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSSiteTable.swift */; };
 		05CC32812CDFA67100978FF6 /* TSSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */; };
 		05CC32822CDFA67100978FF6 /* TSSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */; };
 		05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */; };
@@ -80,7 +80,7 @@
 		051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		0538AD082CE7728100561027 /* sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sites.json; sourceTree = "<group>"; };
 		053970E02CDBA4FD008E4EFA /* TrustedSearch_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0548501D2CE755980060AEA0 /* TSCategoryTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSCategoryTable.swift; sourceTree = "<group>"; };
+		0548501D2CE755980060AEA0 /* TSSiteTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSiteTable.swift; sourceTree = "<group>"; };
 		05780E842CDBA8E5003C03E6 /* TrustedSearch_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSearchParameters.swift; sourceTree = "<group>"; };
 		05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSBrowserController.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 				050DA1D32CDD09C3006E0EDD /* TSViewController.swift */,
 				05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */,
 				05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */,
-				0548501D2CE755980060AEA0 /* TSCategoryTable.swift */,
+				0548501D2CE755980060AEA0 /* TSSiteTable.swift */,
 			);
 			name = Source;
 			path = ../Source;
@@ -298,7 +298,7 @@
 			files = (
 				05CC32812CDFA67100978FF6 /* TSSearchParameters.swift in Sources */,
 				050DA1D42CDD09C3006E0EDD /* TSViewController.swift in Sources */,
-				0548501F2CE755980060AEA0 /* TSCategoryTable.swift in Sources */,
+				0548501F2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
 				05F04E0D2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,7 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05CC32822CDFA67100978FF6 /* TSSearchParameters.swift in Sources */,
-				0548501E2CE755980060AEA0 /* TSCategoryTable.swift in Sources */,
+				0548501E2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
 				05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,
 				050DA1D52CDD09C3006E0EDD /* TSViewController.swift in Sources */,
 			);
