@@ -49,7 +49,7 @@ public class TSCategoryTable
 
         public func load()  {
                 if let resdir = FileManager.default.resourceDirectory {
-                        let file = resdir.appendingPathComponent("categorized_sites.json")
+                        let file = resdir.appendingPathComponent("sites.json")
                         switch MIJsonFile.load(from: file) {
                         case .success(let val):
                                 let table = load(file: val)

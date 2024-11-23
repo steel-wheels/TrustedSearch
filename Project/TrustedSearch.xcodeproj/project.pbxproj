@@ -17,8 +17,8 @@
 		051CF6E92CE0D16D000B690D /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		051CF6EA2CE0D1B1000B690D /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; };
 		051CF6EB2CE0D1B1000B690D /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0538AD0A2CE772A000561027 /* categorized_sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* categorized_sites.json */; };
-		0538AD0C2CE772B100561027 /* categorized_sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* categorized_sites.json */; };
+		0538AD0A2CE772A000561027 /* sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* sites.json */; };
+		0538AD0C2CE772B100561027 /* sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* sites.json */; };
 		0548501E2CE755980060AEA0 /* TSCategoryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSCategoryTable.swift */; };
 		0548501F2CE755980060AEA0 /* TSCategoryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSCategoryTable.swift */; };
 		05CC32812CDFA67100978FF6 /* TSSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSSearchParameters.swift */; };
@@ -58,7 +58,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				0538AD0A2CE772A000561027 /* categorized_sites.json in CopyFiles */,
+				0538AD0A2CE772A000561027 /* sites.json in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +68,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				0538AD0C2CE772B100561027 /* categorized_sites.json in CopyFiles */,
+				0538AD0C2CE772B100561027 /* sites.json in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +78,7 @@
 		050DA1D32CDD09C3006E0EDD /* TSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSViewController.swift; sourceTree = "<group>"; };
 		0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
-		0538AD082CE7728100561027 /* categorized_sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categorized_sites.json; sourceTree = "<group>"; };
+		0538AD082CE7728100561027 /* sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sites.json; sourceTree = "<group>"; };
 		053970E02CDBA4FD008E4EFA /* TrustedSearch_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0548501D2CE755980060AEA0 /* TSCategoryTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSCategoryTable.swift; sourceTree = "<group>"; };
 		05780E842CDBA8E5003C03E6 /* TrustedSearch_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,7 +158,7 @@
 		0538AD072CE7724B00561027 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				0538AD082CE7728100561027 /* categorized_sites.json */,
+				0538AD082CE7728100561027 /* sites.json */,
 			);
 			name = Resource;
 			path = ../Resource;
