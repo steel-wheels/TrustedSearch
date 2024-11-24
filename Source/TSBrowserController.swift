@@ -10,18 +10,28 @@ import Foundation
 
 public class TSBrowserController
 {
-        public static let MAX_TAG_NUM = TSSearchParameters.MAX_TAG_NUM
+        public static let MAX_TAG_NUM = 3
 
         public var siteTable:           TSSiteTable
-        public var parameters:          TSSearchParameters
+
+        private var mKeyword:           String
+        private var mLanguage:          TSLanguage?
+        private var mLimitDate:         TSLimitedDate?
+        private var mTags:              Array<String?>
 
         private var mEngineURL:         URL?
         private var mTagLabels:         Array<Array<String>>
+        private var mCategory:          String?
 
         public init() {
                 siteTable       = TSSiteTable()
-                parameters      = TSSearchParameters()
                 mEngineURL      = URL(string: "https://www.google.com/search?")
+
+                mKeyword        = ""
+                mLanguage       = nil
+                mLimitDate      = nil
+                mCategory       = nil
+                mTags           = []
 
                 mTagLabels = []
                 for _ in 0..<TSBrowserController.MAX_TAG_NUM {
@@ -30,32 +40,24 @@ public class TSBrowserController
         }
 
         public func set(keyword str: String) {
-                if self.parameters.keyword != str {
-                        parameters.keyword = str
-                }
+                mKeyword = str
         }
 
         public func set(language lang: TSLanguage?) {
-                if self.parameters.language != lang {
-                        parameters.language = lang
-                }
+                mLanguage = lang
         }
 
         public func set(limitDate ldate: TSLimitedDate?){
-                if self.parameters.limitDate != ldate {
-                        self.parameters.limitDate = ldate
-                }
+                mLimitDate = ldate
         }
 
         public func set(category cat: String?){
-                if self.parameters.category != cat {
-                        collectTagLabels(category: cat)
-                        self.parameters.category = cat  // send notification
-                }
+                collectTagLabels(category: cat)
+                mCategory = cat
         }
 
-        public func set(level lvl: Int, tag t: String?) {
-                NSLog("set tag \(String(describing: t)) for level \(lvl)")
+        public func set(tags tgs: Array<String?>) {
+                NSLog("set tag \(String(describing: tgs))")
         }
 
         public func tagLabels(level lvl: Int) -> Array<String>? {
@@ -131,11 +133,11 @@ public class TSBrowserController
         }
 
         private func keywordQueries() -> String? {
-                return queryString(operator: "q", contents: self.parameters.keyword)
+                return queryString(operator: "q", contents: mKeyword)
         }
 
         private func siteQueries() -> String?{
-                guard let cat = self.parameters.category else {
+                guard let cat = mCategory else {
                         return nil      // no sepecific site definition
                 }
                 guard let sites = siteTable.selectByCategory(category: cat) else {
@@ -160,7 +162,7 @@ public class TSBrowserController
         }
 
         private func languageQueries() -> String? {
-                if let targetlang = self.parameters.language {
+                if let targetlang = mLanguage {
                         return "lr=lang_\(targetlang.query)"
                 } else {
                         return nil
@@ -168,12 +170,13 @@ public class TSBrowserController
         }
 
         private func limitDateQueries() -> String? {
+                guard let limitdate = mLimitDate else {
+                        return nil
+                }
                 let result: String?
                 let calendar = Calendar.current
                 let today    = Date()
-                switch self.parameters.limitDate {
-                case .none:
-                        result = nil
+                switch limitdate {
                 case .before1day:
                         let targ = calendar.date(byAdding: .day, value: -1, to: today)
                         result = dateToString(date: targ, calendar: calendar)
