@@ -10,26 +10,83 @@ import Foundation
 
 public class TSBrowserController
 {
-        public var siteTable:          TSSiteTable
+        public static let MAX_TAG_NUM  = 3
+
+        public var siteTable:           TSSiteTable
         public var parameters:          TSSearchParameters
+
         private var mEngineURL:         URL?
+        private var mTagLabels:         Array<Array<String>>
 
         public init() {
                 siteTable       = TSSiteTable()
                 parameters      = TSSearchParameters()
                 mEngineURL      = URL(string: "https://www.google.com/search?")
+
+                mTagLabels = []
+                for _ in 0..<TSBrowserController.MAX_TAG_NUM {
+                        mTagLabels.append([])
+                }
+        }
+
+        public func set(keyword str: String) {
+                if self.parameters.keyword != str {
+                        parameters.keyword = str
+                }
         }
 
         public func set(language lang: TSLanguage?) {
-                parameters.language = lang
+                if self.parameters.language != lang {
+                        parameters.language = lang
+                }
         }
 
         public func set(limitDate ldate: TSLimitedDate?){
-                self.parameters.limitDate = ldate
+                if self.parameters.limitDate != ldate {
+                        self.parameters.limitDate = ldate
+                }
         }
 
         public func set(category cat: String?){
-                self.parameters.category = cat
+                if self.parameters.category != cat {
+                        collectTagLabels(category: cat)
+                        self.parameters.category = cat  // send notification
+                }
+        }
+
+        public func tagLabels(level lvl: Int) -> Array<String>? {
+                if 0<=lvl && lvl < mTagLabels.count {
+                        if mTagLabels[lvl].count > 0 {
+                                return mTagLabels[lvl]
+                        } else {
+                                return nil
+                        }
+                } else {
+                        return nil
+                }
+        }
+
+        private func collectTagLabels(category cat: String?) {
+                /* Update tag 0 */
+                if let str = cat {
+                        if let sites = siteTable.selectByCategory(category: str) {
+                                mTagLabels[0] = collectTags(in: sites)
+                        } else {
+                                mTagLabels[0] = []
+                        }
+                } else {
+                        mTagLabels[0] = []
+                }
+        }
+
+        private func collectTags(in sites: Array<TSSite>) -> Array<String> {
+                var result: Set<String> = []
+                for site in sites {
+                        for tag in site.tags {
+                                result.insert(tag)
+                        }
+                }
+                return Array(result.sorted())
         }
 
         public func URLToLaunchBrowser() -> URL? {

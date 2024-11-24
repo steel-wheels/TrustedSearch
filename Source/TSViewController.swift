@@ -10,7 +10,7 @@ import Foundation
 
 class TSViewController: MIViewController
 {
-        private static let MAX_TAG_NUM         = 3
+        public static let MAX_TAG_NUM = TSBrowserController.MAX_TAG_NUM
 
         private var mRootView:          MIStack?                = nil
         private var mKeywordField:      MITextField?            = nil
@@ -88,7 +88,7 @@ class TSViewController: MIViewController
                 keywordfield.placeholderString = "Keywords to search"
                 keywordfield.setCallback({
                         (_ str: String) -> Void in
-                        self.mBrowserController.parameters.keyword = str
+                        self.mBrowserController.set(keyword: str)
                 })
                 return keywordfield
         }
@@ -161,7 +161,7 @@ class TSViewController: MIViewController
 
         private func makeTagMenus() -> Array<MIPopupMenu> {
                 let mitems: Array<MIPopupMenu.MenuItem> = [
-                        MIPopupMenu.MenuItem(menuId: 0, title: "All")
+                        MIPopupMenu.MenuItem(menuId: 0, title: "None")
                 ]
                 var result: Array<MIPopupMenu> = []
                 for _ in 0..<TSViewController.MAX_TAG_NUM {
@@ -206,7 +206,11 @@ class TSViewController: MIViewController
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        self.keywordIsUpdated(self.mBrowserController.parameters.keyword)
+                        let parameters = self.mBrowserController.parameters
+                        let keyword    = parameters.keyword
+                        let category   = parameters.category
+                        self.keywordIsUpdated(keyword: keyword)
+                        self.categoryIsUpdated(category: category)
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.tracking()
@@ -214,9 +218,23 @@ class TSViewController: MIViewController
                 }
         }
 
-        private func keywordIsUpdated(_ str: String) {
+        private func keywordIsUpdated(keyword str: String) {
                 if let button = mSearchButton {
                         button.isEnabled = !str.isEmpty
+                }
+        }
+
+        private func categoryIsUpdated(category str: String?) {
+                if let labels = self.mBrowserController.tagLabels(level: 0) {
+                        var mitems: Array<MIPopupMenu.MenuItem> = []
+                        mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "None"))
+                        for i in 0..<labels.count {
+                                mitems.append(MIPopupMenu.MenuItem(menuId: 1+i, title: labels[i]))
+                        }
+                        mTagMenus[0].setMenuItems(items: mitems)
+                        mTagMenus[0].setEnable(true)
+                } else {
+                        mTagMenus[0].setEnable(false)
                 }
         }
 }

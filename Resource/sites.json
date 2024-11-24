@@ -1,8 +1,8 @@
 [
   {
-    category:	"Internet",
+    category:	"Weather",
     tags: [
-	"Google API"
+	"weather report"
     ],
     sites: [
 	"https://serpapi.com"
@@ -23,7 +23,7 @@
   {
     category:	"Software",
     tags: [
-	"Programming", "macOS", "iOS"
+	"programming", "macOS", "iOS"
     ],
     sites: [
 	"https://developer.apple.com/",
@@ -34,7 +34,7 @@
   {
     category:	"Software",
     tags: [
-	"TypeScript", "Programming", "Language"
+	"typescript", "programming", "language"
     ],
     sites: [
 	"https://basarat.gitbook.io/typescript",
