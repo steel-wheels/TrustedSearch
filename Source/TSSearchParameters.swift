@@ -10,16 +10,24 @@ import Foundation
 
 @Observable final public class TSSearchParameters
 {
+        public static let MAX_TAG_NUM  = 3
+        
         public var keyword      : String
         public var language     : TSLanguage?
         public var limitDate    : TSLimitedDate?
         public var category     : String?
+        public var tags         : Array<String?>
 
         public init() {
                 self.keyword    = ""
                 self.language   = nil
                 self.limitDate  = nil
                 self.category   = nil
+
+                tags = []
+                for _ in 0..<TSSearchParameters.MAX_TAG_NUM {
+                        tags.append(nil)
+                }
         }
 }
 

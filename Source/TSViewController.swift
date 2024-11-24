@@ -164,9 +164,26 @@ class TSViewController: MIViewController
                         MIPopupMenu.MenuItem(menuId: 0, title: "None")
                 ]
                 var result: Array<MIPopupMenu> = []
-                for _ in 0..<TSViewController.MAX_TAG_NUM {
+                for taglvl in 0..<TSViewController.MAX_TAG_NUM {
                         let tagmenu = MIPopupMenu()
                         tagmenu.setMenuItems(items: mitems)
+                        tagmenu.setCallback({
+                                (_ menuId: Int) -> Void in
+                                if menuId > 0 {
+                                        let tagid = menuId - 1
+                                        if let labs = self.mBrowserController.tagLabels(level: taglvl) {
+                                                if 0<=tagid && tagid < labs.count {
+                                                        self.mBrowserController.set(level: taglvl, tag: labs[tagid])
+                                                } else {
+                                                        NSLog("can not happen at \(#function)")
+                                                }
+                                        } else {
+                                                self.mBrowserController.set(level: taglvl, tag: nil)
+                                        }
+                                } else {
+                                        self.mBrowserController.set(level: taglvl, tag: nil)
+                                }
+                        })
                         tagmenu.setEnable(false)
                         result.append(tagmenu)
                 }

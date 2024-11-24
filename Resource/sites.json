@@ -5,7 +5,7 @@
 	"weather report"
     ],
     sites: [
-	"https://serpapi.com"
+	"https://tenki.jp"
     ]
   }
   {

@@ -10,7 +10,7 @@ import Foundation
 
 public class TSBrowserController
 {
-        public static let MAX_TAG_NUM  = 3
+        public static let MAX_TAG_NUM = TSSearchParameters.MAX_TAG_NUM
 
         public var siteTable:           TSSiteTable
         public var parameters:          TSSearchParameters
@@ -52,6 +52,10 @@ public class TSBrowserController
                         collectTagLabels(category: cat)
                         self.parameters.category = cat  // send notification
                 }
+        }
+
+        public func set(level lvl: Int, tag t: String?) {
+                NSLog("set tag \(String(describing: t)) for level \(lvl)")
         }
 
         public func tagLabels(level lvl: Int) -> Array<String>? {
