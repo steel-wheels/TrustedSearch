@@ -10,11 +10,14 @@ import Foundation
 
 class TSViewController: MIViewController
 {
+        private static let MAX_TAG_NUM         = 3
+
         private var mRootView:          MIStack?                = nil
         private var mKeywordField:      MITextField?            = nil
         private var mLanguageMenu:      MIPopupMenu?            = nil
         private var mDateMenu:          MIPopupMenu?            = nil
         private var mCategoryMenu:      MIPopupMenu?            = nil
+        private var mTagMenus:          Array<MIPopupMenu>      = []
         private var mSearchButton:      MIButton?               = nil
 
         private var mBrowserController  = TSBrowserController()
@@ -58,11 +61,17 @@ class TSViewController: MIViewController
                 let datebox = makeLabeledStack(label: "Limit date", content: datemenu)
                 root.addArrangedSubView(datebox)
 
-                /* categorized site menu */
+                /* category site menu */
                 let catmenu = makeCategoryeMenu()
                 mCategoryMenu = catmenu
                 let catbox = makeLabeledStack(label: "Category", content: catmenu)
                 root.addArrangedSubView(catbox)
+
+                /* tags menu */
+                let tagmenus = makeTagMenus()
+                mTagMenus    = tagmenus
+                let tagsbox  = makeLabeledStack(label: "Tags", contents: tagmenus)
+                root.addArrangedSubView(tagsbox)
 
                 /* search button */
                 let searchbutton = MIButton()
@@ -150,6 +159,20 @@ class TSViewController: MIViewController
                 return catmenu
         }
 
+        private func makeTagMenus() -> Array<MIPopupMenu> {
+                let mitems: Array<MIPopupMenu.MenuItem> = [
+                        MIPopupMenu.MenuItem(menuId: 0, title: "All")
+                ]
+                var result: Array<MIPopupMenu> = []
+                for _ in 0..<TSViewController.MAX_TAG_NUM {
+                        let tagmenu = MIPopupMenu()
+                        tagmenu.setMenuItems(items: mitems)
+                        tagmenu.setEnable(false)
+                        result.append(tagmenu)
+                }
+                return result
+        }
+
         private func makeLabeledStack(label labstr: String, content cont: MIInterfaceView) -> MIStack {
                 let newbox = MIStack()
                 newbox.axis = .horizontal
@@ -157,6 +180,18 @@ class TSViewController: MIViewController
                 label.title = labstr
                 newbox.addArrangedSubView(label)
                 newbox.addArrangedSubView(cont)
+                return newbox
+        }
+
+        private func makeLabeledStack(label labstr: String, contents conts: Array<MIInterfaceView>) -> MIStack {
+                let newbox = MIStack()
+                newbox.axis = .horizontal
+                let label = MILabel()
+                label.title = labstr
+                newbox.addArrangedSubView(label)
+                for cont in conts {
+                        newbox.addArrangedSubView(cont)
+                }
                 return newbox
         }
 
