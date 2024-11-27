@@ -23,6 +23,8 @@
 		0548501F2CE755980060AEA0 /* TSSiteTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSSiteTable.swift */; };
 		05CC32812CDFA67100978FF6 /* TSTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSTypes.swift */; };
 		05CC32822CDFA67100978FF6 /* TSTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSTypes.swift */; };
+		05E1B0BF2CF4B026009F23ED /* TSControlParametrers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1B0BE2CF4B026009F23ED /* TSControlParametrers.swift */; };
+		05E1B0C02CF4B026009F23ED /* TSControlParametrers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1B0BE2CF4B026009F23ED /* TSControlParametrers.swift */; };
 		05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */; };
 		05F04E0D2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */; };
 /* End PBXBuildFile section */
@@ -83,6 +85,7 @@
 		0548501D2CE755980060AEA0 /* TSSiteTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSiteTable.swift; sourceTree = "<group>"; };
 		05780E842CDBA8E5003C03E6 /* TrustedSearch_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CC32802CDFA67100978FF6 /* TSTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSTypes.swift; sourceTree = "<group>"; };
+		05E1B0BE2CF4B026009F23ED /* TSControlParametrers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSControlParametrers.swift; sourceTree = "<group>"; };
 		05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSBrowserController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				050DA1D32CDD09C3006E0EDD /* TSViewController.swift */,
+				05E1B0BE2CF4B026009F23ED /* TSControlParametrers.swift */,
 				05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */,
 				05CC32802CDFA67100978FF6 /* TSTypes.swift */,
 				0548501D2CE755980060AEA0 /* TSSiteTable.swift */,
@@ -298,6 +302,7 @@
 			files = (
 				05CC32812CDFA67100978FF6 /* TSTypes.swift in Sources */,
 				050DA1D42CDD09C3006E0EDD /* TSViewController.swift in Sources */,
+				05E1B0C02CF4B026009F23ED /* TSControlParametrers.swift in Sources */,
 				0548501F2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
 				05F04E0D2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,
 			);
@@ -308,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05CC32822CDFA67100978FF6 /* TSTypes.swift in Sources */,
+				05E1B0BF2CF4B026009F23ED /* TSControlParametrers.swift in Sources */,
 				0548501E2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
 				05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,
 				050DA1D52CDD09C3006E0EDD /* TSViewController.swift in Sources */,

@@ -8,31 +8,6 @@
 import MultiUIKit
 import Foundation
 
-@Observable final public class TSControlrameters
-{
-        public static let MAX_TAG_NUM  = TSBrowserController.MAX_TAG_NUM
-
-        public var keyword      : String
-        public var language     : TSLanguage?
-        public var limitDate    : TSLimitedDate?
-        public var category     : String?
-        public var tags         : Array<String?>
-        
-        public init() {
-                self.keyword    = ""
-                self.language   = nil
-                self.limitDate  = nil
-                self.category   = nil
-
-                var tgs :Array<String?> = []
-                for _ in 0 ..< TSControlrameters.MAX_TAG_NUM {
-                        tgs.append(nil)
-                }
-                self.tags       = tgs
-
-        }
-}
-
 class TSViewController: MIViewController
 {
         public static let MAX_TAG_NUM = TSBrowserController.MAX_TAG_NUM
@@ -45,7 +20,6 @@ class TSViewController: MIViewController
         private var mTagMenus:          Array<MIPopupMenu>      = []
         private var mSearchButton:      MIButton?               = nil
 
-        private var mControlParameters  = TSControlrameters()
         private var mBrowserController  = TSBrowserController()
 
         public func setRootView(_ root: MIStack) {
@@ -69,7 +43,7 @@ class TSViewController: MIViewController
                 trackKeyword()
                 trackLanguage()
                 trackCategory()
-                trackTags()
+                trackTag0Label()
         }
 
         private func makeContents(rootView root: MIStack) {
@@ -117,7 +91,7 @@ class TSViewController: MIViewController
                 keywordfield.placeholderString = "Keywords to search"
                 keywordfield.setCallback({
                         (_ str: String) -> Void in
-                        self.mControlParameters.keyword = str
+                        self.mBrowserController.controlParameters.keyword = str
                 })
                 return keywordfield
         }
@@ -135,7 +109,7 @@ class TSViewController: MIViewController
                 langmenu.setCallback({
                         (_ menuid: Int) -> Void in
                         let lang = TSLanguage(rawValue: menuid)
-                        self.mControlParameters.language = lang
+                        self.mBrowserController.controlParameters.language = lang
                 })
                 return langmenu
         }
@@ -177,7 +151,7 @@ class TSViewController: MIViewController
                         if menuId > 0 {
                                 let catid = menuId - 1
                                 if 0<=catid && catid < catnames.count {
-                                        self.mControlParameters.category = catnames[catid]
+                                        self.mBrowserController.controlParameters.category = catnames[catid]
                                 } else {
                                         NSLog("can not happen at \(#function)")
                                 }
@@ -193,24 +167,16 @@ class TSViewController: MIViewController
                         MIPopupMenu.MenuItem(menuId: 0, title: "None")
                 ]
                 var result: Array<MIPopupMenu> = []
-                for taglvl in 0..<TSViewController.MAX_TAG_NUM {
+                for tagid in 0..<TSViewController.MAX_TAG_NUM {
                         let tagmenu = MIPopupMenu()
                         tagmenu.setMenuItems(items: mitems)
                         tagmenu.setCallback({
                                 (_ menuId: Int) -> Void in
                                 if menuId > 0 {
-                                        let tagid = menuId - 1
-                                        if let labs = self.mBrowserController.tagLabels(level: taglvl) {
-                                                if 0<=tagid && tagid < labs.count {
-                                                        self.mControlParameters.tags[taglvl] = labs[tagid]
-                                                } else {
-                                                        NSLog("can not happen at \(#function)")
-                                                }
-                                        } else {
-                                                self.mControlParameters.tags[taglvl] = nil
-                                        }
+                                        let tag = tagmenu.selectedTitle()
+                                        self.mBrowserController.set(tag: tag, at: tagid)
                                 } else {
-                                        self.mControlParameters.tags[taglvl] = nil
+                                        self.mBrowserController.set(tag: nil, at: tagid)
                                 }
                         })
                         tagmenu.setEnable(false)
@@ -252,7 +218,7 @@ class TSViewController: MIViewController
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        let keyword = mControlParameters.keyword
+                        let keyword = mBrowserController.controlParameters.keyword
                         /* Update search button */
                         if let button = mSearchButton {
                                 button.isEnabled = !keyword.isEmpty
@@ -271,7 +237,7 @@ class TSViewController: MIViewController
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        let lang = mControlParameters.language
+                        let lang = mBrowserController.controlParameters.language
                         /* Set to browser controller */
                         self.mBrowserController.set(language: lang)
                 } onChange: {
@@ -286,11 +252,9 @@ class TSViewController: MIViewController
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        let category = mControlParameters.category
+                        let category = mBrowserController.controlParameters.category
                         /* Set to browser controller */
                         self.mBrowserController.set(category: category)
-                        /* Update tag menu */
-                        self.updateFirstTag(forCategory: category)
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackCategory()
@@ -298,33 +262,34 @@ class TSViewController: MIViewController
                 }
         }
 
-        /* Track string in mTagMenus */
-        private func trackTags() {
+        private func trackTag0Label() {
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        let tags = mControlParameters.tags
-                        /* Set to browser controller */
-                        self.mControlParameters.tags = tags
+                        let tag0Labels = mBrowserController.controlParameters.tag0Labels
+                        /* erace current setting */
+                        self.mBrowserController.set(tag: nil, at: 0)
+                        /* Update tag0 menu */
+                        let tag0items = allocateTagMenuItems(tags: tag0Labels)
+                        mTagMenus[0].setMenuItems(items: tag0items)
+                        mTagMenus[0].setEnable(tag0items.count > 1)
                 } onChange: {
                         DispatchQueue.main.async {
-                                self.trackTags()
+                                self.trackTag0Label()
                         }
                 }
         }
 
-        private func updateFirstTag(forCategory str: String?) {
-                if let labels = self.mBrowserController.tagLabels(level: 0) {
-                        var mitems: Array<MIPopupMenu.MenuItem> = []
-                        mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "None"))
-                        for i in 0..<labels.count {
-                                mitems.append(MIPopupMenu.MenuItem(menuId: 1+i, title: labels[i]))
-                        }
-                        mTagMenus[0].setMenuItems(items: mitems)
-                        mTagMenus[0].setEnable(true)
-                } else {
-                        mTagMenus[0].setEnable(false)
+        private func allocateTagMenuItems(tags tgs: Array<String>) -> Array<MIPopupMenu.MenuItem> {
+                var tagitems: Array<MIPopupMenu.MenuItem> = [
+                        MIPopupMenu.MenuItem(menuId: 0, title: "None")
+                ]
+                var tagid = 1
+                for tag in tgs {
+                        tagitems.append(MIPopupMenu.MenuItem(menuId: tagid, title: tag))
+                        tagid += 1
                 }
+                return tagitems
         }
 }
 

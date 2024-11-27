@@ -10,33 +10,29 @@ import Foundation
 
 public class TSBrowserController
 {
-        public static let MAX_TAG_NUM = 3
+        public static let MAX_TAG_NUM = TSControlrameters.MAX_TAG_NUM
 
         public var siteTable:           TSSiteTable
+        public var controlParameters:   TSControlrameters
 
         private var mKeyword:           String
         private var mLanguage:          TSLanguage?
         private var mLimitDate:         TSLimitedDate?
         private var mTags:              Array<String?>
-
-        private var mEngineURL:         URL?
-        private var mTagLabels:         Array<Array<String>>
         private var mCategory:          String?
 
+        private var mEngineURL:         URL?
+
         public init() {
-                siteTable       = TSSiteTable()
-                mEngineURL      = URL(string: "https://www.google.com/search?")
+                siteTable               = TSSiteTable()
+                controlParameters       = TSControlrameters()
+                mEngineURL              = URL(string: "https://www.google.com/search?")
 
                 mKeyword        = ""
                 mLanguage       = nil
                 mLimitDate      = nil
                 mCategory       = nil
-                mTags           = []
-
-                mTagLabels = []
-                for _ in 0..<TSBrowserController.MAX_TAG_NUM {
-                        mTagLabels.append([])
-                }
+                mTags           = Array(repeating: nil, count: TSBrowserController.MAX_TAG_NUM)
         }
 
         public func set(keyword str: String) {
@@ -52,44 +48,35 @@ public class TSBrowserController
         }
 
         public func set(category cat: String?){
-                collectTagLabels(category: cat)
                 mCategory = cat
-        }
 
-        public func set(tags tgs: Array<String?>) {
-                NSLog("set tag \(String(describing: tgs))")
-        }
-
-        public func tagLabels(level lvl: Int) -> Array<String>? {
-                if 0<=lvl && lvl < mTagLabels.count {
-                        if mTagLabels[lvl].count > 0 {
-                                return mTagLabels[lvl]
+                /* set tag0 menu */
+                if let cat = cat {
+                        if let sites = siteTable.selectByCategory(category: cat) {
+                                controlParameters.tag0Labels = collectTags(inSites: sites, byCategory: cat)
                         } else {
-                                return nil
+                                controlParameters.tag0Labels = []
                         }
                 } else {
-                        return nil
+                        controlParameters.tag0Labels = []
                 }
         }
 
-        private func collectTagLabels(category cat: String?) {
-                /* Update tag 0 */
-                if let str = cat {
-                        if let sites = siteTable.selectByCategory(category: str) {
-                                mTagLabels[0] = collectTags(in: sites)
-                        } else {
-                                mTagLabels[0] = []
-                        }
+        public func set(tag tg: String?, at index: Int){
+                if 0<=index && index<mTags.count {
+                        mTags[index] = tg
                 } else {
-                        mTagLabels[0] = []
+                        NSLog("[Error] invalid tag index: \(index)")
                 }
         }
 
-        private func collectTags(in sites: Array<TSSite>) -> Array<String> {
+        private func collectTags(inSites sites: Array<TSSite>, byCategory cat: String) -> Array<String> {
                 var result: Set<String> = []
                 for site in sites {
-                        for tag in site.tags {
-                                result.insert(tag)
+                        if site.category == cat {
+                                for tag in site.tags {
+                                        result.insert(tag)
+                                }
                         }
                 }
                 return Array(result.sorted())
