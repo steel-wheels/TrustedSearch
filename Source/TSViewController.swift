@@ -10,8 +10,6 @@ import Foundation
 
 class TSViewController: MIViewController
 {
-        public static let MAX_TAG_NUM = TSBrowserController.MAX_TAG_NUM
-
         private var mRootView:          MIStack?                = nil
         private var mKeywordField:      MITextField?            = nil
         private var mLanguageMenu:      MIPopupMenu?            = nil
@@ -44,6 +42,8 @@ class TSViewController: MIViewController
                 trackLanguage()
                 trackCategory()
                 trackTag0Label()
+                trackTag1Label()
+                trackTag2Label()
         }
 
         private func makeContents(rootView root: MIStack) {
@@ -167,7 +167,7 @@ class TSViewController: MIViewController
                         MIPopupMenu.MenuItem(menuId: 0, title: "None")
                 ]
                 var result: Array<MIPopupMenu> = []
-                for tagid in 0..<TSViewController.MAX_TAG_NUM {
+                for tagid in 0..<TSControlrameters.MAX_TAG_NUM {
                         let tagmenu = MIPopupMenu()
                         tagmenu.setMenuItems(items: mitems)
                         tagmenu.setCallback({
@@ -276,6 +276,42 @@ class TSViewController: MIViewController
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackTag0Label()
+                        }
+                }
+        }
+
+        private func trackTag1Label() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        let tag1Labels = mBrowserController.controlParameters.tag1Labels
+                        /* erace current setting */
+                        self.mBrowserController.set(tag: nil, at: 1)
+                        /* Update tag0 menu */
+                        let tag1items = allocateTagMenuItems(tags: tag1Labels)
+                        mTagMenus[1].setMenuItems(items: tag1items)
+                        mTagMenus[1].setEnable(tag1items.count > 1)
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackTag1Label()
+                        }
+                }
+        }
+
+        private func trackTag2Label() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        let tag2Labels = mBrowserController.controlParameters.tag2Labels
+                        /* erace current setting */
+                        self.mBrowserController.set(tag: nil, at: 2)
+                        /* Update tag0 menu */
+                        let tag2items = allocateTagMenuItems(tags: tag2Labels)
+                        mTagMenus[2].setMenuItems(items: tag2items)
+                        mTagMenus[2].setEnable(tag2items.count > 1)
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackTag1Label()
                         }
                 }
         }

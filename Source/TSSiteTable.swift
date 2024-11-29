@@ -18,6 +18,24 @@ public class TSSite {
                 self.tags     = tgs
                 self.URLs     = urls
         }
+
+        public func hasTag(tag src: String) -> Bool {
+                for tag in tags {
+                        if tag == src {
+                                return true
+                        }
+                }
+                return false
+        }
+
+        public func hasAllTags(tags srcs: Array<String>) -> Bool {
+                for src in srcs {
+                        if !hasTag(tag: src) {
+                                return false
+                        }
+                }
+                return true
+        }
 }
 
 public class TSSiteTable
@@ -34,21 +52,6 @@ public class TSSiteTable
 
         public func selectByCategory(category cat: String) -> Array<TSSite>? {
                 return mSiteTable[cat]
-        }
-
-        public func selectByCategory(categoryName catname: String) -> Array<URL> {
-                var result: Array<URL> = []
-                if let cats = mSiteTable[catname] {
-                        for cat in cats {
-                                for url in cat.URLs {
-                                        //NSLog("select \(site.absoluteString)")
-                                        result.append(url)
-                                }
-                        }
-                } else {
-                        NSLog("[Error] Unknown category: \(catname)")
-                }
-                return result
         }
 
         public func load()  {

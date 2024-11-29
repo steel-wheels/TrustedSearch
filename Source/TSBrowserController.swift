@@ -10,8 +10,6 @@ import Foundation
 
 public class TSBrowserController
 {
-        public static let MAX_TAG_NUM = TSControlrameters.MAX_TAG_NUM
-
         public var siteTable:           TSSiteTable
         public var controlParameters:   TSControlrameters
 
@@ -21,18 +19,15 @@ public class TSBrowserController
         private var mTags:              Array<String?>
         private var mCategory:          String?
 
-        private var mEngineURL:         URL?
-
         public init() {
                 siteTable               = TSSiteTable()
                 controlParameters       = TSControlrameters()
-                mEngineURL              = URL(string: "https://www.google.com/search?")
 
                 mKeyword        = ""
                 mLanguage       = nil
                 mLimitDate      = nil
                 mCategory       = nil
-                mTags           = Array(repeating: nil, count: TSBrowserController.MAX_TAG_NUM)
+                mTags           = Array(repeating: nil, count: TSControlrameters.MAX_TAG_NUM)
         }
 
         public func set(keyword str: String) {
@@ -53,64 +48,88 @@ public class TSBrowserController
                 /* set tag0 menu */
                 if let cat = cat {
                         if let sites = siteTable.selectByCategory(category: cat) {
-                                controlParameters.tag0Labels = collectTags(inSites: sites, byCategory: cat)
+                                controlParameters.tag0Labels = collectTags(inSites: sites, byCategory: cat, andTags: [])
                         } else {
                                 controlParameters.tag0Labels = []
                         }
                 } else {
-                        controlParameters.tag0Labels = []
+                        for i in 0..<TSControlrameters.MAX_TAG_NUM {
+                                controlParameters.setTagLabels(index: i, labels: [])
+                        }
                 }
         }
 
         public func set(tag tg: String?, at index: Int){
-                if 0<=index && index<mTags.count {
-                        mTags[index] = tg
-                } else {
+                guard 0<=index && index<mTags.count else {
                         NSLog("[Error] invalid tag index: \(index)")
+                        return
+                }
+                mTags[index] = tg
+
+                let nextidx = index + 1
+                if let _ = tg {
+                        if let cat = mCategory, nextidx < TSControlrameters.MAX_TAG_NUM {
+                                if let sites = siteTable.selectByCategory(category: cat) {
+                                        var curtags: Array<String> = []
+                                        for i in 0..<nextidx {
+                                                if let tag = mTags[i] {
+                                                        curtags.append(tag)
+                                                }
+                                        }
+                                        let labs = collectTags(inSites: sites, byCategory: cat, andTags: curtags)
+                                        controlParameters.setTagLabels(index: nextidx, labels: labs)
+                                } else {
+                                        controlParameters.setTagLabels(index: nextidx, labels: [])
+                                }
+                        }
+                } else {
+                        for i in nextidx..<TSControlrameters.MAX_TAG_NUM {
+                                controlParameters.setTagLabels(index: i, labels: [])
+                        }
                 }
         }
 
-        private func collectTags(inSites sites: Array<TSSite>, byCategory cat: String) -> Array<String> {
+        private func collectTags(inSites sites: Array<TSSite>, byCategory cat: String, andTags srctags: Array<String>) -> Array<String> {
                 var result: Set<String> = []
                 for site in sites {
                         if site.category == cat {
-                                for tag in site.tags {
-                                        result.insert(tag)
+                                if site.hasAllTags(tags: srctags) {
+                                        for tag in site.tags {
+                                                result.insert(tag)
+                                        }
                                 }
                         }
+                }
+                for tag in srctags {
+                        result.remove(tag)
                 }
                 return Array(result.sorted())
         }
 
         public func URLToLaunchBrowser() -> URL? {
-                guard let base = mEngineURL else {
-                        return nil
-                }
-                var queries: Array<String> = []
+                var queries: Array<TSQuery> = []
 
                 /* Add keywords */
-                if let query = keywordQueries() {
-                        queries.append(query)
-                }
+                let query = keywordQueries()
+                queries.append(query)
 
                 /* Add sites */
-                if let query = siteQueries() {
-                        queries.append(query)
+                if let q = siteQueries() {
+                        queries.append(q)
                 }
 
                 /* Add language */
-                if let query = languageQueries() {
-                        queries.append(query)
+                if let q = languageQuery() {
+                        queries.append(q)
                 }
 
                 /* Add limit date */
-                if let query = limitDateQueries() {
-                        queries.append(query)
+                if let q = limitDateQueries() {
+                        queries.append(q)
                 }
 
                 /* make quesry string */
-                let qstr   = queries.joined(separator: "&")
-                let result = base.absoluteString + qstr
+                let result = TSQuery.queriesToString(queries: queries)
                 NSLog("query string =\(result)")
                 return URL(string: result)
         }
@@ -119,71 +138,55 @@ public class TSBrowserController
                 return "\(op)=\"" + cont + "\""
         }
 
-        private func keywordQueries() -> String? {
-                return queryString(operator: "q", contents: mKeyword)
+        private func keywordQueries() -> TSQuery {
+                return .keyword(mKeyword)
         }
 
-        private func siteQueries() -> String?{
+        private func siteQueries() -> TSQuery? {
                 guard let cat = mCategory else {
                         return nil      // no sepecific site definition
                 }
-                guard let sites = siteTable.selectByCategory(category: cat) else {
+                guard let sites0 = siteTable.selectByCategory(category: cat) else {
                         return nil      // no specific sites
+                }
 
+                var curtags: Array<String> = []
+                for i in 0..<TSControlrameters.MAX_TAG_NUM {
+                        if let tag = mTags[i] {
+                                curtags.append(tag)
+                        }
+                }
+                var sites1: Array<TSSite> = []
+                for site in sites0 {
+                        if site.hasAllTags(tags: curtags) {
+                                sites1.append(site)
+                        }
+                }
+
+                if sites1.count == 0 {
+                        NSLog("[Error] No sites")
                 }
 
                 var URLs: Set<URL> = []
-                for site in sites {
+                for site in sites1 {
                         for url in site.URLs {
                                 URLs.insert(url)
                         }
                 }
-
-                var result: String = ""
-                var prefix: String = ""
-                for url in URLs {
-                        result += prefix + "site:" + url.absoluteString
-                        prefix = " OR "
-                }
-                return queryString(operator: "q", contents: result)
+                return .sites(Array(URLs))
         }
 
-        private func languageQueries() -> String? {
+        private func languageQuery() -> TSQuery? {
                 if let targetlang = mLanguage {
-                        return "lr=lang_\(targetlang.query)"
+                        return .languate(targetlang)
                 } else {
                         return nil
                 }
         }
 
-        private func limitDateQueries() -> String? {
-                guard let limitdate = mLimitDate else {
-                        return nil
-                }
-                let result: String?
-                let calendar = Calendar.current
-                let today    = Date()
-                switch limitdate {
-                case .before1day:
-                        let targ = calendar.date(byAdding: .day, value: -1, to: today)
-                        result = dateToString(date: targ, calendar: calendar)
-                case .before1month:
-                        let targ = calendar.date(byAdding: .month, value: -1, to: today)
-                        result = dateToString(date: targ, calendar: calendar)
-                case .before1year:
-                        let targ = calendar.date(byAdding: .year, value: -1, to: today)
-                        result = dateToString(date: targ, calendar: calendar)
-                }
-                return result
-        }
-
-        private func dateToString(date dt: Date?, calendar cal: Calendar) -> String? {
-                if let date = dt {
-                        let year  = cal.component(.year,  from: date)
-                        let month = cal.component(.month, from: date)
-                        let day   = cal.component(.day,   from: date)
-                        let str   = "after:\"\(year)/\(month)/\(day)\""
-                        return str
+        private func limitDateQueries() -> TSQuery? {
+                if let ldate = mLimitDate {
+                        return .limitedDate(ldate)
                 } else {
                         return nil
                 }

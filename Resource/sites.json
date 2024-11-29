@@ -21,18 +21,26 @@
     ]
   },
   {
-    category:	"Software",
+    category:	"Software Development",
     tags: [
-	"programming", "macOS", "iOS"
+	"macOS", "iOS", "Apple"
     ],
     sites: [
-	"https://developer.apple.com/",
+	"https://developer.apple.com/"
+    ]
+  },
+  {
+    category:	"Software Development",
+    tags: [
+	"macOS", "iOS", "Unix"
+    ],
+    sites: [
 	"https://github.com",
 	"https://qiita.com"
     ]
   },
   {
-    category:	"Software",
+    category:	"Programming",
     tags: [
 	"typescript", "programming", "language"
     ],

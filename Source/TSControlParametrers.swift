@@ -16,6 +16,8 @@ import Foundation
         public var limitDate    : TSLimitedDate?
         public var category     : String?
         public var tag0Labels   : Array<String>
+        public var tag1Labels   : Array<String>
+        public var tag2Labels   : Array<String>
 
         public init() {
                 self.keyword    = ""
@@ -23,5 +25,16 @@ import Foundation
                 self.limitDate  = nil
                 self.category   = nil
                 self.tag0Labels = []
+                self.tag1Labels = []
+                self.tag2Labels = []
+        }
+
+        public func setTagLabels(index idx: Int, labels labs: Array<String>) {
+                switch idx {
+                case 0: self.tag0Labels = labs
+                case 1: self.tag1Labels = labs
+                case 2: self.tag1Labels = labs
+                default: NSLog("[Error] Invalid index: \(idx)")
+                }
         }
 }
