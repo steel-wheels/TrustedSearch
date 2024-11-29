@@ -1,5 +1,27 @@
 [
   {
+    category:	"Company",
+    tags: [
+	"car"
+    ],
+    sites: [
+	"https://www.isuzu.co.jp",
+	"https://www.global-kawasaki-motors.com",
+	"https://www.globalsuzuki.com",
+	"https://www.subaru.co.jp",
+	"https://www.daihatsu.com/jp/",
+	"https://global.toyota/jp/",
+	"https://www.nissan-global.com/JP/",
+	"https://www.hino.co.jp",
+	"https://global.honda/jp/",
+	"https://www.mazda.com/ja/",
+	"https://www.mitsubishi-motors.com/jp/",
+	"https://www.mitsubishi-fuso.com/ja/",
+	"https://global.yamaha-motor.com/jp/",
+	"https://www.udtrucks.com/japan"
+    ]
+  },
+  {
     category:	"Weather",
     tags: [
 	"weather report"
@@ -36,13 +58,14 @@
     ],
     sites: [
 	"https://github.com",
-	"https://qiita.com"
+	"https://qiita.com",
+	"https://medium.com"
     ]
   },
   {
-    category:	"Programming",
+    category:	"Software Development",
     tags: [
-	"typescript", "programming", "language"
+	"typescript", "language"
     ],
     sites: [
 	"https://basarat.gitbook.io/typescript",
