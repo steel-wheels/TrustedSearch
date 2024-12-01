@@ -33,7 +33,7 @@ import Foundation
                 switch idx {
                 case 0: self.tag0Labels = labs
                 case 1: self.tag1Labels = labs
-                case 2: self.tag1Labels = labs
+                case 2: self.tag2Labels = labs
                 default: NSLog("[Error] Invalid index: \(idx)")
                 }
         }

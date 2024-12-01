@@ -45,12 +45,15 @@ public class TSBrowserController
         public func set(category cat: String?){
                 mCategory = cat
 
-                /* set tag0 menu */
+                /* update gag menus */
                 if let cat = cat {
                         if let sites = siteTable.selectByCategory(category: cat) {
                                 controlParameters.tag0Labels = collectTags(inSites: sites, byCategory: cat, andTags: [])
                         } else {
                                 controlParameters.tag0Labels = []
+                        }
+                        for i in 1..<TSControlrameters.MAX_TAG_NUM {
+                                controlParameters.setTagLabels(index: i, labels: [])
                         }
                 } else {
                         for i in 0..<TSControlrameters.MAX_TAG_NUM {
@@ -66,9 +69,14 @@ public class TSBrowserController
                 }
                 mTags[index] = tg
 
+                NSLog("set index: \(index), tag: \(String(describing: tg))")
+
                 let nextidx = index + 1
+                guard nextidx < TSControlrameters.MAX_TAG_NUM  else {
+                        return // needless opeate next tag
+                }
                 if let _ = tg {
-                        if let cat = mCategory, nextidx < TSControlrameters.MAX_TAG_NUM {
+                        if let cat = mCategory {
                                 if let sites = siteTable.selectByCategory(category: cat) {
                                         var curtags: Array<String> = []
                                         for i in 0..<nextidx {
@@ -83,9 +91,8 @@ public class TSBrowserController
                                 }
                         }
                 } else {
-                        for i in nextidx..<TSControlrameters.MAX_TAG_NUM {
-                                controlParameters.setTagLabels(index: i, labels: [])
-                        }
+                        /* clear next index */
+                        controlParameters.setTagLabels(index: nextidx, labels: [])
                 }
         }
 

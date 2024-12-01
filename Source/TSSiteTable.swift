@@ -55,25 +55,35 @@ public class TSSiteTable
         }
 
         public func load()  {
-                if let resdir = FileManager.default.resourceDirectory {
-                        let file = resdir.appendingPathComponent("sites.json")
-                        switch MIJsonFile.load(from: file) {
-                        case .success(let val):
-                                let table = load(file: val)
-                                for cat in table {
-                                        let catname = cat.category
-                                        if var cats = mSiteTable[catname] {
-                                                cats.append(cat)
-                                                mSiteTable[catname] = cats
-                                        } else {
-                                                mSiteTable[catname] = [cat]
-                                        }
-                                }
-                        case .failure(let err):
-                                NSLog(MIError.errorToString(error: err))
-                        }
-                } else {
+                guard let resdir = FileManager.default.resourceDirectory else {
                         let err = MIError.error(errorCode: .fileError, message: "No resource directory")
+                        NSLog(MIError.errorToString(error: err))
+                        return
+                }
+                let resfile = resdir.appendingPathComponent("sites.json")
+                let cachefile: URL
+                switch FileManager.default.createCacheFile(source: resfile) {
+                case .success(let cfile):
+                        NSLog("cache file = \(cfile.absoluteString)")
+                        cachefile = cfile
+                case .failure(let err):
+                        NSLog("[Error] \(MIError.errorToString(error: err))")
+                        return
+                }
+
+                switch MIJsonFile.load(from: cachefile) {
+                case .success(let val):
+                        let table = load(file: val)
+                        for cat in table {
+                                let catname = cat.category
+                                if var cats = mSiteTable[catname] {
+                                        cats.append(cat)
+                                        mSiteTable[catname] = cats
+                                } else {
+                                        mSiteTable[catname] = [cat]
+                                }
+                        }
+                case .failure(let err):
                         NSLog(MIError.errorToString(error: err))
                 }
         }

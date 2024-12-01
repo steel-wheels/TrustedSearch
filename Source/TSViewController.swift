@@ -179,7 +179,6 @@ class TSViewController: MIViewController
                                         self.mBrowserController.set(tag: nil, at: tagid)
                                 }
                         })
-                        tagmenu.setEnable(false)
                         result.append(tagmenu)
                 }
                 return result
@@ -266,13 +265,8 @@ class TSViewController: MIViewController
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        let tag0Labels = mBrowserController.controlParameters.tag0Labels
-                        /* erace current setting */
-                        self.mBrowserController.set(tag: nil, at: 0)
-                        /* Update tag0 menu */
-                        let tag0items = allocateTagMenuItems(tags: tag0Labels)
-                        mTagMenus[0].setMenuItems(items: tag0items)
-                        mTagMenus[0].setEnable(tag0items.count > 1)
+                        let labels = mBrowserController.controlParameters.tag0Labels
+                        trackTagLabel(tagId: 0, labels: labels)
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackTag0Label()
@@ -284,13 +278,8 @@ class TSViewController: MIViewController
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        let tag1Labels = mBrowserController.controlParameters.tag1Labels
-                        /* erace current setting */
-                        self.mBrowserController.set(tag: nil, at: 1)
-                        /* Update tag0 menu */
-                        let tag1items = allocateTagMenuItems(tags: tag1Labels)
-                        mTagMenus[1].setMenuItems(items: tag1items)
-                        mTagMenus[1].setEnable(tag1items.count > 1)
+                        let labels = mBrowserController.controlParameters.tag1Labels
+                        trackTagLabel(tagId: 1, labels: labels)
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackTag1Label()
@@ -302,18 +291,23 @@ class TSViewController: MIViewController
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        let tag2Labels = mBrowserController.controlParameters.tag2Labels
-                        /* erace current setting */
-                        self.mBrowserController.set(tag: nil, at: 2)
-                        /* Update tag0 menu */
-                        let tag2items = allocateTagMenuItems(tags: tag2Labels)
-                        mTagMenus[2].setMenuItems(items: tag2items)
-                        mTagMenus[2].setEnable(tag2items.count > 1)
+                        let labels = mBrowserController.controlParameters.tag2Labels
+                        trackTagLabel(tagId: 2, labels: labels)
                 } onChange: {
                         DispatchQueue.main.async {
-                                self.trackTag1Label()
+                                self.trackTag2Label()
                         }
                 }
+        }
+
+        private func trackTagLabel(tagId tid: Int, labels labs: Array<String>) {
+                NSLog("trackTagLabel tagid=\(tid). labels=\(labs)")
+                /* erace current setting */
+                self.mBrowserController.set(tag: nil, at: tid)
+                /* Update tag0 menu */
+                let tagitems = allocateTagMenuItems(tags: labs)
+                mTagMenus[tid].setMenuItems(items: tagitems)
+                //mTagMenus[tid].setEnable(tag0items.count > 1)
         }
 
         private func allocateTagMenuItems(tags tgs: Array<String>) -> Array<MIPopupMenu.MenuItem> {
