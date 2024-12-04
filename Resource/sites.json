@@ -22,15 +22,6 @@
     ]
   },
   {
-    category:	"Weather",
-    tags: [
-	"weather report"
-    ],
-    sites: [
-	"https://tenki.jp"
-    ]
-  }
-  {
     category:	"News",
     tags: [
 	"news"
@@ -59,6 +50,7 @@
     sites: [
 	"https://github.com",
 	"https://qiita.com",
+	"https://news.ycombinator.com",
 	"https://medium.com"
     ]
   },
@@ -70,6 +62,15 @@
     sites: [
 	"https://basarat.gitbook.io/typescript",
 	"https://typescript-jp.gitbook.io/deep-dive"
+    ]
+  },
+  {
+    category:	"Weather",
+    tags: [
+	"weather report"
+    ],
+    sites: [
+	"https://tenki.jp"
     ]
   },
   {
