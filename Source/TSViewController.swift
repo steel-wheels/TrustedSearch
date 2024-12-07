@@ -40,10 +40,14 @@ class TSViewController: MIViewController
                 /* repeat tracking */
                 trackKeyword()
                 trackLanguage()
+                trackAllCategories()
                 trackCategory()
                 trackTag0Label()
                 trackTag1Label()
                 trackTag2Label()
+
+                /* Update categories */
+                mBrowserController.controlParameters.allCategories = table.categoryNames
         }
 
         private func makeContents(rootView root: MIStack) {
@@ -134,30 +138,12 @@ class TSViewController: MIViewController
         }
 
         private func makeCategoryeMenu() -> MIPopupMenu {
-                let cattable = mBrowserController.siteTable
-                let catnames = cattable.categoryNames
-
+                let catmenu = MIPopupMenu()
                 var mitems: Array<MIPopupMenu.MenuItem> = []
                 mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
-                var idx = 1
-                for catname in catnames {
-                        mitems.append(MIPopupMenu.MenuItem(menuId: idx, title: catname))
-                        idx += 1
-                }
-                let catmenu = MIPopupMenu()
-                catmenu.setMenuItems(items: mitems)
                 catmenu.setCallback({
                         (_ menuId: Int) -> Void in
-                        if menuId > 0 {
-                                let catid = menuId - 1
-                                if 0<=catid && catid < catnames.count {
-                                        self.mBrowserController.controlParameters.category = catnames[catid]
-                                } else {
-                                        NSLog("can not happen at \(#function)")
-                                }
-                        } else {
-                                self.mBrowserController.set(category: nil)
-                        }
+                        self.mBrowserController.set(category: nil)
                 })
                 return catmenu
         }
@@ -242,6 +228,47 @@ class TSViewController: MIViewController
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackLanguage()
+                        }
+                }
+        }
+
+        /* Track string in mCategoryMenu */
+        private func trackAllCategories() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        let categories = mBrowserController.controlParameters.allCategories
+
+                        var mitems: Array<MIPopupMenu.MenuItem> = []
+                        mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
+                        var idx = 1
+                        for catname in categories {
+                                mitems.append(MIPopupMenu.MenuItem(menuId: idx, title: catname))
+                                idx += 1
+                        }
+                        if let catmenu = mCategoryMenu {
+                                catmenu.setMenuItems(items: mitems)
+                                catmenu.setCallback({
+                                        (_ menuId: Int) -> Void in
+                                        if menuId > 0 {
+                                                let catid = menuId - 1
+                                                if 0<=catid && catid < categories.count {
+                                                        self.mBrowserController.controlParameters.category = categories[catid]
+                                                } else {
+                                                        NSLog("can not happen at \(#function)")
+                                                }
+                                        } else {
+                                                self.mBrowserController.set(category: nil)
+                                        }
+                                })
+                        } else {
+                                NSLog("[Error] No category menu")
+                        }
+                        /* Unselect category menu */
+                        self.mBrowserController.set(category: nil)
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackAllCategories()
                         }
                 }
         }
