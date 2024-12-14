@@ -38,11 +38,13 @@ public class TSSite {
         }
 }
 
-public class TSSiteTable
+@globalActor public actor TSSiteTable
 {
+        public static let shared = TSSiteTable()
+
         private var mSiteTable: Dictionary<String, Array<TSSite>>
 
-        public init() {
+        private init() {
                 mSiteTable  = [:]
         }
 
@@ -71,108 +73,21 @@ public class TSSiteTable
                         return
                 }
 
-                switch MIJsonFile.load(from: cachefile) {
-                case .success(let val):
-                        let table = load(file: val)
-                        for cat in table {
-                                let catname = cat.category
-                                if var cats = mSiteTable[catname] {
-                                        cats.append(cat)
-                                        mSiteTable[catname] = cats
+                switch TSSiteLoader.load(file: cachefile) {
+                case .success(let newsites):
+                        for newsite in newsites {
+                                let catname = newsite.category
+                                if var cursites = mSiteTable[catname] {
+                                        cursites.append(newsite)
+                                        mSiteTable[catname] = cursites
                                 } else {
-                                        mSiteTable[catname] = [cat]
+                                        mSiteTable[catname] = [newsite]
                                 }
                         }
                 case .failure(let err):
-                        NSLog(MIError.errorToString(error: err))
+                        NSLog("[Error] \(MIError.errorToString(error: err))")
+                        return
                 }
-        }
-
-        private func load(file src: MIValue) -> Array<TSSite> {
-                var result: Array<TSSite> = []
-                switch src.value {
-                case .array(let arr):
-                        for elm in arr {
-                                switch elm.value {
-                                case .interface(let dict):
-                                        if let cat = load(element: dict) {
-                                                result.append(cat)
-                                        }
-                                default:
-                                        NSLog("[Error] category value is required")
-                                }
-                        }
-                default:
-                        NSLog("[Error] array of categories is required")
-                }
-                return result
-        }
-
-        private func load(element src: Dictionary<String, MIValue>) -> TSSite? {
-                var category:   String        = "?"
-                var tags:       Array<String> = []
-
-                var result = true
-                if let val = src["category"] {
-                        if let str = val.stringValue {
-                                category = str
-                        } else {
-                                NSLog("[Error] category string is required")
-                        }
-                } else {
-                        NSLog("[Error] category section is not exist")
-                }
-                if let val = src["tags"] {
-                        if let strs = load(strings: val) {
-                                tags.append(contentsOf: strs)
-                        } else {
-                                result = false
-                        }
-                } else {
-                        NSLog("[Error] Tag property is required")
-                        result = false
-                }
-                var URLs: Array<URL> = []
-                if let val = src["sites"] {
-                        if let strs = load(strings: val) {
-                                for str in strs {
-                                        if let url = URL(string: str) {
-                                                URLs.append(url)
-                                        } else {
-                                                NSLog("[Error] Invalid URL")
-                                        }
-                                }
-                        } else {
-                                result = false
-                        }
-                } else {
-                        NSLog("[Error] Sites property is required")
-                        result = false
-                }
-                if result {
-                        return TSSite(category: category, tags: tags, URLs: URLs)
-                } else {
-                        return nil
-                }
-        }
-
-        private func load(strings src: MIValue) -> Array<String>? {
-                var result: Array<String>? = nil
-                switch src.value {
-                case .array(let elms):
-                        var strings: Array<String> = []
-                        for elm in elms {
-                                if let str = elm.stringValue {
-                                        strings.append(str)
-                                } else {
-                                        NSLog("Array element must be strings")
-                                }
-                        }
-                        result = strings.count > 0 ? strings: nil
-                default:
-                        NSLog("Array of strings is required")
-                }
-                return result
         }
 
         public func dump() {

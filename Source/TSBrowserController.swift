@@ -10,7 +10,6 @@ import Foundation
 
 public class TSBrowserController
 {
-        public var siteTable:           TSSiteTable
         public var controlParameters:   TSControlrameters
 
         private var mKeyword:           String
@@ -20,7 +19,6 @@ public class TSBrowserController
         private var mCategory:          String?
 
         public init() {
-                siteTable               = TSSiteTable()
                 controlParameters       = TSControlrameters()
 
                 mKeyword        = ""
@@ -42,12 +40,12 @@ public class TSBrowserController
                 mLimitDate = ldate
         }
 
-        public func set(category cat: String?){
+        public func set(category cat: String?) async {
                 mCategory = cat
 
                 /* update gag menus */
                 if let cat = cat {
-                        if let sites = siteTable.selectByCategory(category: cat) {
+                        if let sites = await TSSiteTable.shared.selectByCategory(category: cat) {
                                 controlParameters.tag0Labels = collectTags(inSites: sites, byCategory: cat, andTags: [])
                         } else {
                                 controlParameters.tag0Labels = []
@@ -62,7 +60,7 @@ public class TSBrowserController
                 }
         }
 
-        public func set(tag tg: String?, at index: Int){
+        public func set(tag tg: String?, at index: Int) async {
                 guard 0<=index && index<mTags.count else {
                         NSLog("[Error] invalid tag index: \(index)")
                         return
@@ -77,7 +75,7 @@ public class TSBrowserController
                 }
                 if let _ = tg {
                         if let cat = mCategory {
-                                if let sites = siteTable.selectByCategory(category: cat) {
+                                if let sites = await TSSiteTable.shared.selectByCategory(category: cat) {
                                         var curtags: Array<String> = []
                                         for i in 0..<nextidx {
                                                 if let tag = mTags[i] {
@@ -113,7 +111,7 @@ public class TSBrowserController
                 return Array(result.sorted())
         }
 
-        public func URLToLaunchBrowser() -> URL? {
+        public func URLToLaunchBrowser() async -> URL? {
                 var queries: Array<TSQuery> = []
 
                 /* Add keywords */
@@ -121,7 +119,7 @@ public class TSBrowserController
                 queries.append(query)
 
                 /* Add sites */
-                if let q = siteQueries() {
+                if let q = await siteQueries() {
                         queries.append(q)
                 }
 
@@ -149,11 +147,11 @@ public class TSBrowserController
                 return .keyword(mKeyword)
         }
 
-        private func siteQueries() -> TSQuery? {
+        private func siteQueries() async -> TSQuery? {
                 guard let cat = mCategory else {
                         return nil      // no sepecific site definition
                 }
-                guard let sites0 = siteTable.selectByCategory(category: cat) else {
+                guard let sites0 = await TSSiteTable.shared.selectByCategory(category: cat) else {
                         return nil      // no specific sites
                 }
 

@@ -21,6 +21,8 @@
 		0538AD0C2CE772B100561027 /* sites.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0538AD082CE7728100561027 /* sites.json */; };
 		0548501E2CE755980060AEA0 /* TSSiteTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSSiteTable.swift */; };
 		0548501F2CE755980060AEA0 /* TSSiteTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548501D2CE755980060AEA0 /* TSSiteTable.swift */; };
+		0565FE042D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0565FE032D0CF0B20014F9AE /* TSSiteLoader.swift */; };
+		0565FE052D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0565FE032D0CF0B20014F9AE /* TSSiteLoader.swift */; };
 		05B3AF052CF92339006AF536 /* TSQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B3AF042CF92339006AF536 /* TSQuery.swift */; };
 		05B3AF062CF92339006AF536 /* TSQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B3AF042CF92339006AF536 /* TSQuery.swift */; };
 		05CC32812CDFA67100978FF6 /* TSTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC32802CDFA67100978FF6 /* TSTypes.swift */; };
@@ -87,6 +89,7 @@
 		0538AD082CE7728100561027 /* sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sites.json; sourceTree = "<group>"; };
 		053970E02CDBA4FD008E4EFA /* TrustedSearch_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0548501D2CE755980060AEA0 /* TSSiteTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSiteTable.swift; sourceTree = "<group>"; };
+		0565FE032D0CF0B20014F9AE /* TSSiteLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSiteLoader.swift; sourceTree = "<group>"; };
 		05780E842CDBA8E5003C03E6 /* TrustedSearch_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05B3AF042CF92339006AF536 /* TSQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSQuery.swift; sourceTree = "<group>"; };
 		05CC32802CDFA67100978FF6 /* TSTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSTypes.swift; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 				05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */,
 				05E1B0BE2CF4B026009F23ED /* TSControlParametrers.swift */,
 				0548501D2CE755980060AEA0 /* TSSiteTable.swift */,
+				0565FE032D0CF0B20014F9AE /* TSSiteLoader.swift */,
 				05B3AF042CF92339006AF536 /* TSQuery.swift */,
 				05E21C682D007DD900C181E3 /* TSPreferenceController.swift */,
 				05CC32802CDFA67100978FF6 /* TSTypes.swift */,
@@ -310,6 +314,7 @@
 			files = (
 				05CC32812CDFA67100978FF6 /* TSTypes.swift in Sources */,
 				05E21C692D007DD900C181E3 /* TSPreferenceController.swift in Sources */,
+				0565FE042D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */,
 				050DA1D42CDD09C3006E0EDD /* TSViewController.swift in Sources */,
 				05E1B0C02CF4B026009F23ED /* TSControlParametrers.swift in Sources */,
 				05B3AF062CF92339006AF536 /* TSQuery.swift in Sources */,
@@ -324,6 +329,7 @@
 			files = (
 				05B3AF052CF92339006AF536 /* TSQuery.swift in Sources */,
 				05CC32822CDFA67100978FF6 /* TSTypes.swift in Sources */,
+				0565FE052D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */,
 				05E1B0BF2CF4B026009F23ED /* TSControlParametrers.swift in Sources */,
 				0548501E2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
 				05E21C6A2D007DD900C181E3 /* TSPreferenceController.swift in Sources */,

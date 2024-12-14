@@ -27,11 +27,6 @@ class TSViewController: MIViewController
         override func viewDidLoad() {
                 super.viewDidLoad()
 
-                /* load categorized sites data */
-                let table = mBrowserController.siteTable
-                table.load()
-                table.dump()
-
                 /* make contents */
                 if let root = mRootView {
                         makeContents(rootView: root)
@@ -46,8 +41,13 @@ class TSViewController: MIViewController
                 trackTag1Label()
                 trackTag2Label()
 
-                /* Update categories */
-                mBrowserController.controlParameters.allCategories = table.categoryNames
+                /* load categorized sites data */
+                Task {
+                        let table = TSSiteTable.shared
+                        await table.load()
+                        await table.dump()
+                        await mBrowserController.controlParameters.allCategories = table.categoryNames
+                }
         }
 
         private func makeContents(rootView root: MIStack) {
@@ -143,7 +143,7 @@ class TSViewController: MIViewController
                 mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
                 catmenu.setCallback({
                         (_ menuId: Int) -> Void in
-                        self.mBrowserController.set(category: nil)
+                        Task { await self.mBrowserController.set(category: nil)}
                 })
                 return catmenu
         }
@@ -160,9 +160,9 @@ class TSViewController: MIViewController
                                 (_ menuId: Int) -> Void in
                                 if menuId > 0 {
                                         let tag = tagmenu.selectedTitle()
-                                        self.mBrowserController.set(tag: tag, at: tagid)
+                                        Task { await self.mBrowserController.set(tag: tag, at: tagid)}
                                 } else {
-                                        self.mBrowserController.set(tag: nil, at: tagid)
+                                        Task { await self.mBrowserController.set(tag: nil, at: tagid)}
                                 }
                         })
                         result.append(tagmenu)
@@ -193,8 +193,10 @@ class TSViewController: MIViewController
         }
 
         private func searchButtonPressed() {
-                if let url = mBrowserController.URLToLaunchBrowser() {
-                        super.open(URL: url)
+                Task { @MainActor in
+                        if let url = await mBrowserController.URLToLaunchBrowser() {
+                                super.open(URL: url)
+                        }
                 }
         }
 
@@ -258,14 +260,14 @@ class TSViewController: MIViewController
                                                         NSLog("can not happen at \(#function)")
                                                 }
                                         } else {
-                                                self.mBrowserController.set(category: nil)
+                                                Task { await self.mBrowserController.set(category: nil) }
                                         }
                                 })
                         } else {
                                 NSLog("[Error] No category menu")
                         }
                         /* Unselect category menu */
-                        self.mBrowserController.set(category: nil)
+                        Task { await self.mBrowserController.set(category: nil) }
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackAllCategories()
@@ -280,7 +282,7 @@ class TSViewController: MIViewController
                         guard let self = self else { return }
                         let category = mBrowserController.controlParameters.category
                         /* Set to browser controller */
-                        self.mBrowserController.set(category: category)
+                        Task { await self.mBrowserController.set(category: category) }
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackCategory()
@@ -329,12 +331,14 @@ class TSViewController: MIViewController
 
         private func trackTagLabel(tagId tid: Int, labels labs: Array<String>) {
                 NSLog("trackTagLabel tagid=\(tid). labels=\(labs)")
-                /* erace current setting */
-                self.mBrowserController.set(tag: nil, at: tid)
+
                 /* Update tag0 menu */
                 let tagitems = allocateTagMenuItems(tags: labs)
                 mTagMenus[tid].setMenuItems(items: tagitems)
                 //mTagMenus[tid].setEnable(tag0items.count > 1)
+
+                /* erace current setting */
+                Task { await self.mBrowserController.set(tag: nil, at: tid) }
         }
 
         private func allocateTagMenuItems(tags tgs: Array<String>) -> Array<MIPopupMenu.MenuItem> {
