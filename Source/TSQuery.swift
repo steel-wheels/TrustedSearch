@@ -29,7 +29,7 @@ public enum TSQuery {
         }
 
         private func keywordToString(keyword: String) -> String {
-                return queryString(contents: "\"" + keyword + "\"")
+                return "as_q=\(keyword)"
         }
 
         private func sitesToString(URLs: Array<URL>) -> String {

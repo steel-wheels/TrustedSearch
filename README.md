@@ -24,12 +24,6 @@ This software is distributed under [GNU GENERAL PUBLIC LISENCE version 2](https:
 * OS version:   macOS 13, iOS 16
 * Xcode:        Xcode 14
 
-## References
-* [Overview of Google search operators](https://developers.google.com/search/docs/monitor-debug/search-operators)
-* [Goofle Search Engine Results API](https://serpapi.com/search-api)
-* [Yahoo Dorectory (Archived)](https://web.archive.org/web/20141122194515/https://dir.yahoo.com/)
-
-
-
-
+## Documents
+* [Google search parameters](Documents/search-option.md)
 
