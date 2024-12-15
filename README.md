@@ -6,7 +6,7 @@ The features of this application are:
 * This application gives the <strong>trusted web site list</strong>
 to limit the search targets.
 It helps you to find correct infomation from the reliable websites.
-* You can give the [google search options](Document/search-option.md) by GUI. 
+* You can give the [google search options](Documents/search-option.md) by GUI. 
 
 ## What is the trusted site
 This application has the list of trusted web sites.
