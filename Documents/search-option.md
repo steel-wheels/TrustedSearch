@@ -18,15 +18,7 @@ https://www.google.com/search?\
 as_q=keyword-a+keyword-b&\
 as_epq=keyword-c+keyword-d&\
 as_oq=keyword-e+keyword-f&\
-as_eq=keyword-g+keyword-h&\
-as_nlo=&\
-as_nhi=&\
-lr=&\
-cr=&\
-as_qdr=all&\
-as_sitesearch=&\
-as_occt=any&\
-as_filetype=&tbs=
+as_eq=keyword-g+keyword-h
 </pre>
 
 ## Reference

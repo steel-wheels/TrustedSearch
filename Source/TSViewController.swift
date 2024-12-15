@@ -211,7 +211,7 @@ class TSViewController: MIViewController
                                 button.isEnabled = !keyword.isEmpty
                         }
                         /* Set to browser controller */
-                        self.mBrowserController.set(keyword: keyword)
+                        self.mBrowserController.set(type: TSQuery.KeywordType.matchAllWords,  keyword: keyword)
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackKeyword()

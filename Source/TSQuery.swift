@@ -8,7 +8,14 @@
 import Foundation
 
 public enum TSQuery {
-        case keyword(String)
+        public enum KeywordType: CaseIterable {
+                case matchAllWords
+                case matchEntireText
+                case matchSomeWords
+                case matchNotWord
+        }
+
+        case keyword(KeywordType, String)
         case sites(Array<URL>)
         case languate(TSLanguage)
         case limitedDate(TSLimitedDate)
@@ -16,8 +23,8 @@ public enum TSQuery {
         public func toString() -> String {
                 let result: String
                 switch self {
-                case .keyword(let str):
-                        result = self.keywordToString(keyword: str)
+                case .keyword(let type, let str):
+                        result = self.keywordToString(type: type, keyword: str)
                 case .sites(let sites):
                         result = self.sitesToString(URLs: sites)
                 case .languate(let lang):
@@ -28,8 +35,15 @@ public enum TSQuery {
                 return result
         }
 
-        private func keywordToString(keyword: String) -> String {
-                return "as_q=\(keyword)"
+        private func keywordToString(type typ: KeywordType, keyword: String) -> String {
+                let result: String
+                switch typ {
+                case .matchAllWords:    result = "as_q=\(keyword)"
+                case .matchEntireText:  result = "as_ebq=\(keyword)"
+                case .matchSomeWords:   result = "as_op=\(keyword)"
+                case .matchNotWord:     result = "as_eq=\(keyword)"
+                }
+                return result
         }
 
         private func sitesToString(URLs: Array<URL>) -> String {

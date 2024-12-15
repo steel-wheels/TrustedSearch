@@ -12,7 +12,7 @@ public class TSBrowserController
 {
         public var controlParameters:   TSControlrameters
 
-        private var mKeyword:           String
+        private var mKeywords:          Dictionary<TSQuery.KeywordType, String>
         private var mLanguage:          TSLanguage?
         private var mLimitDate:         TSLimitedDate?
         private var mTags:              Array<String?>
@@ -21,15 +21,15 @@ public class TSBrowserController
         public init() {
                 controlParameters       = TSControlrameters()
 
-                mKeyword        = ""
+                mKeywords       = [:]
                 mLanguage       = nil
                 mLimitDate      = nil
                 mCategory       = nil
                 mTags           = Array(repeating: nil, count: TSControlrameters.MAX_TAG_NUM)
         }
 
-        public func set(keyword str: String) {
-                mKeyword = str
+        public func set(type ktype: TSQuery.KeywordType, keyword str: String) {
+                mKeywords[ktype] = str
         }
 
         public func set(language lang: TSLanguage?) {
@@ -115,8 +115,7 @@ public class TSBrowserController
                 var queries: Array<TSQuery> = []
 
                 /* Add keywords */
-                let query = keywordQueries()
-                queries.append(query)
+                queries.append(contentsOf: keywordQueries())
 
                 /* Add sites */
                 if let q = await siteQueries() {
@@ -143,8 +142,16 @@ public class TSBrowserController
                 return "\(op)=\"" + cont + "\""
         }
 
-        private func keywordQueries() -> TSQuery {
-                return .keyword(mKeyword)
+        private func keywordQueries() -> Array<TSQuery> {
+                var result: Array<TSQuery> = []
+                for ktype in TSQuery.KeywordType.allCases {
+                        if let keyword = mKeywords[ktype] {
+                                if !keyword.isEmpty {
+                                        result.append(.keyword(ktype, keyword))
+                                }
+                        }
+                }
+                return result
         }
 
         private func siteQueries() async -> TSQuery? {
