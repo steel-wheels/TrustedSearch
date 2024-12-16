@@ -11,7 +11,8 @@ import Foundation
 class TSViewController: MIViewController
 {
         private var mRootView:          MIStack?                = nil
-        private var mKeywordField:      MITextField?            = nil
+        private var mAllWordsField:     MITextField?            = nil
+        private var mEntireTextField:   MITextField?            = nil
         private var mLanguageMenu:      MIPopupMenu?            = nil
         private var mDateMenu:          MIPopupMenu?            = nil
         private var mCategoryMenu:      MIPopupMenu?            = nil
@@ -33,7 +34,8 @@ class TSViewController: MIViewController
                 }
 
                 /* repeat tracking */
-                trackKeyword()
+                trackAllWordsKeyword()
+                trackEntireTextKeyword()
                 trackLanguage()
                 trackAllCategories()
                 trackCategory()
@@ -51,10 +53,21 @@ class TSViewController: MIViewController
         }
 
         private func makeContents(rootView root: MIStack) {
-                /* keyword field */
-                let keywordfield = makeKeywordField()
-                root.addArrangedSubView(keywordfield)
-                mKeywordField = keywordfield
+                /* all Words Match field */
+                let allwordslabel = MILabel()
+                allwordslabel.title = "Words to match all"
+                root.addArrangedSubView(allwordslabel)
+                let allwordsfield = makeAllWordsField()
+                root.addArrangedSubView(allwordsfield)
+                mAllWordsField = allwordsfield
+
+                /* Entire text match field */
+                let entiretextlabel = MILabel()
+                entiretextlabel.title = "Entire Text"
+                root.addArrangedSubView(entiretextlabel)
+                let entiretextfield = makeEntireTextField()
+                root.addArrangedSubView(entiretextfield)
+                mEntireTextField = entiretextfield
 
                 /* Language menu */
                 let langmenu = makeLanguageMenu()
@@ -90,12 +103,22 @@ class TSViewController: MIViewController
                 mSearchButton = searchbutton
         }
 
-        private func makeKeywordField() -> MITextField {
+        private func makeAllWordsField() -> MITextField {
                 let keywordfield = MITextField()
                 keywordfield.placeholderString = "Keywords to search"
                 keywordfield.setCallback({
                         (_ str: String) -> Void in
-                        self.mBrowserController.controlParameters.keyword = str
+                        self.mBrowserController.controlParameters.allWordsKeyword = str
+                })
+                return keywordfield
+        }
+
+        private func makeEntireTextField() -> MITextField {
+                let keywordfield = MITextField()
+                keywordfield.placeholderString = "Keywords to search"
+                keywordfield.setCallback({
+                        (_ str: String) -> Void in
+                        self.mBrowserController.controlParameters.entireTextKeyword = str
                 })
                 return keywordfield
         }
@@ -200,21 +223,40 @@ class TSViewController: MIViewController
                 }
         }
 
-        /* track text in mKeywordField */
-        private func trackKeyword() {
+        /* track all words */
+        private func trackAllWordsKeyword() {
                 withObservationTracking {
                         [weak self] in
                         guard let self = self else { return }
-                        let keyword = mBrowserController.controlParameters.keyword
+                        let keyword = mBrowserController.controlParameters.allWordsKeyword
                         /* Update search button */
                         if let button = mSearchButton {
-                                button.isEnabled = !keyword.isEmpty
+                                button.isEnabled = !mBrowserController.controlParameters.hasNoKeyword()
                         }
                         /* Set to browser controller */
-                        self.mBrowserController.set(type: TSQuery.KeywordType.matchAllWords,  keyword: keyword)
+                        self.mBrowserController.set(type: TSQuery.KeywordType.allWords,  keyword: keyword)
                 } onChange: {
                         DispatchQueue.main.async {
-                                self.trackKeyword()
+                                self.trackAllWordsKeyword()
+                        }
+                }
+        }
+
+        /* track entire text */
+        private func trackEntireTextKeyword() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        let keyword = mBrowserController.controlParameters.entireTextKeyword
+                        /* Update search button */
+                        if let button = mSearchButton {
+                                button.isEnabled = !mBrowserController.controlParameters.hasNoKeyword()
+                        }
+                        /* Set to browser controller */
+                        self.mBrowserController.set(type: TSQuery.KeywordType.entireText,  keyword: keyword)
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackEntireTextKeyword()
                         }
                 }
         }

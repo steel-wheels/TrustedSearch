@@ -11,7 +11,10 @@ import Foundation
 {
         public static let MAX_TAG_NUM = 3
 
-        public var keyword              : String
+        public var allWordsKeyword      : String
+        public var entireTextKeyword    : String
+        public var someWordsKeyword     : String
+        public var notWordsKeyword      : String
         public var language             : TSLanguage?
         public var limitDate            : TSLimitedDate?
         public var allCategories        : Array<String>
@@ -21,7 +24,10 @@ import Foundation
         public var tag2Labels           : Array<String>
 
         public init() {
-                self.keyword            = ""
+                self.allWordsKeyword    = ""
+                self.entireTextKeyword  = ""
+                self.someWordsKeyword   = ""
+                self.notWordsKeyword    = ""
                 self.language           = nil
                 self.limitDate          = nil
                 self.allCategories      = []
@@ -29,6 +35,13 @@ import Foundation
                 self.tag0Labels         = []
                 self.tag1Labels         = []
                 self.tag2Labels         = []
+        }
+
+        public func hasNoKeyword() -> Bool {
+                return     self.allWordsKeyword.isEmpty
+                        && self.entireTextKeyword.isEmpty
+                        && self.someWordsKeyword.isEmpty
+                        && self.notWordsKeyword.isEmpty
         }
 
         public func setTagLabels(index idx: Int, labels labs: Array<String>) {

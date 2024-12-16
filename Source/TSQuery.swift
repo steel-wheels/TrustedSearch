@@ -9,10 +9,10 @@ import Foundation
 
 public enum TSQuery {
         public enum KeywordType: CaseIterable {
-                case matchAllWords
-                case matchEntireText
-                case matchSomeWords
-                case matchNotWord
+                case allWords
+                case entireText
+                case someWords
+                case notWords
         }
 
         case keyword(KeywordType, String)
@@ -38,10 +38,10 @@ public enum TSQuery {
         private func keywordToString(type typ: KeywordType, keyword: String) -> String {
                 let result: String
                 switch typ {
-                case .matchAllWords:    result = "as_q=\(keyword)"
-                case .matchEntireText:  result = "as_ebq=\(keyword)"
-                case .matchSomeWords:   result = "as_op=\(keyword)"
-                case .matchNotWord:     result = "as_eq=\(keyword)"
+                case .allWords:    result = "as_q=\(keyword)"
+                case .entireText:  result = "as_epq=\"\(keyword)\""
+                case .someWords:   result = "as_op=\(keyword)"
+                case .notWords:    result = "as_eq=\(keyword)"
                 }
                 return result
         }
