@@ -13,6 +13,8 @@ class TSViewController: MIViewController
         private var mRootView:          MIStack?                = nil
         private var mAllWordsField:     MITextField?            = nil
         private var mEntireTextField:   MITextField?            = nil
+        private var mSomeWordsField:    MITextField?            = nil
+        private var mNotWordsField:     MITextField?            = nil
         private var mLanguageMenu:      MIPopupMenu?            = nil
         private var mDateMenu:          MIPopupMenu?            = nil
         private var mCategoryMenu:      MIPopupMenu?            = nil
@@ -36,6 +38,8 @@ class TSViewController: MIViewController
                 /* repeat tracking */
                 trackAllWordsKeyword()
                 trackEntireTextKeyword()
+                trackSomeWordsKeyword()
+                trackNotWordsKeyword()
                 trackLanguage()
                 trackAllCategories()
                 trackCategory()
@@ -55,7 +59,7 @@ class TSViewController: MIViewController
         private func makeContents(rootView root: MIStack) {
                 /* all Words Match field */
                 let allwordslabel = MILabel()
-                allwordslabel.title = "Words to match all"
+                allwordslabel.title = "Contains all words"
                 root.addArrangedSubView(allwordslabel)
                 let allwordsfield = makeAllWordsField()
                 root.addArrangedSubView(allwordsfield)
@@ -63,11 +67,27 @@ class TSViewController: MIViewController
 
                 /* Entire text match field */
                 let entiretextlabel = MILabel()
-                entiretextlabel.title = "Entire Text"
+                entiretextlabel.title = "Contains entire Text"
                 root.addArrangedSubView(entiretextlabel)
                 let entiretextfield = makeEntireTextField()
                 root.addArrangedSubView(entiretextfield)
                 mEntireTextField = entiretextfield
+
+                /* Some words field */
+                let somewordslabel = MILabel()
+                somewordslabel.title = "Contains some words"
+                root.addArrangedSubView(somewordslabel)
+                let somewordsfield = makeSomeWordsField()
+                root.addArrangedSubView(somewordsfield)
+                mSomeWordsField = somewordsfield
+
+                /* Not words field */
+                let notwordslabel = MILabel()
+                notwordslabel.title = "Does not contain these words"
+                root.addArrangedSubView(notwordslabel)
+                let notwordsfield = makeNotWordsField()
+                root.addArrangedSubView(notwordsfield)
+                mNotWordsField = notwordsfield
 
                 /* Language menu */
                 let langmenu = makeLanguageMenu()
@@ -119,6 +139,26 @@ class TSViewController: MIViewController
                 keywordfield.setCallback({
                         (_ str: String) -> Void in
                         self.mBrowserController.controlParameters.entireTextKeyword = str
+                })
+                return keywordfield
+        }
+
+        private func makeSomeWordsField() -> MITextField {
+                let keywordfield = MITextField()
+                keywordfield.placeholderString = "Keywords to search"
+                keywordfield.setCallback({
+                        (_ str: String) -> Void in
+                        self.mBrowserController.controlParameters.someWordsKeyword = str
+                })
+                return keywordfield
+        }
+
+        private func makeNotWordsField() -> MITextField {
+                let keywordfield = MITextField()
+                keywordfield.placeholderString = "Keywords to search"
+                keywordfield.setCallback({
+                        (_ str: String) -> Void in
+                        self.mBrowserController.controlParameters.notWordsKeyword = str
                 })
                 return keywordfield
         }
@@ -257,6 +297,44 @@ class TSViewController: MIViewController
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackEntireTextKeyword()
+                        }
+                }
+        }
+
+        /* track some words */
+        private func trackSomeWordsKeyword() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        let keyword = mBrowserController.controlParameters.someWordsKeyword
+                        /* Update search button */
+                        if let button = mSearchButton {
+                                button.isEnabled = !mBrowserController.controlParameters.hasNoKeyword()
+                        }
+                        /* Set to browser controller */
+                        self.mBrowserController.set(type: TSQuery.KeywordType.someWords,  keyword: keyword)
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackSomeWordsKeyword()
+                        }
+                }
+        }
+
+        /* track not words */
+        private func trackNotWordsKeyword() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        let keyword = mBrowserController.controlParameters.notWordsKeyword
+                        /* Update search button */
+                        if let button = mSearchButton {
+                                button.isEnabled = !mBrowserController.controlParameters.hasNoKeyword()
+                        }
+                        /* Set to browser controller */
+                        self.mBrowserController.set(type: TSQuery.KeywordType.notWords,  keyword: keyword)
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackNotWordsKeyword()
                         }
                 }
         }
