@@ -7,7 +7,7 @@
 |Command		|Search condition               |
 |--                     |--                             |
 |<code>as_q</code>	|Contains all words             |
-|<code>as_ebq</code>	|Contains entire text           |
+|<code>as_epq</code>	|Contains entire text           |
 |<code>as_op</code>	|Contains one or more words     |
 |<code>as_eq</code>	|Do not contains all words      |
 

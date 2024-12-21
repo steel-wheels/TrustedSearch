@@ -40,6 +40,8 @@ public class TSSite {
 
 @globalActor public actor TSSiteTable
 {
+        private static let SiteFileName = "sites.json"
+
         public static let shared = TSSiteTable()
 
         private var mSiteTable: Dictionary<String, Array<TSSite>>
@@ -56,13 +58,20 @@ public class TSSite {
                 return mSiteTable[cat]
         }
 
+        private var resourceFile: URL? { get {
+                if let resdir = FileManager.default.resourceDirectory {
+                        return resdir.appendingPathComponent(TSSiteTable.SiteFileName)
+                } else {
+                        NSLog("[Error] No resoource directory")
+                        return nil
+                }
+        }}
+
         public func load()  {
-                guard let resdir = FileManager.default.resourceDirectory else {
-                        let err = MIError.error(errorCode: .fileError, message: "No resource directory")
-                        NSLog(MIError.errorToString(error: err))
+                guard let resfile = self.resourceFile else {
                         return
                 }
-                let resfile = resdir.appendingPathComponent("sites.json")
+
                 let cachefile: URL
                 switch FileManager.default.createCacheFile(source: resfile) {
                 case .success(let cfile):
@@ -73,20 +82,43 @@ public class TSSite {
                         return
                 }
 
-                switch TSSiteLoader.load(file: cachefile) {
-                case .success(let newsites):
-                        for newsite in newsites {
-                                let catname = newsite.category
-                                if var cursites = mSiteTable[catname] {
-                                        cursites.append(newsite)
-                                        mSiteTable[catname] = cursites
-                                } else {
-                                        mSiteTable[catname] = [newsite]
-                                }
-                        }
-                case .failure(let err):
+                if let err = load(from: cachefile) {
                         NSLog("[Error] \(MIError.errorToString(error: err))")
+                }
+        }
+
+        public func reload() {
+                guard let resfile = self.resourceFile else {
                         return
+                }
+                if let err = FileManager.default.cleanCacheFile(source: resfile) {
+                        NSLog("[Error] \(MIError.errorToString(error: err))")
+                }
+                mSiteTable = [:]
+                if let err = load(from: resfile) {
+                        NSLog("[Error] \(MIError.errorToString(error: err))")
+                }
+        }
+
+        private func load(from file: URL) -> NSError? {
+                switch TSSiteLoader.load(file: file) {
+                case .success(let newsites):
+                        merge(sites: newsites)
+                        return nil
+                case .failure(let err):
+                        return err
+                }
+        }
+
+        private func merge(sites newsites: Array<TSSite>) {
+                for newsite in newsites {
+                        let catname = newsite.category
+                        if var cursites = mSiteTable[catname] {
+                                cursites.append(newsite)
+                                mSiteTable[catname] = cursites
+                        } else {
+                                mSiteTable[catname] = [newsite]
+                        }
                 }
         }
 

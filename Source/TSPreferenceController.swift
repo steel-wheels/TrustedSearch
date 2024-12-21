@@ -23,7 +23,10 @@ public class PreferenceViewController: MIViewController
         }
 
         private func removeCacheFile() {
-                NSLog("Remove cache file")
+                let table = TSSiteTable.shared
+                Task {
+                        await table.reload()
+                }
         }
 
         private func allocateRemovePreferenceButton() -> MIStack {

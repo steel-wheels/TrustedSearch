@@ -10,9 +10,10 @@ It helps you to find correct infomation from the reliable websites.
 
 ## What is the trusted site
 This application has the list of trusted web sites.
-The Steel Wheels Project defines the trusted website:
-* Provide primary information (primary source)
-* Provide good article about the primary source without unpleasant ads
+The definitions of the trusted web site is
+* Provide primary information (the source information) or good article about the primary source
+* Politically neutral
+* Not an affiliate site
 
 The trusted web site list is managed by human hodelators.
 
