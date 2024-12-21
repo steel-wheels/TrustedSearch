@@ -450,8 +450,6 @@ class TSViewController: MIViewController
         }
 
         private func trackTagLabel(tagId tid: Int, labels labs: Array<String>) {
-                NSLog("trackTagLabel tagid=\(tid). labels=\(labs)")
-
                 /* Update tag0 menu */
                 let tagitems = allocateTagMenuItems(tags: labs)
                 mTagMenus[tid].setMenuItems(items: tagitems)

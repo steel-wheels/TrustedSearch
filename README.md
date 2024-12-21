@@ -15,7 +15,7 @@ The definitions of the trusted web site is
 * Politically neutral
 * Not an affiliate site
 
-The trusted web site list is managed by human hodelators.
+The trusted web site list is managed by human modelator.
 
 ## Copyright
 Copyright (C) 2024 [Steel Wheels Project](https://github.com/steel-wheels/Project).
@@ -27,6 +27,98 @@ This software is distributed under [GNU GENERAL PUBLIC LISENCE version 2](https:
 
 ## Documents
 * [Google search parameters](Documents/search-option.md)
+
+## Trusted site list
+<pre>
+[
+  {
+    category:	"Company",
+    tags: [
+	"car"
+    ],
+    sites: [
+	"https://www.isuzu.co.jp",
+	"https://www.global-kawasaki-motors.com",
+	"https://www.globalsuzuki.com",
+	"https://www.subaru.co.jp",
+	"https://www.daihatsu.com/jp/",
+	"https://global.toyota/jp/",
+	"https://www.nissan-global.com/JP/",
+	"https://www.hino.co.jp",
+	"https://global.honda/jp/",
+	"https://www.mazda.com/ja/",
+	"https://www.mitsubishi-motors.com/jp/",
+	"https://www.mitsubishi-fuso.com/ja/",
+	"https://global.yamaha-motor.com/jp/",
+	"https://www.udtrucks.com/japan"
+    ]
+  },
+  {
+    category:	"News",
+    tags: [
+	"news"
+    ],
+    sites: [
+	"https://www.bbc.com",
+	"https://www.cnn.com",
+	"https://www.nikkei.com",
+	"https://www.data.jma.go.jp/multi/index.html"
+    ]
+  },
+  {
+    category:	"Software Development",
+    tags: [
+	"macOS", "iOS", "Apple"
+    ],
+    sites: [
+	"https://developer.apple.com/"
+    ]
+  },
+  {
+    category:	"Software Development",
+    tags: [
+	"macOS", "iOS", "Unix"
+    ],
+    sites: [
+	"https://github.com",
+	"https://qiita.com",
+	"https://news.ycombinator.com",
+	"https://medium.com"
+    ]
+  },
+  {
+    category:	"Software Development",
+    tags: [
+	"typescript", "language"
+    ],
+    sites: [
+	"https://basarat.gitbook.io/typescript",
+	"https://typescript-jp.gitbook.io/deep-dive"
+    ]
+  },
+  {
+    category:	"Weather",
+    tags: [
+	"weather report"
+    ],
+    sites: [
+	"https://tenki.jp"
+    ]
+  },
+  {
+    category:	"Wikipedia",
+    tags: [],
+    sites: [
+	"https://ja.wikipedia.org/",
+	"https://en.wikipedia.org/",
+	"https://de.wikipedia.org/",
+	"https://fr.wikipedia.org/"
+    ]
+  }
+]
+
+
+</pre>
 
 # Related links
 * [Steel Wheels Project](https://github.com/steel-wheels/Project)

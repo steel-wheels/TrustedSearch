@@ -6,7 +6,9 @@ include Makefile.inc
 
 root_dir	= ..
 
-all: $(root_dir)/README.md search-option.md
+all: $(root_dir)/README.md \
+     search-option.md \
+     related-links.md
 
 clean:
 	rm -f README.md

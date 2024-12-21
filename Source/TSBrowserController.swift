@@ -67,8 +67,6 @@ public class TSBrowserController
                 }
                 mTags[index] = tg
 
-                NSLog("set index: \(index), tag: \(String(describing: tg))")
-
                 let nextidx = index + 1
                 guard nextidx < TSControlrameters.MAX_TAG_NUM  else {
                         return // needless opeate next tag

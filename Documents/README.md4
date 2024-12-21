@@ -15,7 +15,7 @@ The definitions of the trusted web site is
 * Politically neutral
 * Not an affiliate site
 
-The trusted web site list is managed by human hodelators.
+The trusted web site list is managed by human modelator.
 
 ## Copyright
 Copyright (C) 2024 [Steel Wheels Project](https://github.com/steel-wheels/Project).
@@ -28,5 +28,10 @@ This software is distributed under [GNU GENERAL PUBLIC LISENCE version 2](https:
 ## Documents
 * [Google search parameters](Documents/search-option.md)
 
-m4_include(related-links.md4)
+## Trusted site list
+<pre>
+m4_include(sites.json)
+</pre>
+
+m4_include(related-links.md)
 
