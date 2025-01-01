@@ -252,6 +252,7 @@ class TSViewController: MIViewController
                 for cont in conts {
                         newbox.addArrangedSubView(cont)
                 }
+                newbox.distribution = .fillEqually
                 return newbox
         }
 
