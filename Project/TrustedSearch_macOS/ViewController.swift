@@ -8,12 +8,9 @@
 import MultiUIKit
 import Cocoa
 
-class ViewController: TSViewController
+class ViewController: TSMainViewController
 {
-        @IBOutlet weak var mRootView: MIStack!
-
         override func viewDidLoad() {
-                setRootView(mRootView)
                 super.viewDidLoad()
         }
 

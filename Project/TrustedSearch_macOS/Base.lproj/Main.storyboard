@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -708,26 +707,7 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="TrustedSearch_macOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="440"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ny9-v8-1Yj" customClass="MIStack" customModule="MultiUIKit">
-                                <rect key="frame" x="20" y="20" width="440" height="400"/>
-                            </customView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="ny9-v8-1Yj" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="0yu-e6-gUb"/>
-                            <constraint firstItem="ny9-v8-1Yj" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="8yu-uv-dsu"/>
-                            <constraint firstAttribute="bottom" secondItem="ny9-v8-1Yj" secondAttribute="bottom" constant="20" symbolic="YES" id="fBA-kM-sGg"/>
-                            <constraint firstAttribute="trailing" secondItem="ny9-v8-1Yj" secondAttribute="trailing" constant="20" symbolic="YES" id="ubi-kb-yH7"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="mRootView" destination="ny9-v8-1Yj" id="XWp-Ny-zM0"/>
-                    </connections>
-                </viewController>
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="TrustedSearch_macOS" customModuleProvider="target" sceneMemberID="viewController"/>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="767"/>

@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		050DA1D42CDD09C3006E0EDD /* TSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSViewController.swift */; };
-		050DA1D52CDD09C3006E0EDD /* TSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSViewController.swift */; };
+		05057D332D268985000DC56D /* TSMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05057D322D268985000DC56D /* TSMainViewController.swift */; };
+		05057D342D268985000DC56D /* TSMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05057D322D268985000DC56D /* TSMainViewController.swift */; };
+		050DA1D42CDD09C3006E0EDD /* TSSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */; };
+		050DA1D52CDD09C3006E0EDD /* TSSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */; };
 		0518B09B2CDBB23800C46E01 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; };
 		0518B09C2CDBB23800C46E01 /* MultiUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0518B0A12CDBB26C00C46E01 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; };
@@ -83,7 +85,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		050DA1D32CDD09C3006E0EDD /* TSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSViewController.swift; sourceTree = "<group>"; };
+		05057D322D268985000DC56D /* TSMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSMainViewController.swift; sourceTree = "<group>"; };
+		050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSearchViewController.swift; sourceTree = "<group>"; };
 		0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		0538AD082CE7728100561027 /* sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sites.json; sourceTree = "<group>"; };
@@ -158,7 +161,8 @@
 		0518B0AE2CDBB95A00C46E01 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				050DA1D32CDD09C3006E0EDD /* TSViewController.swift */,
+				05057D322D268985000DC56D /* TSMainViewController.swift */,
+				050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */,
 				05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */,
 				05E1B0BE2CF4B026009F23ED /* TSControlParametrers.swift */,
 				0548501D2CE755980060AEA0 /* TSSiteTable.swift */,
@@ -260,7 +264,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1610;
-				LastUpgradeCheck = 1610;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					053970DF2CDBA4FD008E4EFA = {
 						CreatedOnToolsVersion = 16.1;
@@ -312,10 +316,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05057D342D268985000DC56D /* TSMainViewController.swift in Sources */,
 				05CC32812CDFA67100978FF6 /* TSTypes.swift in Sources */,
 				05E21C692D007DD900C181E3 /* TSPreferenceController.swift in Sources */,
 				0565FE042D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */,
-				050DA1D42CDD09C3006E0EDD /* TSViewController.swift in Sources */,
+				050DA1D42CDD09C3006E0EDD /* TSSearchViewController.swift in Sources */,
 				05E1B0C02CF4B026009F23ED /* TSControlParametrers.swift in Sources */,
 				05B3AF062CF92339006AF536 /* TSQuery.swift in Sources */,
 				0548501F2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
@@ -327,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05057D332D268985000DC56D /* TSMainViewController.swift in Sources */,
 				05B3AF052CF92339006AF536 /* TSQuery.swift in Sources */,
 				05CC32822CDFA67100978FF6 /* TSTypes.swift in Sources */,
 				0565FE052D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */,
@@ -334,7 +340,7 @@
 				0548501E2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
 				05E21C6A2D007DD900C181E3 /* TSPreferenceController.swift in Sources */,
 				05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,
-				050DA1D52CDD09C3006E0EDD /* TSViewController.swift in Sources */,
+				050DA1D52CDD09C3006E0EDD /* TSSearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +381,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -438,6 +445,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -468,6 +476,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = TR2DNF3P93;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
@@ -497,6 +506,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = TR2DNF3P93;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";

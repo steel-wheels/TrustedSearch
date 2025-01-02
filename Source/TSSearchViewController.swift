@@ -1,6 +1,6 @@
 /*
- * @file TSViewCpntrpller.swift
- * @description Define TSViewController class
+ * @file TSSearchViewCpntrpller.swift
+ * @description Define TSSearchViewController class
  * @par Copyright
  *   Copyright (C) 2024 Steel Wheels Project
  */
@@ -8,9 +8,8 @@
 import MultiUIKit
 import Foundation
 
-class TSViewController: MIViewController
+class TSSearchViewController: MIStackViewController
 {
-        private var mRootView:          MIStack?                = nil
         private var mAllWordsField:     MITextField?            = nil
         private var mEntireTextField:   MITextField?            = nil
         private var mSomeWordsField:    MITextField?            = nil
@@ -23,17 +22,12 @@ class TSViewController: MIViewController
 
         private var mBrowserController  = TSBrowserController()
 
-        public func setRootView(_ root: MIStack) {
-                mRootView = root
-        }
-
         override func viewDidLoad() {
+                super.setup(axis: .vertical)
                 super.viewDidLoad()
 
                 /* make contents */
-                if let root = mRootView {
-                        makeContents(rootView: root)
-                }
+                makeContents(rootView: self.root)
 
                 /* repeat tracking */
                 trackAllWordsKeyword()
