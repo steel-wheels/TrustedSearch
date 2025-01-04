@@ -14,6 +14,9 @@ class TSMainViewController: MITabViewController
                 let searchctrl = TSSearchViewController()
                 super.addContentView(title: "Search", controller: searchctrl)
 
+                let sitesctrl = TSSiteViewController()
+                super.addContentView(title: "Sites", controller: sitesctrl)
+
                 NSLog("Main: viewDidLoad")
                 super.viewDidLoad()
         }

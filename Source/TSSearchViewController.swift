@@ -227,29 +227,6 @@ class TSSearchViewController: MIStackViewController
                 return result
         }
 
-        private func makeLabeledStack(label labstr: String, content cont: MIInterfaceView) -> MIStack {
-                let newbox = MIStack()
-                newbox.axis = .horizontal
-                let label = MILabel()
-                label.title = labstr
-                newbox.addArrangedSubView(label)
-                newbox.addArrangedSubView(cont)
-                return newbox
-        }
-
-        private func makeLabeledStack(label labstr: String, contents conts: Array<MIInterfaceView>) -> MIStack {
-                let newbox = MIStack()
-                newbox.axis = .horizontal
-                let label = MILabel()
-                label.title = labstr
-                newbox.addArrangedSubView(label)
-                for cont in conts {
-                        newbox.addArrangedSubView(cont)
-                }
-                newbox.distribution = .fillEqually
-                return newbox
-        }
-
         private func searchButtonPressed() {
                 Task { @MainActor in
                         if let url = await mBrowserController.URLToLaunchBrowser() {

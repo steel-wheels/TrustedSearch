@@ -37,17 +37,5 @@ public class PreferenceViewController: MIViewController
                 })
                 return makeLabeledStack(label: "Remove", contents: [button])
         }
-
-        private func makeLabeledStack(label labstr: String, contents conts: Array<MIInterfaceView>) -> MIStack {
-                let newbox = MIStack()
-                newbox.axis = .horizontal
-                let label = MILabel()
-                label.title = labstr
-                newbox.addArrangedSubView(label)
-                for cont in conts {
-                        newbox.addArrangedSubView(cont)
-                }
-                return newbox
-        }
 }
 
