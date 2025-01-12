@@ -26,7 +26,7 @@ class TSSiteViewController: MIStackViewController
                 /* category site menu */
                 let catmenu = makeCategoryeMenu()
                 mCategoryMenu = catmenu
-                let catbox = makeLabeledStack(label: "Category", content: catmenu)
+                let catbox = makeLabeledStack(label: "Category", contents: [catmenu])
                 root.addArrangedSubView(catbox)
         }
 

@@ -85,20 +85,20 @@ class TSSearchViewController: MIStackViewController
 
                 /* Language menu */
                 let langmenu = makeLanguageMenu()
-                let langbox  = makeLabeledStack(label: "Language", content: langmenu)
+                let langbox  = makeLabeledStack(label: "Language", contents: [langmenu])
                 root.addArrangedSubView(langbox)
                 mLanguageMenu = langmenu
 
                 /* limit date menu */
                 let datemenu = makeLimitDateMenu()
                 mDateMenu = datemenu
-                let datebox = makeLabeledStack(label: "Limit date", content: datemenu)
+                let datebox = makeLabeledStack(label: "Limit date", contents: [datemenu])
                 root.addArrangedSubView(datebox)
 
                 /* category site menu */
                 let catmenu = makeCategoryeMenu()
                 mCategoryMenu = catmenu
-                let catbox = makeLabeledStack(label: "Category", content: catmenu)
+                let catbox = makeLabeledStack(label: "Category", contents: [catmenu])
                 root.addArrangedSubView(catbox)
 
                 /* tags menu */
