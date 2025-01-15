@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Kxb-U9-Bay">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -696,21 +697,90 @@
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
                     </window>
-                    <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
-                    </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="53" y="358"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="hIz-AP-VOD">
+        <!--Tab View Controller-->
+        <scene sceneID="a4N-ck-CF1">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="TrustedSearch_macOS" customModuleProvider="target" sceneMemberID="viewController"/>
-                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <tabViewController selectedTabViewItemIndex="0" id="Kxb-U9-Bay" sceneMemberID="viewController">
+                    <tabViewItems>
+                        <tabViewItem identifier="" id="S8c-0z-8jQ"/>
+                        <tabViewItem identifier="" id="R15-d0-7FB"/>
+                    </tabViewItems>
+                    <tabView key="tabView" type="noTabsNoBorder" id="ITe-g4-XKj">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="system"/>
+                        <connections>
+                            <outlet property="delegate" destination="Kxb-U9-Bay" id="8Q0-4s-KmZ"/>
+                        </connections>
+                    </tabView>
+                    <connections>
+                        <outlet property="tabView" destination="ITe-g4-XKj" id="bCG-ak-09y"/>
+                        <segue destination="JMW-5N-wEQ" kind="relationship" relationship="tabItems" id="Mvi-hl-RB1"/>
+                        <segue destination="d4x-hU-JCR" kind="relationship" relationship="tabItems" id="zsc-H6-QjU"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="fis-4C-2To" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="767"/>
+            <point key="canvasLocation" x="75" y="906"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="7b9-Yf-OId">
+            <objects>
+                <viewController id="JMW-5N-wEQ" customClass="TSSearchViewController" customModule="TrustedSearch_macOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="7ca-y0-gXh">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="3E6-Mo-C2U" customClass="MIStack" customModule="MultiUIKit">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="3E6-Mo-C2U" secondAttribute="trailing" id="QgE-DR-T3N"/>
+                            <constraint firstAttribute="bottom" secondItem="3E6-Mo-C2U" secondAttribute="bottom" id="gcu-3q-idU"/>
+                            <constraint firstItem="3E6-Mo-C2U" firstAttribute="top" secondItem="7ca-y0-gXh" secondAttribute="top" id="jLQ-fr-dc9"/>
+                            <constraint firstItem="3E6-Mo-C2U" firstAttribute="leading" secondItem="7ca-y0-gXh" secondAttribute="leading" id="wAB-i9-fWH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mRootView" destination="3E6-Mo-C2U" id="t1a-Cf-p0g"/>
+                    </connections>
+                </viewController>
+                <customObject id="bnM-2g-qos" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="74" y="1389"/>
+        </scene>
+        <!--Site View Controller-->
+        <scene sceneID="zx0-Vs-SLb">
+            <objects>
+                <viewController id="d4x-hU-JCR" customClass="TSSiteViewController" customModule="TrustedSearch_macOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="b72-Ya-uzI">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="caU-UP-x3k" customClass="MIStack" customModule="MultiUIKit">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="caU-UP-x3k" secondAttribute="trailing" id="2eG-mA-fHV"/>
+                            <constraint firstItem="caU-UP-x3k" firstAttribute="leading" secondItem="b72-Ya-uzI" secondAttribute="leading" id="ABh-vp-Sv9"/>
+                            <constraint firstAttribute="bottom" secondItem="caU-UP-x3k" secondAttribute="bottom" id="mIr-HK-Nfh"/>
+                            <constraint firstItem="caU-UP-x3k" firstAttribute="top" secondItem="b72-Ya-uzI" secondAttribute="top" id="oAK-rW-rAj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mRootView" destination="caU-UP-x3k" id="0UI-uI-6Bp"/>
+                    </connections>
+                </viewController>
+                <customObject id="w1c-lK-yaK" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-411" y="1389"/>
         </scene>
     </scenes>
 </document>

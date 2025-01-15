@@ -8,8 +8,14 @@
 import MultiUIKit
 import Foundation
 
-class TSSearchViewController: MIStackViewController
+class TSSearchViewController: MIViewController
 {
+        #if os(iOS)
+        @IBOutlet weak var mRootView: MIStack!
+#else
+        @IBOutlet weak var mRootView: MIStack!
+        #endif
+
         private var mAllWordsField:     MITextField?            = nil
         private var mEntireTextField:   MITextField?            = nil
         private var mSomeWordsField:    MITextField?            = nil
@@ -23,11 +29,11 @@ class TSSearchViewController: MIStackViewController
         private var mBrowserController  = TSBrowserController()
 
         override func viewDidLoad() {
-                super.setup(axis: .vertical)
+                mRootView.axis = .vertical
                 super.viewDidLoad()
 
                 /* make contents */
-                makeContents(rootView: self.root)
+                makeContents(rootView: mRootView)
 
                 /* repeat tracking */
                 trackAllWordsKeyword()

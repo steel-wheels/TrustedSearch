@@ -8,18 +8,24 @@
 import MultiUIKit
 import Foundation
 
-class TSSiteViewController: MIStackViewController
+class TSSiteViewController: MIViewController
 {
+        #if os(iOS)
+        @IBOutlet weak var mRootView: MIStack!
+        #else
+        @IBOutlet weak var mRootView: MIStack!
+        #endif
+        
         private var mCategoryMenu:      MIPopupMenu?            = nil
         
         private var mBrowserController  = TSBrowserController()
         
         override func viewDidLoad() {
-                super.setup(axis: .vertical)
+                mRootView.axis = .vertical
                 super.viewDidLoad()
 
                 /* make contents */
-                makeContents(rootView: self.root)
+                makeContents(rootView: mRootView)
         }
 
         private func makeContents(rootView root: MIStack) {
