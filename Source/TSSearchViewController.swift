@@ -28,6 +28,10 @@ class TSSearchViewController: MIViewController
 
         private var mBrowserController  = TSBrowserController()
 
+        public var controlParameters: TSControlrameters { get {
+                return mBrowserController.controlParameters
+        }}
+
         override func viewDidLoad() {
                 mRootView.axis = .vertical
                 super.viewDidLoad()

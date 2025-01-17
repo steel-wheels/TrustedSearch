@@ -705,7 +705,7 @@
         <!--Tab View Controller-->
         <scene sceneID="a4N-ck-CF1">
             <objects>
-                <tabViewController selectedTabViewItemIndex="0" id="Kxb-U9-Bay" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="0" id="Kxb-U9-Bay" customClass="MITabViewController" customModule="MultiUIKit" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem identifier="" id="S8c-0z-8jQ"/>
                         <tabViewItem identifier="" id="R15-d0-7FB"/>

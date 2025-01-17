@@ -19,7 +19,8 @@ class TSSiteViewController: MIViewController
         private var mCategoryMenu:      MIPopupMenu?            = nil
         
         private var mBrowserController  = TSBrowserController()
-        
+        public  var controlParameters   = TSControlrameters()
+
         override func viewDidLoad() {
                 mRootView.axis = .vertical
                 super.viewDidLoad()
