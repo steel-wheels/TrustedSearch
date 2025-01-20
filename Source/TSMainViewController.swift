@@ -14,7 +14,6 @@ class TSMainViewController: MITabViewController
                 if let searchctrl = fvc as? TSSearchViewController,
                    let sitectrl   = tvc as? TSSiteViewController {
                         NSLog("search ctrl -> site ctrl")
-                        TSControlrameters.copy(from: searchctrl.controlParameters, to: sitectrl.controlParameters)
                 }
                 return true
         }

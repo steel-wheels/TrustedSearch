@@ -17,9 +17,6 @@ class TSSiteViewController: MIViewController
         #endif
         
         private var mCategoryMenu:      MIPopupMenu?            = nil
-        
-        private var mBrowserController  = TSBrowserController()
-        public  var controlParameters   = TSControlrameters()
 
         override func viewDidLoad() {
                 mRootView.axis = .vertical
@@ -35,6 +32,12 @@ class TSSiteViewController: MIViewController
                 mCategoryMenu = catmenu
                 let catbox = makeLabeledStack(label: "Category", contents: [catmenu])
                 root.addArrangedSubView(catbox)
+
+                /* URL table */
+                let urltbl  = makeURLTable()
+                let urllbl = MILabel() ; urllbl.title = "URLs"
+                root.addArrangedSubView(urllbl)
+                root.addArrangedSubView(urltbl)
         }
 
         private func makeCategoryeMenu() -> MIPopupMenu {
@@ -43,9 +46,14 @@ class TSSiteViewController: MIViewController
                 mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
                 catmenu.setCallback({
                         (_ menuId: Int) -> Void in
-                        Task { await self.mBrowserController.set(category: nil)}
+                        //Task { await self.mBrowserController.set(category: nil)}
                 })
                 return catmenu
+        }
+
+        private func makeURLTable() -> MITable {
+                let table = MITable()
+                return table
         }
 }
 

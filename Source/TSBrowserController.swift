@@ -152,12 +152,12 @@ public class TSBrowserController
                 return result
         }
 
-        private func siteQueries() async -> TSQuery? {
+        private func siteURLs() async -> Array<URL> {
                 guard let cat = mCategory else {
-                        return nil      // no sepecific site definition
+                        return []      // no sepecific site definition
                 }
                 guard let sites0 = await TSSiteTable.shared.selectByCategory(category: cat) else {
-                        return nil      // no specific sites
+                        return []      // no specific sites
                 }
 
                 var curtags: Array<String> = []
@@ -183,7 +183,16 @@ public class TSBrowserController
                                 URLs.insert(url)
                         }
                 }
-                return .sites(Array(URLs))
+                return Array(URLs)
+        }
+
+        private func siteQueries() async -> TSQuery? {
+                let urls = await siteURLs()
+                if urls.count > 0 {
+                        return .sites(urls)
+                } else {
+                        return nil
+                }
         }
 
         private func languageQuery() -> TSQuery? {

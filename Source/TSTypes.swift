@@ -1,6 +1,6 @@
 /*
- * @file TSSearchParameters.swift
- * @description Define TSSearchParameters class
+ * @file TSType.swift
+ * @description Define TSType class
  * @par Copyright
  *   Copyright (C) 2024 Steel Wheels Project
  */
