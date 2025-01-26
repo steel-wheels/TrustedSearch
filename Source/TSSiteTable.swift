@@ -8,7 +8,8 @@
 import MultiDataKit
 import Foundation
 
-public class TSSite {
+public class TSSite
+{
         public var category:    String
         public var tags:        Array<String>
         public var URLs:        Array<URL>
@@ -28,7 +29,7 @@ public class TSSite {
                 return false
         }
 
-        public func hasAllTags(tags srcs: Array<String>) -> Bool {
+        public func hasTags(tags srcs: Array<String>) -> Bool {
                 for src in srcs {
                         if !hasTag(tag: src) {
                                 return false
@@ -44,15 +45,27 @@ public class TSSite {
 
         public static let shared = TSSiteTable()
 
-        private var mSiteTable: Dictionary<String, Array<TSSite>>
+        private var mSiteTable:         Dictionary<String, Array<TSSite>>
+        private var mAllCategoories:    Set<String>
+        private var mCategorizedTags:   Dictionary<String, Set<String>>
 
         private init() {
-                mSiteTable  = [:]
+                mSiteTable              = [:]
+                mAllCategoories         = []
+                mCategorizedTags        = [:]
         }
 
-        public var categoryNames: Array<String> { get {
-                return Array(mSiteTable.keys.sorted())
+        public var allCategories: Set<String> { get {
+                return mAllCategoories
         }}
+
+        public func categorizedTags(inCategory cat: String) -> Set<String> {
+                if let tags = mCategorizedTags[cat] {
+                        return tags
+                } else {
+                        return []
+                }
+        }
 
         public func selectByCategory(category cat: String) -> Array<TSSite>? {
                 return mSiteTable[cat]
@@ -85,6 +98,7 @@ public class TSSite {
                 if let err = load(from: cachefile) {
                         NSLog("[Error] \(MIError.errorToString(error: err))")
                 }
+                updateInfo()
         }
 
         public func reload() {
@@ -98,6 +112,7 @@ public class TSSite {
                 if let err = load(from: resfile) {
                         NSLog("[Error] \(MIError.errorToString(error: err))")
                 }
+                updateInfo()
         }
 
         private func load(from file: URL) -> NSError? {
@@ -122,6 +137,80 @@ public class TSSite {
                 }
         }
 
+        private func updateInfo() {
+                mAllCategoories         = []
+                mCategorizedTags        = [:]
+                for (catname, sites) in mSiteTable {
+                        mAllCategoories.insert(catname)
+                        for site in sites {
+                                for tag in site.tags {
+                                        if var tags = mCategorizedTags[catname] {
+                                                tags.insert(tag)
+                                                mCategorizedTags[catname] = tags
+                                        } else {
+                                                mCategorizedTags[catname] = [tag]
+                                        }
+                                }
+                        }
+                }
+        }
+
+        public func search(category catp: String?, tags tgs: Array<String>) -> Array<TSSite> {
+                var result: Array<TSSite> = []
+                if let cat = catp {
+                        if let sites = mSiteTable[cat] {
+                                for site in sites {
+                                        if site.hasTags(tags: tgs) {
+                                                result.append(site)
+                                        }
+                                }
+                        }
+                } else {
+                        for (_, sites) in mSiteTable {
+                                for site in sites {
+                                        if site.hasTags(tags: tgs) {
+                                                result.append(site)
+                                        }
+                                }
+                        }
+                }
+                return result
+        }
+
+        public func collectTags(category catp: String?, tags tgs: Array<String>) -> Set<String> {
+                var result: Set<String> = []
+                if let cat = catp {
+                        if let sites = mSiteTable[cat] {
+                                let res = collectTags(sites: sites, tags: tgs)
+                                result = result.union(res)
+                        } else {
+                                NSLog("[Error] Unknown category")
+                        }
+                } else {
+                        for sites in mSiteTable.values {
+                                let res = collectTags(sites: sites, tags: tgs)
+                                result = result.union(res)
+                        }
+                }
+                /* remove tags given by parameter */
+                for tag in tgs {
+                        result.remove(tag)
+                }
+                return result
+        }
+
+        private func collectTags(sites sts: Array<TSSite>, tags tgs: Array<String>) -> Set<String> {
+                var result: Set<String> = []
+                for site in sts {
+                        if site.hasTags(tags: tgs) {
+                                for tag in site.tags {
+                                        result.insert(tag)
+                                }
+                        }
+                }
+                return result
+        }
+
         public func dump() {
                 for (_, cats) in mSiteTable {
                         for cat in cats {
@@ -135,6 +224,15 @@ public class TSSite {
                                 }
                                 NSLog("}")
                         }
+                }
+
+                for cat in self.allCategories {
+                        NSLog("category: \(cat) {")
+                        let tags = self.categorizedTags(inCategory: cat)
+                        for tag in tags {
+                                NSLog("     tag: \(tag)")
+                        }
+                        NSLog("}")
                 }
         }
 }

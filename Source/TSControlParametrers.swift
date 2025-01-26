@@ -17,11 +17,11 @@ import Foundation
         public var notWordsKeyword      : String
         public var language             : TSLanguage?
         public var limitDate            : TSLimitedDate?
-        public var allCategories        : Array<String>
         public var category             : String?
-        public var tag0Labels           : Array<String>
-        public var tag1Labels           : Array<String>
-        public var tag2Labels           : Array<String>
+        public var tag0Label            : String?
+        public var tag1Label            : String?
+        public var tag2Label            : String?
+        public var tag3Label            : String?
 
         public init() {
                 self.allWordsKeyword    = ""
@@ -30,11 +30,10 @@ import Foundation
                 self.notWordsKeyword    = ""
                 self.language           = nil
                 self.limitDate          = nil
-                self.allCategories      = []
                 self.category           = nil
-                self.tag0Labels         = []
-                self.tag1Labels         = []
-                self.tag2Labels         = []
+                self.tag0Label          = nil
+                self.tag1Label          = nil
+                self.tag2Label          = nil
         }
 
         public func hasNoKeyword() -> Bool {
@@ -44,12 +43,13 @@ import Foundation
                         && self.notWordsKeyword.isEmpty
         }
 
-        public func setTagLabels(index idx: Int, labels labs: Array<String>) {
+        public func setTag(index idx: Int, tag tgs: String?) {
                 switch idx {
-                case 0: self.tag0Labels = labs
-                case 1: self.tag1Labels = labs
-                case 2: self.tag2Labels = labs
+                case 0: self.tag0Label = tgs
+                case 1: self.tag1Label = tgs
+                case 2: self.tag2Label = tgs
                 default: NSLog("[Error] Invalid index: \(idx)")
                 }
         }
 }
+

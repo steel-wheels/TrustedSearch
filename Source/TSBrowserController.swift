@@ -10,8 +10,14 @@ import Foundation
 
 public class TSBrowserController
 {
-        public var controlParameters:   TSControlrameters
+        public func URLToLaunchBrowser() async -> URL? {
+                return nil
+        }
+}
 
+ /*
+public class TSBrowserController
+{
         private var mKeywords:          Dictionary<TSQuery.KeywordType, String>
         private var mLanguage:          TSLanguage?
         private var mLimitDate:         TSLimitedDate?
@@ -34,10 +40,6 @@ public class TSBrowserController
 
         public func set(language lang: TSLanguage?) {
                 mLanguage = lang
-        }
-
-        public func set(limitDate ldate: TSLimitedDate?){
-                mLimitDate = ldate
         }
 
         public func set(category cat: String?) async {
@@ -152,7 +154,7 @@ public class TSBrowserController
                 return result
         }
 
-        private func siteURLs() async -> Array<URL> {
+        public func siteURLs() async -> Array<URL> {
                 guard let cat = mCategory else {
                         return []      // no sepecific site definition
                 }
@@ -211,3 +213,5 @@ public class TSBrowserController
                 }
         }
 }
+*/
+
