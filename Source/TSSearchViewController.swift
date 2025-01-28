@@ -18,8 +18,6 @@ class TSSearchViewController: MIViewController
 
         public var controlParameters = TSControlrameters()
 
-        private var mBrowserController = TSBrowserController()
-
         private var mAllWordsField:     MITextField?            = nil
         private var mEntireTextField:   MITextField?            = nil
         private var mSomeWordsField:    MITextField?            = nil
@@ -288,7 +286,8 @@ class TSSearchViewController: MIViewController
 
         private func searchButtonPressed() {
                 Task { @MainActor in
-                        if let url = await mBrowserController.URLToLaunchBrowser() {
+                        let ctlr = TSBrowserController(controlParameter: self.controlParameters)
+                        if let url = await ctlr.URLToLaunchBrowser() {
                                 super.open(URL: url)
                         }
                 }
@@ -502,28 +501,5 @@ class TSSearchViewController: MIViewController
                 }
                 return mitems
         }
-
-        /*
-         private func trackTagLabel(tagId tid: Int, labels labs: Array<String>) {
-                 /* Update tag0 menu */
-                 let tagitems = allocateTagMenuItems(tags: labs)
-                 mTagMenus[tid].setMenuItems(items: tagitems)
-                 //mTagMenus[tid].setEnable(tag0items.count > 1)
-
-                 /* erace current setting */
-                 Task { await self.mBrowserController.set(tag: nil, at: tid) }
-         }
-
-        private func allocateTagMenuItems(tags tgs: Array<String>) -> Array<MIPopupMenu.MenuItem> {
-                var tagitems: Array<MIPopupMenu.MenuItem> = [
-                        MIPopupMenu.MenuItem(menuId: 0, title: "None")
-                ]
-                var tagid = 1
-                for tag in tgs {
-                        tagitems.append(MIPopupMenu.MenuItem(menuId: tagid, title: tag))
-                        tagid += 1
-                }
-                return tagitems
-        }*/
 }
 

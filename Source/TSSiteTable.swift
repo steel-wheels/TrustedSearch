@@ -155,7 +155,7 @@ public class TSSite
                 }
         }
 
-        public func search(category catp: String?, tags tgs: Array<String>) -> Array<TSSite> {
+        public func collectSites(category catp: String?, tags tgs: Array<String>) -> Array<TSSite> {
                 var result: Array<TSSite> = []
                 if let cat = catp {
                         if let sites = mSiteTable[cat] {
