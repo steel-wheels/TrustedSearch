@@ -8,7 +8,7 @@
 import MultiUIKit
 import Foundation
 
-class TSSiteViewController: MIViewController
+class TSSiteViewController: TSBaseViewController
 {
         #if os(iOS)
         @IBOutlet weak var mRootView: MIStack!
@@ -18,7 +18,8 @@ class TSSiteViewController: MIViewController
 
         public var controlParameters = TSControlrameters()
 
-        private var mURLTable: MITable? = nil
+        private var mCategoryMenu: MIPopupMenu? = nil
+        private var mURLTable:     MITable?     = nil
 
         override func viewDidLoad() {
                 mRootView.axis = .vertical
@@ -27,51 +28,109 @@ class TSSiteViewController: MIViewController
                 /* make contents */
                 makeContents(rootView: mRootView)
 
-                /* load table */
-                //Task {
-                //        await loadURLTable()
-                //}
+                /* repeat tracking */
+                trackCategory()
+                trackTag0Label()
+                trackTag1Label()
+                trackTag2Label()
+
+                /* load categorized sites data */
+                Task {
+                        await self.initContents()
+                }
         }
 
         private func makeContents(rootView root: MIStack) {
+                /* Category menu */
+                let catmenu = makeCategoryMenu(controlParameter: self.controlParameters)
+                mCategoryMenu = catmenu
+                let catbox = makeLabeledStack(label: "Category", contents: [catmenu])
+                root.addArrangedSubView(catbox)
+
                 /* URL table */
-                let urltbl  = makeURLTable()
-                let urllbl = MILabel() ; urllbl.title = "URLs"
+                let urltbl  = MITable()
+                let urllbl  = MILabel() ; urllbl.title = "URLs"
                 root.addArrangedSubView(urllbl)
                 root.addArrangedSubView(urltbl)
                 mURLTable = urltbl
         }
 
-        /*
-        private func makeCategoryeMenu() -> MIPopupMenu {
-                let catmenu = MIPopupMenu()
-                var mitems: Array<MIPopupMenu.MenuItem> = []
-                mitems.append(MIPopupMenu.MenuItem(menuId: 0, title: "All"))
-                catmenu.setCallback({
-                        (_ menuId: Int) -> Void in
-                        //Task { await self.mBrowserController.set(category: nil)}
-                })
-                return catmenu
-        }
-         */
-
-        private func makeURLTable() -> MITable {
-                let table = MITable()
-                return table
-        }
-
-        /*
-        private func loadURLTable() async {
-                NSLog("load URL table (1)")
-                guard let urltable = mURLTable, let ctrl = browserController else {
-                        NSLog("skip")
-                        return
+        private func initContents() async {
+                /* capabilities */
+                if let popupmenu = mCategoryMenu {
+                        await super.initCategoryMenu(menu: popupmenu)
+                        if let curcap = controlParameters.category {
+                                let _ = popupmenu.selectByTitle(curcap)
+                        }
+                } else {
+                        NSLog("[Error] No PopupMenu \(#function)")
                 }
-                NSLog("load URL table (2)")
-                let urls  = await ctrl.siteURLs()
-                let paths = urls.map { $0.path }
-                urltable.setTableData(paths)
-                urltable.requireDisplay()
-        }*/
+        }
+        
+        private func trackCategory() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        /* refer the value */
+                        let _ = self.controlParameters.category
+                        Task { await self.updateURLTable() }
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackCategory()
+                        }
+                }
+        }
+
+        private func trackTag0Label() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        /* refer the value */
+                        let _ = self.controlParameters.tag0Label
+                        Task { await self.updateURLTable() }
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackTag0Label()
+                        }
+                }
+        }
+
+        private func trackTag1Label() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        /* refer the value */
+                        let _ = self.controlParameters.tag1Label
+                        Task { await self.updateURLTable() }
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackTag1Label()
+                        }
+                }
+        }
+
+        private func trackTag2Label() {
+                withObservationTracking {
+                        [weak self] in
+                        guard let self = self else { return }
+                        /* refer the value */
+                        let _ = self.controlParameters.tag2Label
+                        Task { await self.updateURLTable() }
+                } onChange: {
+                        DispatchQueue.main.async {
+                                self.trackTag2Label()
+                        }
+                }
+        }
+
+        public func updateURLTable() async {
+                let bcontroller = TSBrowserController(controlParameter: self.controlParameters)
+                let urls = await bcontroller.siteURLs()
+                if let table = mURLTable {
+                        let data: Array<String> = urls.map { $0.absoluteString }
+                        table.setTableData(data)
+                }
+        }
+
 }
 

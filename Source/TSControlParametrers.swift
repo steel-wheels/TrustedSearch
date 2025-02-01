@@ -51,5 +51,19 @@ import Foundation
                 default: NSLog("[Error] Invalid index: \(idx)")
                 }
         }
+
+        public static func copy(dst: TSControlrameters, src: TSControlrameters) {
+                dst.allWordsKeyword     = src.allWordsKeyword
+                dst.entireTextKeyword   = src.entireTextKeyword
+                dst.someWordsKeyword    = src.someWordsKeyword
+                dst.notWordsKeyword     = src.notWordsKeyword
+                dst.language            = src.language
+                dst.limitDate           = src.limitDate
+                dst.category            = src.category
+                dst.tag0Label           = src.tag0Label
+                dst.tag1Label           = src.tag1Label
+                dst.tag2Label           = src.tag2Label
+                dst.tag3Label           = src.tag3Label
+        }
 }
 

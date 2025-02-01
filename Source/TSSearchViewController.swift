@@ -8,7 +8,7 @@
 import MultiUIKit
 import Foundation
 
-class TSSearchViewController: MIViewController
+class TSSearchViewController: TSBaseViewController
 {
 #if os(iOS)
         @IBOutlet weak var mRootView: MIStack!
@@ -104,7 +104,7 @@ class TSSearchViewController: MIViewController
                 root.addArrangedSubView(datebox)
 
                 /* category site menu */
-                let catmenu = makeCategoryMenu()
+                let catmenu = makeCategoryMenu(controlParameter: self.controlParameters)
                 mCategoryMenu = catmenu
                 let catbox = makeLabeledStack(label: "Category", contents: [catmenu])
                 root.addArrangedSubView(catbox)
@@ -129,18 +129,11 @@ class TSSearchViewController: MIViewController
 
         private func initContents() async {
                 /* capabilities */
-                guard let popupmenu = mCategoryMenu else {
+                if let popupmenu = mCategoryMenu {
+                        await super.initCategoryMenu(menu: popupmenu)
+                } else {
                         NSLog("[Error] No PopupMenu \(#function)")
-                        return
                 }
-                var mitems: Array<MIPopupMenu.MenuItem> = [
-                        MIPopupMenu.MenuItem(title: "All", value: .none)
-                ]
-                let allcats = await TSSiteTable.shared.allCategories.sorted()
-                for cat in allcats {
-                        mitems.append(MIPopupMenu.MenuItem(title: cat, value: .stringValue(cat)))
-                }
-                popupmenu.setMenuItems(items: mitems)
         }
 
         private func makeAllWordsField() -> MITextField {
@@ -240,28 +233,6 @@ class TSSearchViewController: MIViewController
                         }
                 })
                 return datemenu
-        }
-
-        private func makeCategoryMenu() -> MIPopupMenu {
-                let catmenu = MIPopupMenu()
-                let mitems: Array<MIPopupMenu.MenuItem> = [
-                        MIPopupMenu.MenuItem(title: "All", value: .none)
-                ]
-                catmenu.setMenuItems(items: mitems)
-                catmenu.setCallback({
-                        (_ value: MIMenuItem.Value) -> Void in
-                        switch value {
-                        case .none:
-                                self.controlParameters.category = nil
-                        case .stringValue(let sval):
-                                self.controlParameters.category = sval
-                        case .intValue(let ival):
-                                NSLog("[Error] Unexpected int value: \(ival)")
-                        @unknown default:
-                                NSLog("[Error] can not happen at \(#function)")
-                        }
-                })
-                return catmenu
         }
 
         private func makeTagMenu(level lvl: Int) -> MIPopupMenu {

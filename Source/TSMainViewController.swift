@@ -11,12 +11,13 @@ import Foundation
 class TSMainViewController: MITabViewController
 {
         open override func shouldTransition(from fvc: MIViewControllerBase, to tvc: MIViewControllerBase) -> Bool {
-                NSLog("shouldTransition (1) \(#function)")
                 if let searchctrl = fvc as? TSSearchViewController,
                    let sitectrl   = tvc as? TSSiteViewController {
                         NSLog("search ctrl -> site ctrl")
+                        let srcparam = searchctrl.controlParameters
+                        let dstparam = sitectrl.controlParameters
+                        TSControlrameters.copy(dst: dstparam, src: srcparam)
                 }
-                NSLog("shouldTransition (2) \(#function)")
                 return true
         }
 }

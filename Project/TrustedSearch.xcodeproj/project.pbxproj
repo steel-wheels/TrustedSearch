@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050863E52D4D924D00FD12B8 /* TSBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050863E42D4D924D00FD12B8 /* TSBaseViewController.swift */; };
+		050863E62D4D924D00FD12B8 /* TSBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050863E42D4D924D00FD12B8 /* TSBaseViewController.swift */; };
 		050DA1D42CDD09C3006E0EDD /* TSSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */; };
 		050DA1D52CDD09C3006E0EDD /* TSSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */; };
 		0518B09B2CDBB23800C46E01 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */; };
@@ -87,6 +89,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		050863E42D4D924D00FD12B8 /* TSBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSBaseViewController.swift; sourceTree = "<group>"; };
 		050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSearchViewController.swift; sourceTree = "<group>"; };
 		0518B09A2CDBB23800C46E01 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		051CF6E72CE0D16D000B690D /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 				058BB2852D3B182900AC36B0 /* TSMainViewController.swift */,
 				050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */,
 				05795BA22D27FC8B00498224 /* TSSiteViewController.swift */,
+				050863E42D4D924D00FD12B8 /* TSBaseViewController.swift */,
 				05F04E0B2CDEDC2B006C8586 /* TSBrowserController.swift */,
 				05E1B0BE2CF4B026009F23ED /* TSControlParametrers.swift */,
 				0548501D2CE755980060AEA0 /* TSSiteTable.swift */,
@@ -325,6 +329,7 @@
 				05795BA42D27FC8B00498224 /* TSSiteViewController.swift in Sources */,
 				05E21C692D007DD900C181E3 /* TSPreferenceController.swift in Sources */,
 				0565FE042D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */,
+				050863E62D4D924D00FD12B8 /* TSBaseViewController.swift in Sources */,
 				050DA1D42CDD09C3006E0EDD /* TSSearchViewController.swift in Sources */,
 				05E1B0C02CF4B026009F23ED /* TSControlParametrers.swift in Sources */,
 				05B3AF062CF92339006AF536 /* TSQuery.swift in Sources */,
@@ -344,6 +349,7 @@
 				0565FE052D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */,
 				05E1B0BF2CF4B026009F23ED /* TSControlParametrers.swift in Sources */,
 				0548501E2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
+				050863E52D4D924D00FD12B8 /* TSBaseViewController.swift in Sources */,
 				05E21C6A2D007DD900C181E3 /* TSPreferenceController.swift in Sources */,
 				05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,
 				050DA1D52CDD09C3006E0EDD /* TSSearchViewController.swift in Sources */,
