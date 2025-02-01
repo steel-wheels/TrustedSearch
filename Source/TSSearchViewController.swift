@@ -110,9 +110,9 @@ class TSSearchViewController: TSBaseViewController
                 root.addArrangedSubView(catbox)
 
                 /* tags menu */
-                let tag0menu = makeTagMenu(level: 0) ; mTag0Menu = tag0menu
-                let tag1menu = makeTagMenu(level: 1) ; mTag1Menu = tag1menu
-                let tag2menu = makeTagMenu(level: 2) ; mTag2Menu = tag2menu
+                let tag0menu = makeTagMenu(controlParameter: self.controlParameters,  level: 0) ; mTag0Menu = tag0menu
+                let tag1menu = makeTagMenu(controlParameter: self.controlParameters,  level: 1) ; mTag1Menu = tag1menu
+                let tag2menu = makeTagMenu(controlParameter: self.controlParameters,  level: 2) ; mTag2Menu = tag2menu
                 let tagsbox  = makeLabeledStack(label: "Tags", contents:
                                                         [tag0menu, tag1menu, tag2menu])
                 root.addArrangedSubView(tagsbox)
@@ -233,26 +233,6 @@ class TSSearchViewController: TSBaseViewController
                         }
                 })
                 return datemenu
-        }
-
-        private func makeTagMenu(level lvl: Int) -> MIPopupMenu {
-                let tagmenu = MIPopupMenu()
-                let mitems = tagsToMenuItems(tags: [])
-                tagmenu.setMenuItems(items: mitems)
-                tagmenu.setCallback({
-                        (_ value: MIMenuItem.Value) -> Void in
-                        switch value {
-                        case .none:
-                                self.controlParameters.setTag(index: lvl, tag: nil)
-                        case .stringValue(let str):
-                                self.controlParameters.setTag(index: lvl, tag: str)
-                        case .intValue(let ival):
-                                NSLog("[Error] Unexpected int value: \(ival)")
-                        @unknown default:
-                                NSLog("[Error] can not happen at \(#function)")
-                        }
-                })
-                return tagmenu
         }
 
         private func searchButtonPressed() {
@@ -461,16 +441,6 @@ class TSSearchViewController: TSBaseViewController
                 } else {
                         tag2menu.setMenuItems(items: tag2items)
                 }
-        }
-
-        private func tagsToMenuItems(tags tgs: Set<String>) -> Array<MIMenuItem> {
-                var mitems: Array<MIPopupMenu.MenuItem> = [
-                        MIPopupMenu.MenuItem(title: "None", value: .none)
-                ]
-                for tag in tgs.sorted() {
-                        mitems.append(MIPopupMenu.MenuItem(title: tag, value: .stringValue(tag)))
-                }
-                return mitems
         }
 }
 

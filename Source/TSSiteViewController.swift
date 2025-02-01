@@ -18,8 +18,11 @@ class TSSiteViewController: TSBaseViewController
 
         public var controlParameters = TSControlrameters()
 
-        private var mCategoryMenu: MIPopupMenu? = nil
-        private var mURLTable:     MITable?     = nil
+        private var mCategoryMenu:      MIPopupMenu?    = nil
+        private var mTag0Menu:          MIPopupMenu?    = nil
+        private var mTag1Menu:          MIPopupMenu?    = nil
+        private var mTag2Menu:          MIPopupMenu?    = nil
+        private var mURLTable:          MITable?        = nil
 
         override func viewDidLoad() {
                 mRootView.axis = .vertical
@@ -52,7 +55,7 @@ class TSSiteViewController: TSBaseViewController
         }
         #endif
         private func applyControlParameters() {
-                if let cap = self.controlParameters.category, let menu = mCategoryMenu {
+                if let menu = mCategoryMenu, let cap = self.controlParameters.category {
                         let _ = menu.selectByTitle(cap)
                 }
         }
@@ -63,6 +66,14 @@ class TSSiteViewController: TSBaseViewController
                 mCategoryMenu = catmenu
                 let catbox = makeLabeledStack(label: "Category", contents: [catmenu])
                 root.addArrangedSubView(catbox)
+
+                /* tags menu */
+                let tag0menu = makeTagMenu(controlParameter: self.controlParameters,  level: 0) ; mTag0Menu = tag0menu
+                let tag1menu = makeTagMenu(controlParameter: self.controlParameters,  level: 1) ; mTag1Menu = tag1menu
+                let tag2menu = makeTagMenu(controlParameter: self.controlParameters,  level: 2) ; mTag2Menu = tag2menu
+                let tagsbox  = makeLabeledStack(label: "Tags", contents:
+                                                        [tag0menu, tag1menu, tag2menu])
+                root.addArrangedSubView(tagsbox)
 
                 /* URL table */
                 let urltbl  = MITable()
