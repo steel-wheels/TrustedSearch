@@ -40,6 +40,23 @@ class TSSiteViewController: TSBaseViewController
                 }
         }
 
+        #if os(OSX)
+        public override func viewWillAppear() {
+                super.viewWillAppear()
+                applyControlParameters()
+        }
+        #else
+        public override func viewWillAppear(_ animated: Bool) {
+                super.viewWillAppear(animated)
+                applyControlParameters()
+        }
+        #endif
+        private func applyControlParameters() {
+                if let cap = self.controlParameters.category, let menu = mCategoryMenu {
+                        let _ = menu.selectByTitle(cap)
+                }
+        }
+
         private func makeContents(rootView root: MIStack) {
                 /* Category menu */
                 let catmenu = makeCategoryMenu(controlParameter: self.controlParameters)
