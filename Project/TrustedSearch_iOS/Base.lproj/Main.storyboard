@@ -70,10 +70,10 @@
             </objects>
             <point key="canvasLocation" x="-927.48091603053433" y="-212.67605633802819"/>
         </scene>
-        <!--Tab View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="laS-x0-gFd">
             <objects>
-                <tabBarController id="w9w-ke-Nur" customClass="MITabViewController" customModule="MultiUIKit" sceneMemberID="viewController">
+                <tabBarController id="w9w-ke-Nur" customClass="TSMainViewController" customModule="TrustedSearch_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="d2t-K6-ZaM">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

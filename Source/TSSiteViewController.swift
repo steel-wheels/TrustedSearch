@@ -36,27 +36,27 @@ class TSSiteViewController: TSBaseViewController
                 trackTag0Label()
                 trackTag1Label()
                 trackTag2Label()
-
-                /* load categorized sites data */
-                Task {
-                        await self.initContents()
-                }
         }
 
         #if os(OSX)
         public override func viewWillAppear() {
                 super.viewWillAppear()
-                applyControlParameters()
+                executeBeforeAppearing()
         }
         #else
         public override func viewWillAppear(_ animated: Bool) {
                 super.viewWillAppear(animated)
-                applyControlParameters()
+                executeBeforeAppearing()
         }
         #endif
-        private func applyControlParameters() {
-                if let menu = mCategoryMenu, let cap = self.controlParameters.category {
-                        let _ = menu.selectByTitle(cap)
+        private func executeBeforeAppearing() {
+                NSLog("viewWillAppear")
+                Task {
+                        /* capabilities */
+                        await self.updateCategory()
+                        /* tags */
+                        await self.updateContents()
+                        await self.updateSelection()
                 }
         }
 
@@ -82,18 +82,6 @@ class TSSiteViewController: TSBaseViewController
                 root.addArrangedSubView(urltbl)
                 mURLTable = urltbl
         }
-
-        private func initContents() async {
-                /* capabilities */
-                if let popupmenu = mCategoryMenu {
-                        await super.initCategoryMenu(menu: popupmenu)
-                        if let curcap = controlParameters.category {
-                                let _ = popupmenu.selectByTitle(curcap)
-                        }
-                } else {
-                        NSLog("[Error] No PopupMenu \(#function)")
-                }
-        }
         
         private func trackCategory() {
                 withObservationTracking {
@@ -101,7 +89,7 @@ class TSSiteViewController: TSBaseViewController
                         guard let self = self else { return }
                         /* refer the value */
                         let _ = self.controlParameters.category
-                        Task { await self.updateURLTable() }
+                        Task { await self.updateContents() }
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackCategory()
@@ -115,7 +103,7 @@ class TSSiteViewController: TSBaseViewController
                         guard let self = self else { return }
                         /* refer the value */
                         let _ = self.controlParameters.tag0Label
-                        Task { await self.updateURLTable() }
+                        Task { await self.updateContents() }
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackTag0Label()
@@ -129,7 +117,7 @@ class TSSiteViewController: TSBaseViewController
                         guard let self = self else { return }
                         /* refer the value */
                         let _ = self.controlParameters.tag1Label
-                        Task { await self.updateURLTable() }
+                        Task { await self.updateContents() }
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackTag1Label()
@@ -143,7 +131,7 @@ class TSSiteViewController: TSBaseViewController
                         guard let self = self else { return }
                         /* refer the value */
                         let _ = self.controlParameters.tag2Label
-                        Task { await self.updateURLTable() }
+                        Task { await self.updateContents() }
                 } onChange: {
                         DispatchQueue.main.async {
                                 self.trackTag2Label()
@@ -151,7 +139,7 @@ class TSSiteViewController: TSBaseViewController
                 }
         }
 
-        public func updateURLTable() async {
+        private func updateURLTable() async {
                 let bcontroller = TSBrowserController(controlParameter: self.controlParameters)
                 let urls = await bcontroller.siteURLs()
                 if let table = mURLTable {
@@ -160,5 +148,63 @@ class TSSiteViewController: TSBaseViewController
                 }
         }
 
+        private func updateContents() async {
+                await self.updateTags()
+                await self.updateURLTable()
+        }
+
+        private func updateTags() async {
+                guard let tag0menu = mTag0Menu,
+                      let tag1menu = mTag1Menu,
+                      let tag2menu = mTag2Menu else {
+                        NSLog("[Error] No menu at \(#function)")
+                        return
+                }
+                await super.updateTags(tag0Menu: tag0menu, tag1Menu: tag1menu, tag2Menu: tag2menu, controlParameter: self.controlParameters)
+        }
+
+        private func updateCategory() async {
+                /* capabilities */
+                if let popupmenu = mCategoryMenu {
+                        await super.updateCategoryMenu(menu: popupmenu)
+                } else {
+                        NSLog("[Error] No PopupMenu \(#function)")
+                }
+        }
+
+        private func updateSelection() async {
+                /* category */
+                if let menu = mCategoryMenu {
+                        if let cat = self.controlParameters.category {
+                                let _ = menu.selectByTitle(cat)
+                        } else {
+                                let _ = menu.selectByValue(.none)
+                        }
+                }
+                /* tag0 */
+                if let menu = mTag0Menu {
+                        if let label = self.controlParameters.tag0Label {
+                                let _ = menu.selectByTitle(label)
+                        } else {
+                                let _ = menu.selectByValue(.none)
+                        }
+                }
+                /* tag1 */
+                if let menu = mTag1Menu {
+                        if let label = self.controlParameters.tag1Label {
+                                let _ = menu.selectByTitle(label)
+                        } else {
+                                let _ = menu.selectByValue(.none)
+                        }
+                }
+                /* tag2 */
+                if let menu = mTag2Menu {
+                        if let label = self.controlParameters.tag2Label {
+                                let _ = menu.selectByTitle(label)
+                        } else {
+                                let _ = menu.selectByValue(.none)
+                        }
+                }
+        }
 }
 

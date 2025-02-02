@@ -53,7 +53,7 @@ class TSSearchViewController: TSBaseViewController
                         let table = TSSiteTable.shared
                         await table.load()
                         await table.dump()
-                        await self.initContents()
+                        await updateCategory()
                         await updateTags()
                 }
         }
@@ -125,15 +125,6 @@ class TSSearchViewController: TSBaseViewController
                 }
                 root.addArrangedSubView(searchbutton)
                 mSearchButton = searchbutton
-        }
-
-        private func initContents() async {
-                /* capabilities */
-                if let popupmenu = mCategoryMenu {
-                        await super.initCategoryMenu(menu: popupmenu)
-                } else {
-                        NSLog("[Error] No PopupMenu \(#function)")
-                }
         }
 
         private func makeAllWordsField() -> MITextField {
@@ -395,6 +386,15 @@ class TSSearchViewController: TSBaseViewController
                 }
         }
 
+        private func updateCategory() async {
+                /* capabilities */
+                if let popupmenu = mCategoryMenu {
+                        await super.updateCategoryMenu(menu: popupmenu)
+                } else {
+                        NSLog("[Error] No PopupMenu \(#function)")
+                }
+        }
+
         private func updateTags() async {
                 guard let tag0menu = mTag0Menu,
                       let tag1menu = mTag1Menu,
@@ -402,45 +402,7 @@ class TSSearchViewController: TSBaseViewController
                         NSLog("[Error] No menu at \(#function)")
                         return
                 }
-                let cat = self.controlParameters.category
-                NSLog("updateTags: \(String(describing: cat))")
-
-                /* update tag0 */
-                let tag0tags = await TSSiteTable.shared.collectTags(category: cat, tags: [])
-                let tag0items = tagsToMenuItems(tags: tag0tags)
-                if let sel0title = tag0menu.selectedTitle() {
-                        tag0menu.setMenuItems(items: tag0items)
-                        let _ = tag0menu.selectByTitle(sel0title)
-                } else {
-                        tag0menu.setMenuItems(items: tag0items)
-                }
-
-                /* update tag1 */
-                var definedtags: Array<String> = []
-                if let tag = self.controlParameters.tag0Label {
-                        definedtags.append(tag)
-                }
-                let tag1tags = await TSSiteTable.shared.collectTags(category: cat, tags: definedtags)
-                let tag1items = tagsToMenuItems(tags: tag1tags)
-                if let sel1title = tag1menu.selectedTitle() {
-                        tag1menu.setMenuItems(items: tag1items)
-                        let _ = tag1menu.selectByTitle(sel1title)
-                } else {
-                        tag1menu.setMenuItems(items: tag1items)
-                }
-
-                /* update tag2 */
-                if let tag = self.controlParameters.tag1Label {
-                        definedtags.append(tag)
-                }
-                let tag2tags = await TSSiteTable.shared.collectTags(category: cat, tags: definedtags)
-                let tag2items = tagsToMenuItems(tags: tag2tags)
-                if let sel2title = tag2menu.selectedTitle() {
-                        tag2menu.setMenuItems(items: tag2items)
-                        let _ = tag2menu.selectByTitle(sel2title)
-                } else {
-                        tag2menu.setMenuItems(items: tag2items)
-                }
+                await super.updateTags(tag0Menu: tag0menu, tag1Menu: tag1menu, tag2Menu: tag2menu, controlParameter: self.controlParameters)
         }
 }
 
