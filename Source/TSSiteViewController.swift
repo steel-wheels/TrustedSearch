@@ -77,6 +77,7 @@ class TSSiteViewController: TSBaseViewController
 
                 /* URL table */
                 let urltbl  = MITable()
+                urltbl.setHeaderTitle(nil)
                 let urllbl  = MILabel() ; urllbl.title = "URLs"
                 root.addArrangedSubView(urllbl)
                 root.addArrangedSubView(urltbl)
