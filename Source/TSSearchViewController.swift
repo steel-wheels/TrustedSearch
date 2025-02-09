@@ -405,4 +405,3 @@ class TSSearchViewController: TSBaseViewController
                 await super.updateTags(tag0Menu: tag0menu, tag1Menu: tag1menu, tag2Menu: tag2menu, controlParameter: self.controlParameters)
         }
 }
-
