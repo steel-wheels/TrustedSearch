@@ -15,8 +15,20 @@ class AppDelegate: NSObject, NSApplicationDelegate
                 // Insert code here to initialize your application
         }
 
-        func applicationWillTerminate(_ aNotification: Notification) {
-                // Insert code here to tear down your application
+        private var mDidSaved = false
+
+        /* see https://hitorigoto.zumuya.com/240802_applicationShouldTerminate */
+        func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+                if !mDidSaved {
+                        Task {
+                                await TSApplication.terminate()
+                                mDidSaved = true
+                                sender.reply(toApplicationShouldTerminate: true)
+                        }
+                        return .terminateLater
+                } else {
+                        return .terminateNow
+                }
         }
 
         func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {

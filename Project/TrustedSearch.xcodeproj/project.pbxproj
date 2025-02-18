@@ -27,6 +27,8 @@
 		0565FE052D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0565FE032D0CF0B20014F9AE /* TSSiteLoader.swift */; };
 		05795BA32D27FC8B00498224 /* TSSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05795BA22D27FC8B00498224 /* TSSiteViewController.swift */; };
 		05795BA42D27FC8B00498224 /* TSSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05795BA22D27FC8B00498224 /* TSSiteViewController.swift */; };
+		057B42CE2D60B20900C08E5E /* TSApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057B42CD2D60B20900C08E5E /* TSApplication.swift */; };
+		057B42CF2D60B20900C08E5E /* TSApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057B42CD2D60B20900C08E5E /* TSApplication.swift */; };
 		058BB2862D3B182900AC36B0 /* TSMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058BB2852D3B182900AC36B0 /* TSMainViewController.swift */; };
 		058BB2872D3B182900AC36B0 /* TSMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058BB2852D3B182900AC36B0 /* TSMainViewController.swift */; };
 		05B3AF052CF92339006AF536 /* TSQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B3AF042CF92339006AF536 /* TSQuery.swift */; };
@@ -99,6 +101,7 @@
 		0565FE032D0CF0B20014F9AE /* TSSiteLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSiteLoader.swift; sourceTree = "<group>"; };
 		05780E842CDBA8E5003C03E6 /* TrustedSearch_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrustedSearch_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05795BA22D27FC8B00498224 /* TSSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSSiteViewController.swift; sourceTree = "<group>"; };
+		057B42CD2D60B20900C08E5E /* TSApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSApplication.swift; sourceTree = "<group>"; };
 		058BB2852D3B182900AC36B0 /* TSMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSMainViewController.swift; sourceTree = "<group>"; };
 		05B3AF042CF92339006AF536 /* TSQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSQuery.swift; sourceTree = "<group>"; };
 		05CC32802CDFA67100978FF6 /* TSTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSTypes.swift; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 		0518B0AE2CDBB95A00C46E01 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				057B42CD2D60B20900C08E5E /* TSApplication.swift */,
 				058BB2852D3B182900AC36B0 /* TSMainViewController.swift */,
 				050DA1D32CDD09C3006E0EDD /* TSSearchViewController.swift */,
 				05795BA22D27FC8B00498224 /* TSSiteViewController.swift */,
@@ -324,6 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				057B42CE2D60B20900C08E5E /* TSApplication.swift in Sources */,
 				058BB2862D3B182900AC36B0 /* TSMainViewController.swift in Sources */,
 				05CC32812CDFA67100978FF6 /* TSTypes.swift in Sources */,
 				05795BA42D27FC8B00498224 /* TSSiteViewController.swift in Sources */,
@@ -349,6 +354,7 @@
 				0565FE052D0CF0B20014F9AE /* TSSiteLoader.swift in Sources */,
 				05E1B0BF2CF4B026009F23ED /* TSControlParametrers.swift in Sources */,
 				0548501E2CE755980060AEA0 /* TSSiteTable.swift in Sources */,
+				057B42CF2D60B20900C08E5E /* TSApplication.swift in Sources */,
 				050863E52D4D924D00FD12B8 /* TSBaseViewController.swift in Sources */,
 				05E21C6A2D007DD900C181E3 /* TSPreferenceController.swift in Sources */,
 				05F04E0C2CDEDC2B006C8586 /* TSBrowserController.swift in Sources */,

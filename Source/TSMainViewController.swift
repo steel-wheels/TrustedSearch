@@ -13,7 +13,9 @@ class TSMainViewController: MITabViewController
         open override func shouldTransition(from fvc: MIViewControllerBase, to tvc: MIViewControllerBase) -> Bool {
                 if let searchctrl = fvc as? TSSearchViewController,
                    let sitectrl   = tvc as? TSSiteViewController {
-                        NSLog("search ctrl -> site ctrl")
+
+                        Task { await TSApplication.transition() }
+
                         let srcparam = searchctrl.controlParameters
                         let dstparam = sitectrl.controlParameters
                         TSControlrameters.copy(dst: dstparam, src: srcparam)

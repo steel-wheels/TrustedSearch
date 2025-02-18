@@ -24,6 +24,10 @@ class TSSiteViewController: TSBaseViewController
         private var mTag2Menu:          MIPopupMenu?    = nil
         private var mURLTable:          MITable?        = nil
 
+        #if os(OSX)
+        private var mExportButton:      MIButton?       = nil
+        #endif // os(OSX)
+
         override func viewDidLoad() {
                 mRootView.axis = .vertical
                 super.viewDidLoad()
@@ -50,7 +54,6 @@ class TSSiteViewController: TSBaseViewController
         }
         #endif
         private func executeBeforeAppearing() {
-                NSLog("viewWillAppear")
                 Task {
                         /* capabilities */
                         await self.updateCategory()
@@ -82,6 +85,19 @@ class TSSiteViewController: TSBaseViewController
                 root.addArrangedSubView(urllbl)
                 root.addArrangedSubView(urltbl)
                 mURLTable = urltbl
+
+                /* Export button for macOS version */
+                #if os(OSX)
+                let exportbutton = MIButton()
+                exportbutton.title = "Export"
+                exportbutton.setCallback {
+                        () -> Void in Task {
+                                @MainActor in TSApplication.export()
+                        }
+                }
+                root.addArrangedSubView(exportbutton)
+                mExportButton = exportbutton
+                #endif // os(OSX)
         }
         
         private func trackCategory() {

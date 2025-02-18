@@ -182,6 +182,10 @@ public class TSSite
                 updateInfo()
         }
 
+        public func save()  {
+                NSLog("save site table")
+        }
+
         private func cacheFile() -> URL? {
                 guard let resfile = self.resourceFile else {
                         return nil

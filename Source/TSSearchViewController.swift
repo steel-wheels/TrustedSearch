@@ -52,7 +52,7 @@ class TSSearchViewController: TSBaseViewController
                 Task {
                         let table = TSSiteTable.shared
                         await table.load()
-                        await table.dump()
+                        //await table.dump()
                         await updateCategory()
                         await updateTags()
                 }
