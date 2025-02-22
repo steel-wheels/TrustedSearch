@@ -244,7 +244,7 @@ class TSSearchViewController: TSBaseViewController
                         let _ = self.controlParameters.allWordsKeyword
                         /* Update search button */
                         if let button = mSearchButton {
-                                button.isEnabled = self.controlParameters.hasNoKeyword()
+                                button.isEnabled = !self.controlParameters.hasNoKeyword()
                         }
                 } onChange: {
                         DispatchQueue.main.async {

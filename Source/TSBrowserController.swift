@@ -39,7 +39,7 @@ public class TSBrowserController
 
                 /* make quesry string */
                 let result = TSQuery.queriesToString(queries: queries)
-                NSLog("query string =\(result)")
+                //NSLog("query string =\(result)")
                 return URL(string: result)
         }
 

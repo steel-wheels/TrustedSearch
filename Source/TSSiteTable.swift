@@ -182,10 +182,6 @@ public class TSSite
                 updateInfo()
         }
 
-        public func save()  {
-                NSLog("save site table")
-        }
-
         private func cacheFile() -> URL? {
                 guard let resfile = self.resourceFile else {
                         return nil
@@ -311,6 +307,20 @@ public class TSSite
                 return result
         }
 
+        public func save(to url: URL) -> NSError? {
+                let srcval = toValue()
+                let text   = MIJsonEncoder.encode(value: srcval)
+                let str    = text.toString()
+                var result: NSError? = nil
+                do {
+                        //NSLog("save table into \(url.absoluteString)")
+                        try str.write(to: url, atomically: false, encoding: .utf8)
+                } catch {
+                        result = MIError.error(errorCode: .fileError, message: "Failed to save table info \(url.absoluteString)")
+                }
+                return result
+        }
+
         public func toValue() -> MIValue {
                 var result: Array<MIValue> = []
                 for (_, sites) in mSiteTable {
@@ -324,6 +334,6 @@ public class TSSite
         public func dump() {
                 let tableval = self.toValue()
                 let text = MIJsonEncoder.encode(value: tableval)
-                NSLog("[Dump site table] " + text.toString())
+                NSLog("[Site table] " + text.toString())
         }
 }
